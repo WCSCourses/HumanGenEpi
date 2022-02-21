@@ -1,4 +1,8 @@
+ ![](https://coursesandconferences.wellcomeconnectingscience.org/wp-content/themes/wcc_courses_and_conferences/dist/assets/svg/logo.svg =x250) 
+ ![](https://www.hku.hk/assets/img/hku-logo.svg =x250)  
+ ![](https://www.monash.edu.my/__data/assets/git_bridge/0006/509343/deploy/mysource_files/monash-logo-mono.svg =x250)
 # Human Genomic Epidemiology - Asia (Virtual)
+
 
 In collaboration with the University of Hong Kong and Monash University Malaysia, we are pleased to announce the Human Genomic Epidemiology in Asian Populations course.
 
@@ -7,8 +11,7 @@ Advances in genomics have led to exciting new insights on the causes and mechani
 
 
 
- ![](https://coursesandconferences.wellcomeconnectingscience.org/wp-content/themes/wcc_courses_and_conferences/dist/assets/svg/logo.svg) 
-   
+
    
 
 
