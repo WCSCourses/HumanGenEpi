@@ -43,7 +43,7 @@ Let's have a look at the `PED` file
 less -S practical1.ped   # type 'q' to quit
 ```
 The PED file is a white-space (space or tab) delimited file<br>
-It has no header line, and one line per sample with 2V+6 fields where V is the number of variants. Tthe first six columns are mandatory and are the same as  in a `FAM` file. 
+It has no header line, and one line per sample with 2**V**+6 fields where **V** is the number of variants. The first six columns are mandatory and are the same as  in a `FAM` file. 
 
 > 1. Family ID ('FID')<br>
 > 2. Individual ID('IID')<br>
@@ -57,6 +57,10 @@ The 7th and 8th fields are the alleles for the first variant in the MAP file. Th
 :green_book: **Q:** How many samples are there?
 ```bash
 wc practical1.ped
+```
+:green_book: **Q:** Which samples are related?
+```bash
+awk '$3!=0 || $4!=0' practical1.ped | cut -d' ' -f 1-6     # space as delimiter
 ```
 
 ## Step 2: Data conversion in PLINK
@@ -84,6 +88,7 @@ The BIM file is the extended MAP file with first four columns same as the MAP fi
 :closed_book: **Q:** What is the minor allele of the second SNP?
 <details>
   <summary>You can try some basic unix commands by yourself first</summary>
+  
   <pre>head -n 2 practical1_1.bim     # output the first 2 rows </pre>
   <pre>head -n 2 practical1_1.bim | tail -n 1 | cut -f 5   # output the first 2 rows -> output the last row -> cut out the 5th column </pre>
   <pre>sed -n 2p practical1_1.bim | cut -f 5 # output the 2nd row and cut out the 5th column </pre>
