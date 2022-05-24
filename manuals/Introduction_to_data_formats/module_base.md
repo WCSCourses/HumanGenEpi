@@ -61,7 +61,7 @@ Read the `practical1` PLINK text fileset and convert to the PLINK binary fileset
 
 ## Equivalent to 
 # plink <b>--file practical1</b> --out practical1_1
-# plink <b>--ped practical1.ped --map practical1.map</b> --make-bed --out practical1_1`
+# plink <b>--ped practical1.ped --map practical1.map</b> --make-bed --out practical1_1
 </code></pre>
 The command `--file **practical1**` reads in **practical1**.ped and **practical1**.map and outputs the PLINK binary files with prefix of **practical1_1**
 
