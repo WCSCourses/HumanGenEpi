@@ -107,7 +107,7 @@ cat LDLgenes.bed
 
 Next, we can try some basic data management functions in PLINK
 #### - SNP management
-- Extract variants by by SNP ID(s)<br>
+##### -- Extract variants by by SNP ID(s)<br>
 E.g. A missense variant _APOB_:NM_000384.3:c.293C>T:p.Thr98Ile ([rs1367117](https://www.ebi.ac.uk/gwas/variants/rs1367117)) was previously reported to be associated with LDL level.
 :closed_book: **Q:** Who and how many of the samples carry at least one of the risk allele **A**?.
 ```bash
