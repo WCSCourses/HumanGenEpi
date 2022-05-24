@@ -107,8 +107,8 @@ cat LDLgenes.bed
 
 Next, we can try some basic data management functions in PLINK
 #### - SNP management
-##### -- Extract variants by by SNP ID(s)<br>
-E.g. A missense variant _APOB_:NM_000384.3:c.293C>T:p.Thr98Ile ([rs1367117](https://www.ebi.ac.uk/gwas/variants/rs1367117)) was previously reported to be associated with LDL level.
+##### -- Extract variants by by SNP ID(s)
+E.g. A missense variant _APOB_:NM_000384.3:c.293C>T:p.Thr98Ile ([rs1367117](https://www.ebi.ac.uk/gwas/variants/rs1367117)) was previously reported to be associated with LDL level.<br>
 :closed_book: **Q:** Who and how many of the samples carry at least one of the risk allele **A**?.
 ```bash
 plink --bfile practical1_1 --snp rs1367117 --recode --out practical1_1.rs1367117
@@ -122,7 +122,7 @@ plink --bfile practical1_1 --snp rs1367117 --recode --out practical1_1.rs1367117
 In addition to extract genotypes of a single SNP, you can also extract multiple SNPs simultaneously using `--snps`. <br>
 E.g. `--snps rs1042034-rs1042031,rs693,exm175886`  for SNPs from rs1042034-rs1042031 as well as rs693 and exm175886
 
-- Extract variants by chromosomal position
+##### --  Extract variants by chromosomal position
 We can also specify a chromosomal region and extract all genotypes fall within the region<br>
 E.g. You can extract genotypes of all SNPs in _PCSK9_ (chr1:55505149-55530526)
 ```bash
@@ -133,7 +133,7 @@ To extract multiple regions, you can also use `--extract range`
 ```bash
 plink --bfile practical1_1 --extract range PCSK9.set --make-bed --out practical1_1.PCSK9_byExtractRange
 ```
-- Extracting or excluding multiple variants
+##### -- Extracting or excluding multiple variants
 
 
 ```bash
@@ -143,7 +143,7 @@ plink --bfile practical1_1 --extract PCSK9.snp --make-bed --out practical1_1.PCS
 plink --bfile practical1_1 --exclude non-PCSK9.snp --make-bed --out practical1_1.PCSK9_byExclude
 ```
 #### - Sample management
-- Extracting or keeping samples
+##### --  Extracting or keeping samples
 ```bash
 plink --bfile practical1_1 --keep FAM1.indiv --out practical1_1.fam1
 ```
