@@ -40,7 +40,7 @@ cut -f 1 practical1.map | sort | uniq -c
 #### - PLINK text pedigree and genotype file (PED)
 Let's have a look at the `PED` file
 ```bash
-less -S chr22.1000g.ped   # type 'q' to quit
+less -S practical1.ped   # type 'q' to quit
 ```
 The PED file is a white-space (space or tab) delimited file<br>
 It has no header line, and one line per sample with 2V+6 fields where V is the number of variants. Tthe first six columns are mandatory and are the same as  in a `FAM` file. 
