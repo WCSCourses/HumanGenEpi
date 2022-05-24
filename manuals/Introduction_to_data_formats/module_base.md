@@ -97,13 +97,13 @@ The BIM file is the extended MAP file with first four columns same as the MAP fi
 
 ## Step 3: Data management in PLINK
 In fact, this PLINK binary file includes SNPs of three chromosomal regions
-<details>
-  <summary>`cat ../LDLgenes.bed`</summary>
-  
-> 19 11200038 11244505 LDLR
-> 1 55505149 55530526 PCSK9
-> 2 21224301 21266945 APOB
-</details>
+```bash
+cat LDLgenes.bed
+```
+> 19 11200038 11244505 LDLR<br>
+> 1 55505149 55530526 PCSK9<br>
+> 2 21224301 21266945 APOB<br>
+
 Next, we can try some basic data management functions in PLINK
 - Extract variants by chromosomal position
 ```bash
