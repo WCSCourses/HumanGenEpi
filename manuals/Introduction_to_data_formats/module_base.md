@@ -96,12 +96,13 @@ The BIM file is the extended MAP file with first four columns same as the MAP fi
 </details>
 
 ## Step 3: Data management in PLINK
-- Extracting or excluding variants
-- by chromosomal position
+Next, we can try some basic data management functions in PLINK
+- Extract variants by chromosomal position
 - by SNP(s)
 ```bash
 plink --bfile practical1_1 --chr 22 --from-bp xxx --to-bp xxx --make-bed --out practical1_1.22p11
 ```
+- Extracting or excluding variants
 - Extracting or keeping samples
 ```bash
 plink --bfile practical1_1 --keep FAM1.indiv --out practical1_1.fam1
