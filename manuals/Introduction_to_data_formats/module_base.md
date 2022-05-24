@@ -111,11 +111,14 @@ E.g. A missense variant _APOB_:NM_000384.3:c.293C>T:p.Thr98Ile ([rs1367117](http
 ```bash
 plink --bfile practical1_1 --snp rs1367117 --recode --out practical1_1.rs1367117
 ```
+You can also extract multiple SNPs using `--snps rs1042034-rs1042031,rs693,exm175886`
+
 - Extract variants by chromosomal position
-We can also extract genotypes of all SNPs in _PCSK9_
+We can also extract genotypes of all SNPs in _PCSK9_ (chr1:55505149-55530526)
 ```bash
 plink --bfile practical1_1 --chr 1 --from-bp 55505149 --to-bp 55530526 --recode --out practical1_1.PCSK9
 ```
+You can also extract by kb using `--from-kb <kb pos> --to-kb <kb pos>` or by mb using `--from-mb <mb pos> --to-mb <mb pos>`
 
 - Extracting or excluding multiple variants
 ```bash
