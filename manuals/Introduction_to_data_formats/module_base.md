@@ -117,6 +117,7 @@ plink --bfile practical1_1 --snp rs1367117 --recode --out practical1_1.rs1367117
   
   <pre> awk '$7=="A" || $8=="A"' practical1_1.rs1367117.ped </pre>  
   <pre> awk '$7=="A" || $8=="A"' practical1_1.rs1367117.ped | wc </pre>
+</details>
 You can also extract multiple SNPs using `--snps rs1042034-rs1042031,rs693,exm175886`
 
 - Extract variants by chromosomal position
