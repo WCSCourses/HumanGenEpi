@@ -105,14 +105,16 @@ cat LDLgenes.bed
 > 19 11200038 11244505 LDLR<br>
 
 Next, we can try some basic data management functions in PLINK
-- Extract variants by chromosomal position
-```bash
-plink --bfile practical1_1 --chr 1 --from-bp 55505149 --to-bp 55530526 --make-bed --out practical1_1.PCSK9
-```
-- by SNP(s)
+- SNP management
+  - Extract variants by by SNP ID(s)
 ```bash
 plink --bfile practical1_1 --chr 22 --from-bp xxx --to-bp xxx --make-bed --out practical1_1.22p11
 ```
+  - Extract variants by chromosomal position
+```bash
+plink --bfile practical1_1 --chr 1 --from-bp 55505149 --to-bp 55530526 --make-bed --out practical1_1.PCSK9
+```
+
 - Extracting or excluding multiple variants
 ```bash
 cat LDLR.set
