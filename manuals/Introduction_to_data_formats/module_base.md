@@ -155,7 +155,7 @@ plink --bfile practical1_1 --keep HG00103fam.indiv --make-bed --out practical1_1
 ```
 Similarly, you can remove a list of samples using `--remove <file>`
 
-##### - Basic summary statistics
+##### -- Basic summary statistics
 ```bash
 plink --bfile practical1_1 --freq --out practical1_1
 ```
