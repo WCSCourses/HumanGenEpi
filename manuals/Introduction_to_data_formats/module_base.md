@@ -106,7 +106,7 @@ cat LDLgenes.bed
 > 19 11200038 11244505 LDLR<br>
 
 Next, we can try some basic data management functions in PLINK
-#### - SNP management
+#### - SNP management (Extract / Exclude)
 ##### -- Extract variants by by SNP ID(s)
 E.g. A missense variant _APOB_:NM_000384.3:c.293C>T:p.Thr98Ile ([rs1367117](https://www.ebi.ac.uk/gwas/variants/rs1367117)) was previously reported to be associated with LDL level.<br>
 :closed_book: **Q:** Who and how many of the samples carry at least one of the risk allele **A**?
@@ -143,8 +143,8 @@ plink --bfile practical1_1 --extract PCSK9.snp --make-bed --out practical1_1.PCS
 ```bash
 plink --bfile practical1_1 --exclude non-PCSK9.snp --make-bed --out practical1_1.PCSK9_byExclude
 ```
-#### - Sample management
-##### --  Extracting or keeping samples
+#### - Sample management (Keep / Remove)
+##### --  Keeping samples
 ```bash
 plink --bfile practical1_1 --keep FAM1.indiv --out practical1_1.fam1
 ```
