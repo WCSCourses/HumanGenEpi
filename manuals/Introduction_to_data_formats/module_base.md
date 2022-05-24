@@ -121,34 +121,44 @@ plink --bfile practical1_1 --snp rs1367117 --recode --out practical1_1.rs1367117
 </details>
 
 In addition to extract a single SNP, you can also extract multiple SNPs simultaneously using `--snps`<br>
-E.g. `--snps rs1042034-rs1042031,rs693,exm175886`  for SNPs from rs1042034-rs1042031 as well as rs693 and exm175886
+E.g. `--snps rs1042034-rs1042031,rs693,exm175886`  for SNPs from rs1042034-rs1042031 as well as rs693 and exm175886. Similarly, you can exclude multiple SNPs simultaneously using `--exclude-snps`
 
 ##### --  Extract variants by chromosomal position
-We may specify a chromosomal region and extract all genotypes fall within the region<br>
+You may specify a chromosomal region and extract all genotypes fall within the region<br>
 E.g. You can extract genotypes of all SNPs in _PCSK9_ (chr1:55505149-55530526)
 ```bash
 plink --bfile practical1_1 --chr 1 --from-bp 55505149 --to-bp 55530526 --recode --out practical1_1.PCSK9_byChrPos
 ```
 Instead of base pair, you are allowed to specific the position in kb using `--from-kb <kb pos> --to-kb <kb pos>` or in mb using `--from-mb <mb pos> --to-mb <mb pos>`<br>
-To extract multiple regions, you can also use `--extract range`
+To extract multiple regions, you can also use `--extract range <set file>` and specify a set file (in UCSC 1-based coordinate bed file format)
 ```bash
-plink --bfile practical1_1 --extract range PCSK9.set --make-bed --out practical1_1.PCSK9_byExtractRange
+head -n 2 LDLgenes.bed > non-LDLR.bed
+plink --bfile practical1_1 --extract range non-LDLR.bed --make-bed --out practical1_1.nonLDLR
 ```
+
 ##### -- Extracting or excluding multiple variants
-
-
+You may specify a list of variants to be extracted or excluded<br>
 ```bash
+awk '$1==1 { print $2 }' practical1_1.bim > PCSK9.snp
 plink --bfile practical1_1 --extract PCSK9.snp --make-bed --out practical1_1.PCSK9_byExtract
 ```
 ```bash
+awk '$1!=1 { print $2 }' practical1_1.bim > non-PCSK9.snp
 plink --bfile practical1_1 --exclude non-PCSK9.snp --make-bed --out practical1_1.PCSK9_byExclude
 ```
+
 #### - Sample management (Keep / Remove)
 ##### --  Keeping samples
 ```bash
-plink --bfile practical1_1 --keep FAM1.indiv --out practical1_1.fam1
+awk '$1=="HG00103" { print $1,$2 }' practical1_1.fam > HG00103fam.indiv
+plink --bfile practical1_1 --keep HG00103fam.indiv --make-bed --out practical1_1.HG00103fam
 ```
+Similarly, you can remove a list of samples using `--remove <file>`
+
+##### - Basic summary statistics
 ```bash
-plink --bfile practical1_1.22p11 --freq --out practical1_1.22p11
+plink --bfile practical1_1 --freq --out practical1_1
 ```
+
+
 You can combine all commands in one line
