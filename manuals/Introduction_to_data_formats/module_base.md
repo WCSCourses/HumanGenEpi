@@ -109,7 +109,7 @@ Next, we can try some basic data management functions in PLINK
 #### - SNP management
 ##### -- Extract variants by by SNP ID(s)
 E.g. A missense variant _APOB_:NM_000384.3:c.293C>T:p.Thr98Ile ([rs1367117](https://www.ebi.ac.uk/gwas/variants/rs1367117)) was previously reported to be associated with LDL level.<br>
-:closed_book: **Q:** Who and how many of the samples carry at least one of the risk allele **A**?.
+:closed_book: **Q:** Who and how many of the samples carry at least one of the risk allele **A**?
 ```bash
 plink --bfile practical1_1 --snp rs1367117 --recode --out practical1_1.rs1367117
 ```
@@ -119,16 +119,17 @@ plink --bfile practical1_1 --snp rs1367117 --recode --out practical1_1.rs1367117
   <pre> awk '$7=="A" || $8=="A"' practical1_1.rs1367117.ped </pre>  
   <pre> awk '$7=="A" || $8=="A"' practical1_1.rs1367117.ped | wc </pre>
 </details>
-In addition to extract genotypes of a single SNP, you can also extract multiple SNPs simultaneously using `--snps`. <br>
+
+In addition to extract a single SNP, you can also extract multiple SNPs simultaneously using `--snps`<br>
 E.g. `--snps rs1042034-rs1042031,rs693,exm175886`  for SNPs from rs1042034-rs1042031 as well as rs693 and exm175886
 
 ##### --  Extract variants by chromosomal position
-We can also specify a chromosomal region and extract all genotypes fall within the region<br>
+We may specify a chromosomal region and extract all genotypes fall within the region<br>
 E.g. You can extract genotypes of all SNPs in _PCSK9_ (chr1:55505149-55530526)
 ```bash
 plink --bfile practical1_1 --chr 1 --from-bp 55505149 --to-bp 55530526 --recode --out practical1_1.PCSK9_byChrPos
 ```
-Instead of base pair, you can also specific the position by kb using `--from-kb <kb pos> --to-kb <kb pos>` or by mb using `--from-mb <mb pos> --to-mb <mb pos>`<br>
+Instead of base pair, you are allowed to specific the position in kb using `--from-kb <kb pos> --to-kb <kb pos>` or in mb using `--from-mb <mb pos> --to-mb <mb pos>`<br>
 To extract multiple regions, you can also use `--extract range`
 ```bash
 plink --bfile practical1_1 --extract range PCSK9.set --make-bed --out practical1_1.PCSK9_byExtractRange
