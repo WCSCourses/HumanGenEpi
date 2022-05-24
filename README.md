@@ -1,6 +1,6 @@
- ![](https://coursesandconferences.wellcomeconnectingscience.org/wp-content/themes/wcc_courses_and_conferences/dist/assets/svg/logo.svg) <!-- .element height="50%" width="50%" -->
- ![](https://www.hku.hk/assets/img/hku-logo.svg)
- ![](https://www.monash.edu.my/__data/assets/git_bridge/0006/509343/deploy/mysource_files/monash-logo-mono.svg)
+ ![](https://coursesandconferences.wellcomeconnectingscience.org/wp-content/themes/wcc_courses_and_conferences/dist/assets/svg/logo.svg)<!-- .element height="50%" width="50%" -->
+ ![](https://www.hku.hk/assets/img/hku-logo.svg)<!-- .element height="50%" width="50%" -->
+ ![](https://www.monash.edu.my/__data/assets/git_bridge/0006/509343/deploy/mysource_files/monash-logo-mono.svg)<!-- .element height="150%" width="150%" -->
 # Human Genomic Epidemiology - Asia (Virtual)
 
 
