@@ -77,7 +77,7 @@ The BIM file is the extended MAP file with first four columns same as the MAP fi
 > 5. Allele 1 (**A1**; corresponding to the **minor allele** by default; 0 is monomorphic)<br>
 > 6. Allele 2 (**A2**; corresponding to the **major allele** by default)<br>
 
-:closed_book: Q: What is the minor allele of the second SNP?
+:closed_book: **Q:** What is the minor allele of the second SNP?
 <details>
   <summary>You can try some basic unix commands by yourself first</summary>
   <pre>head -n 2 practical1_1.bim     # output the first 2 rows </pre>
