@@ -11,10 +11,11 @@ cd practical1
 ```
 Download the genotype data in regular PLINK text file format (`PED / MAP`) into the directory
 ```bash
-wget 'http://github..../practical1.ped'
-wget 'http://github..../practical1.map'
+wget 'http://github..../practical1.zip'
 ```
-
+```bash
+unzip practical1.zip'
+```
 #### - PLINK text variant file (MAP)
 Let's have a look at the variant `MAP` file
 ```bash
@@ -107,26 +108,36 @@ cat LDLgenes.bed
 Next, we can try some basic data management functions in PLINK
 #### - SNP management
 - Extract variants by by SNP ID(s)<br>
-E.g. A missense variant _APOB_:NM_000384.3:c.293C>T:p.Thr98Ile ([rs1367117](https://www.ebi.ac.uk/gwas/variants/rs1367117)) was previously reported to be associated with LDL level. We would like to examine who and how many of the samples carry at least one risk allele **A**.
+E.g. A missense variant _APOB_:NM_000384.3:c.293C>T:p.Thr98Ile ([rs1367117](https://www.ebi.ac.uk/gwas/variants/rs1367117)) was previously reported to be associated with LDL level. We would like to examine who and how many of the samples carry at least one of the risk allele **A**.
 ```bash
 plink --bfile practical1_1 --snp rs1367117 --recode --out practical1_1.rs1367117
 ```
+<details>
+  <summary>You can try some basic unix commands by yourself first</summary>
+  
+  <pre> awk '$7=="A" || $8=="A"' practical1_1.rs1367117.ped </pre>  
+  <pre> awk '$7=="A" || $8=="A"' practical1_1.rs1367117.ped | wc </pre>
 You can also extract multiple SNPs using `--snps rs1042034-rs1042031,rs693,exm175886`
 
 - Extract variants by chromosomal position
-We can also extract genotypes of all SNPs in _PCSK9_ (chr1:55505149-55530526)
+We can also specify a chromosomal regions and extract all genotypes fall within the region<br>
+E.g. You can extract genotypes of all SNPs in _PCSK9_ (chr1:55505149-55530526)
 ```bash
-plink --bfile practical1_1 --chr 1 --from-bp 55505149 --to-bp 55530526 --recode --out practical1_1.PCSK9
+plink --bfile practical1_1 --chr 1 --from-bp 55505149 --to-bp 55530526 --recode --out practical1_1.PCSK9_byChrPos
 ```
 You can also extract by kb using `--from-kb <kb pos> --to-kb <kb pos>` or by mb using `--from-mb <mb pos> --to-mb <mb pos>`
 
 - Extracting or excluding multiple variants
 ```bash
-cat LDLR.set
+plink --bfile practical1_1 --extract range PCSK9.set --make-bed --out practical1_1.PCSK9_byExtractRange
 ```
 ```bash
-plink --bfile practical1_1 --extract range LDLR.set --make-bed --out practical1_1.LDLR
+plink --bfile practical1_1 --extract PCSK9.snp --make-bed --out practical1_1.PCSK9_byExtract
 ```
+```bash
+plink --bfile practical1_1 --exclude non-PCSK9.snp --make-bed --out practical1_1.PCSK9_byExclude
+```
+#### - Sample management
 - Extracting or keeping samples
 ```bash
 plink --bfile practical1_1 --keep FAM1.indiv --out practical1_1.fam1
