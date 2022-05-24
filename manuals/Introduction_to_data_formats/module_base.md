@@ -32,6 +32,10 @@ It contains no header line and each line describes a single marker with 4 column
 ```bash
 wc -l practical1.map
 ```
+:green_book: **Q:** Where are these SNPs located in?
+```bash
+cut -f 1 practical1.map | sort | uniq -c
+```
 
 #### - PLINK text pedigree and genotype file (PED)
 Let's have a look at the `PED` file
