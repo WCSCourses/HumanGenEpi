@@ -37,9 +37,7 @@ cd ~/QC
 
 - Download the raw genotype data in binary format and save it to the current directory
 ```bash
-FILEURL="http://"
-
-wget $FILEURL
+wget https://github.com/WCSCourses/HumanGenEpi/raw/main/course_data/SNP_array_QC/practical2.tar.gz
 ```
 
 
