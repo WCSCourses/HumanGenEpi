@@ -20,9 +20,8 @@ You should get three files, including the two regular PLINK text files (`PED` an
 > practical1.map<br>
 > practical1.ped<br>
 > LDLgenes.set<br>
-
-#### * PLINK text variant file (MAP)
 ***
+#### * PLINK text variant file (MAP)
 Let's have a look at the variant `MAP` file
 ```bash
 head practical1.map
@@ -43,7 +42,7 @@ wc -l practical1.map
 ```bash
 cut -f 1 practical1.map | sort | uniq -c
 ```
-
+***
 #### - PLINK text pedigree and genotype file (PED)
 Let's have a look at the `PED` file
 ```bash
