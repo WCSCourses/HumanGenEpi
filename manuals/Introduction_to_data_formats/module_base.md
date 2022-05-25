@@ -148,7 +148,6 @@ cat non-LDLR.set
 ```bash
 plink --bfile practical1_1 --extract range non-LDLR.set --make-bed --out practical1_1.nonLDLR
 ```
-***
 #### -- Extracting or excluding multiple variants
 You may specify a list of variants to be extracted or excluded<br>
 ```bash
