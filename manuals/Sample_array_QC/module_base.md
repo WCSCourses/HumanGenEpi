@@ -3,6 +3,7 @@
 ## Objectives
 In this practical, you will learn the basic steps of data quality assessment and perform QC on genotype data that are typically carried out in genome wide association studies (GWAS).
 * [Sample QC](#Sample-QC)
+* [Variant QC](#Variant-QC)
 
 ## Why do we need the QC on GWAS data?
 Suboptimal study design, poor sample quality, and errors in genotype calling can introduce systematic biases into GWAS, leading to spurious associations. A thorough QC can help us identify samples and variants that should be removed prior to association analysis to minimize false-positive and false-negative associations.
