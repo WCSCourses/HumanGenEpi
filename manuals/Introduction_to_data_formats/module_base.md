@@ -21,7 +21,7 @@ You should get three files, including the two regular PLINK text files (`PED` an
 > practical1.ped<br>
 > LDLgenes.set<br>
 ***
-#### * PLINK text variant file (MAP)
+### - PLINK text variant file (MAP)
 Let's have a look at the variant `MAP` file
 ```bash
 head practical1.map
@@ -43,7 +43,7 @@ wc -l practical1.map
 cut -f 1 practical1.map | sort | uniq -c
 ```
 ***
-#### - PLINK text pedigree and genotype file (PED)
+### - PLINK text pedigree and genotype file (PED)
 Let's have a look at the `PED` file
 ```bash
 less -S practical1.ped   # type 'q' to quit
@@ -115,8 +115,9 @@ cat LDLgenes.set
 > 19 11200038 11244505 LDLR<br>
 
 Next, we can try some basic data management functions in PLINK
-#### - SNP management (Extract / Exclude)
-##### -- Extract variants by by SNP ID(s)
+***
+### - SNP management (Extract / Exclude)
+#### -- Extract variants by by SNP ID(s)
 E.g. A missense variant _APOB_:NM_000384.3:c.293C>T:p.Thr98Ile ([rs1367117](https://www.ebi.ac.uk/gwas/variants/rs1367117)) was previously reported to be associated with LDL level.<br>
 :closed_book: **Q:** Who and how many of the samples carry at least one of the risk allele **A**?
 ```bash
@@ -132,7 +133,7 @@ plink --bfile practical1_1 --snp rs1367117 --recode --out practical1_1.rs1367117
 In addition to extract a single SNP, you can also extract multiple SNPs simultaneously using `--snps`<br>
 E.g. `--snps rs1042034-rs1042031,rs693,exm175886`  for SNPs from rs1042034-rs1042031 as well as rs693 and exm175886. Similarly, you can exclude multiple SNPs simultaneously using `--exclude-snps`
 
-##### --  Extract variants by chromosomal position
+#### --  Extract variants by chromosomal position
 You may specify a chromosomal region and extract all genotypes fall within the region<br>
 E.g. You can extract genotypes of all SNPs in _PCSK9_ (chr1:55505149-55530526)
 ```bash
@@ -147,8 +148,8 @@ cat non-LDLR.set
 ```bash
 plink --bfile practical1_1 --extract range non-LDLR.set --make-bed --out practical1_1.nonLDLR
 ```
-
-##### -- Extracting or excluding multiple variants
+***
+#### -- Extracting or excluding multiple variants
 You may specify a list of variants to be extracted or excluded<br>
 ```bash
 awk '$1==1 { print $2 }' practical1_1.bim > PCSK9.snp
@@ -158,16 +159,16 @@ plink --bfile practical1_1 --extract PCSK9.snp --make-bed --out practical1_1.PCS
 awk '$1!=1 { print $2 }' practical1_1.bim > non-PCSK9.snp
 plink --bfile practical1_1 --exclude non-PCSK9.snp --make-bed --out practical1_1.PCSK9_byExclude
 ```
-
-#### - Sample management (Keep / Remove)
-##### --  Keeping or removing samples
+***
+### - Sample management (Keep / Remove)
+#### --  Keeping or removing samples
 To obtain genotypes of a particular list of samples, you can use the `--keep` or `--remove` commands to include or exclude a list of samples with specified family and individual IDs, respectively.
 ```bash
 plink --bfile practical1_1 --remove related.indiv --make-bed --out practical1_1.unrelated
 ```
 
-#### - Basic summary statistics
-##### --  Obtaining minor allele frequency
+### - Basic summary statistics
+#### --  Obtaining minor allele frequency
 Other functions of PLINK are implemented in a similar manner. For example, if you would like to obtain allele frequencies for SNPs, you can use the `--freq` function.
 ```bash
 plink --bfile practical1_1 --freq --out practical1_1
