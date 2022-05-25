@@ -73,8 +73,7 @@ awk '$3!=0 || $4!=0' practical1.ped | cut -d' ' -f 1-6     # space as delimiter
 Read the `practical1` PLINK text fileset and convert to the PLINK binary fileset (`BED / BIM / FAM`)
 <pre><code>plink <b>--file practical1</b> --make-bed --out practical1_1
 </code></pre>
-<pre><code>
-## Equivalent to 
+<pre><code>## Equivalent to 
 # plink <b>--file practical1</b> --out practical1_1
 # plink <b>--ped practical1.ped --map practical1.map</b> --make-bed --out practical1_1
 </code></pre>
