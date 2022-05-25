@@ -9,14 +9,19 @@ First, create a working directory named `practical1` and change to the directory
 mkdir practical1
 cd practical1
 ```
-Download the genotype data in regular PLINK text file format (`PED / MAP`) into the directory
+Download the gzipped tar file `practical1.tar.gz` into the directory and unzip it
 ```bash
-wget 'http://github..../practical1.zip'
+wget https://github.com/WCSCourses/HumanGenEpi/raw/main/course_data/Introduction_to_data_formats/practical1.tar.gz
 ```
 ```bash
-unzip practical1.zip'
+tar -xzvf practical1.tar.gz
 ```
-#### - PLINK text variant file (MAP)
+You should get three files, including the two regular PLINK text files (`PED` and `MAP`) and a PLINK set file
+> practical1.map<br>
+> practical1.ped<br>
+> LDLgenes.set<br>
+***
+### - PLINK text variant file (MAP)
 Let's have a look at the variant `MAP` file
 ```bash
 head practical1.map
@@ -37,8 +42,8 @@ wc -l practical1.map
 ```bash
 cut -f 1 practical1.map | sort | uniq -c
 ```
-
-#### - PLINK text pedigree and genotype file (PED)
+***
+### - PLINK text pedigree and genotype file (PED)
 Let's have a look at the `PED` file
 ```bash
 less -S practical1.ped   # type 'q' to quit
@@ -61,14 +66,18 @@ wc practical1.ped
 ```
 :green_book: **Q:** Which samples are related?
 ```bash
-awk '$3!=0 || $4!=0' practical1.ped | cut -d' ' -f 1-6     # space as delimiter
+awk '$3!=0 || $4!=0' practical1.ped | cut -d' ' -f 1-6   # space as delimiter
+```
+We now record the nonfounders `HG00103 HG00104` and `HG00123 HG00124` to a file named `related.indiv` for removal in downstream analysis.
+```bash
+awk '$3!=0 || $4!=0' practical1.ped | cut -d' ' -f 1-2 > related.indiv 
 ```
 
 ## Step 2: Data conversion in PLINK
 Read the `practical1` PLINK text fileset and convert to the PLINK binary fileset (`BED / BIM / FAM`)
 <pre><code>plink <b>--file practical1</b> --make-bed --out practical1_1
-
-## Equivalent to 
+</code></pre>
+<pre><code>## Equivalent to 
 # plink <b>--file practical1</b> --out practical1_1
 # plink <b>--ped practical1.ped --map practical1.map</b> --make-bed --out practical1_1
 </code></pre>
@@ -99,15 +108,16 @@ The BIM file is the extended MAP file with first four columns same as the MAP fi
 ## Step 3: Data management in PLINK
 In fact, the PLINK file records the genotype information for SNPs in three chromosomal regions
 ```bash
-cat LDLgenes.bed
+cat LDLgenes.set
 ```
 > 1 55505149 55530526 PCSK9<br>
 > 2 21224301 21266945 APOB<br>
 > 19 11200038 11244505 LDLR<br>
 
 Next, we can try some basic data management functions in PLINK
-#### - SNP management (Extract / Exclude)
-##### -- Extract variants by by SNP ID(s)
+***
+### - SNP management (Extract / Exclude)
+#### -- Extract variants by by SNP ID(s)
 E.g. A missense variant _APOB_:NM_000384.3:c.293C>T:p.Thr98Ile ([rs1367117](https://www.ebi.ac.uk/gwas/variants/rs1367117)) was previously reported to be associated with LDL level.<br>
 :closed_book: **Q:** Who and how many of the samples carry at least one of the risk allele **A**?
 ```bash
@@ -123,7 +133,7 @@ plink --bfile practical1_1 --snp rs1367117 --recode --out practical1_1.rs1367117
 In addition to extract a single SNP, you can also extract multiple SNPs simultaneously using `--snps`<br>
 E.g. `--snps rs1042034-rs1042031,rs693,exm175886`  for SNPs from rs1042034-rs1042031 as well as rs693 and exm175886. Similarly, you can exclude multiple SNPs simultaneously using `--exclude-snps`
 
-##### --  Extract variants by chromosomal position
+#### --  Extract variants by chromosomal position
 You may specify a chromosomal region and extract all genotypes fall within the region<br>
 E.g. You can extract genotypes of all SNPs in _PCSK9_ (chr1:55505149-55530526)
 ```bash
@@ -132,11 +142,13 @@ plink --bfile practical1_1 --chr 1 --from-bp 55505149 --to-bp 55530526 --recode 
 Instead of base pair, you are allowed to specific the position in kb using `--from-kb <kb pos> --to-kb <kb pos>` or in mb using `--from-mb <mb pos> --to-mb <mb pos>`<br>
 To extract multiple regions, you can also use `--extract range <set file>` and specify a set file (in UCSC 1-based coordinate bed file format)
 ```bash
-head -n 2 LDLgenes.bed > non-LDLR.bed
-plink --bfile practical1_1 --extract range non-LDLR.bed --make-bed --out practical1_1.nonLDLR
+head -n 2 LDLgenes.set > non-LDLR.set
+cat non-LDLR.set
 ```
-
-##### -- Extracting or excluding multiple variants
+```bash
+plink --bfile practical1_1 --extract range non-LDLR.set --make-bed --out practical1_1.nonLDLR
+```
+#### -- Extracting or excluding multiple variants
 You may specify a list of variants to be extracted or excluded<br>
 ```bash
 awk '$1==1 { print $2 }' practical1_1.bim > PCSK9.snp
@@ -146,19 +158,22 @@ plink --bfile practical1_1 --extract PCSK9.snp --make-bed --out practical1_1.PCS
 awk '$1!=1 { print $2 }' practical1_1.bim > non-PCSK9.snp
 plink --bfile practical1_1 --exclude non-PCSK9.snp --make-bed --out practical1_1.PCSK9_byExclude
 ```
-
-#### - Sample management (Keep / Remove)
-##### --  Keeping samples
+***
+### - Sample management (Keep / Remove)
+#### --  Keeping or removing samples
+To obtain genotypes of a particular list of samples, you can use the `--keep` or `--remove` commands to include or exclude a list of samples with specified family and individual IDs, respectively.
 ```bash
-awk '$1=="HG00103" { print $1,$2 }' practical1_1.fam > HG00103fam.indiv
-plink --bfile practical1_1 --keep HG00103fam.indiv --make-bed --out practical1_1.HG00103fam
+plink --bfile practical1_1 --remove related.indiv --make-bed --out practical1_1.unrelated
 ```
-Similarly, you can remove a list of samples using `--remove <file>`
-
-##### -- Basic summary statistics
+***
+### - Basic summary statistics
+#### --  Obtaining minor allele frequency
+Other functions of PLINK are implemented in a similar manner. For example, if you would like to obtain allele frequencies for SNPs, you can use the `--freq` function.
 ```bash
 plink --bfile practical1_1 --freq --out practical1_1
 ```
-
-
-You can combine all commands in one line
+You can combine all commands in one line. For example, to obtain frequency of SNPs in _PCSK9_ across all unrelated samples, you can use 
+```bash
+plink --bfile practical1_1 --remove related.indiv --extract PCSK9.snp --freq --out practical1_1.unrelated.PCSK9
+```
+:closed_book: **Q:** What are the minor allele frequencies for the two SNPs, rs693 and exm175886, in _APOB_ across all unrelated samples?
