@@ -166,7 +166,8 @@ To obtain genotypes of a particular list of samples, you can use the `--keep` or
 plink --bfile practical1_1 --remove related.indiv --make-bed --out practical1_1.unrelated
 ```
 
-##### -- Basic summary statistics
+#### - Basic summary statistics
+##### --  Obtaining minor allele frequency
 Other functions of PLINK are implemented in a similar manner. For example, if you would like to obtain allele frequencies for SNPs, you can use the `--freq` function.
 ```bash
 plink --bfile practical1_1 --freq --out practical1_1
