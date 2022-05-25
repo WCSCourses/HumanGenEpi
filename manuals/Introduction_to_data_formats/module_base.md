@@ -66,8 +66,9 @@ wc practical1.ped
 ```
 :green_book: **Q:** Which samples are related?
 ```bash
-awk '$3!=0 || $4!=0' practical1.ped | cut -d' ' -f 1-6     # space as delimiter
+awk '$3!=0 || $4!=0' practical1.ped | cut -d' ' -f 1-6 > related.indiv    # space as delimiter
 ```
+We now record the nonfounders `HG00103 HG00104` and `HG00123 HG00124` to a file named `related.indiv` for removal in downstream analysis.
 
 ## Step 2: Data conversion in PLINK
 Read the `practical1` PLINK text fileset and convert to the PLINK binary fileset (`BED / BIM / FAM`)
