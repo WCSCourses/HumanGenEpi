@@ -9,13 +9,15 @@ First, create a working directory named `practical1` and change to the directory
 mkdir practical1
 cd practical1
 ```
-Download the genotype data in regular PLINK text file format (`PED / MAP`) into the directory
+Download the zipped file `practical1.tar.gz` into the directory and unzip it
 ```bash
-wget 'http://github..../practical1.zip'
+wget https://github.com/WCSCourses/HumanGenEpi/tree/main/course_data/Introduction_to_data_formats/practical1.tar.gz
 ```
 ```bash
-unzip practical1.zip'
+tar -xzvf practical1.tar.gz
 ```
+You should get three files, including the genotype data in regular PLINK text file format (`PED / MAP`) and a PLINK set file
+
 #### - PLINK text variant file (MAP)
 Let's have a look at the variant `MAP` file
 ```bash
