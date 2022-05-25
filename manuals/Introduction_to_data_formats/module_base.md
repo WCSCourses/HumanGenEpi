@@ -171,8 +171,8 @@ Other functions of PLINK are implemented in a similar manner. For example, if yo
 ```bash
 plink --bfile practical1_1 --freq --out practical1_1
 ```
-You can combine all commands in one line. For example, to obtain frequency of SNPs in PCSK9 across all unrelated samples, you can use 
+You can combine all commands in one line. For example, to obtain frequency of SNPs in _PCSK9_ across all unrelated samples, you can use 
 ```bash
 plink --bfile practical1_1 --remove related.indiv --extract PCSK9.snp --freq --out practical1_1.unrelated.PCSK9
 ```
-:closed_book: **Q:** What are the minor allele frequencies for the two SNPs, rs693 and exm175886, in APOB across all unrelated samples?
+:closed_book: **Q:** What are the minor allele frequencies for the two SNPs, rs693 and exm175886, in _APOB_ across all unrelated samples?
