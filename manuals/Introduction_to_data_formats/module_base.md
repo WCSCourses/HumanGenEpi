@@ -148,17 +148,20 @@ plink --bfile practical1_1 --exclude non-PCSK9.snp --make-bed --out practical1_1
 ```
 
 #### - Sample management (Keep / Remove)
-##### --  Keeping samples
+##### --  Keeping or removing samples
+To obtain genotypes of a particular list of samples, you can use the `--keep` or `--remove` commands to include or exclude a list of samples with specified family and individual IDs, respectively.
 ```bash
-awk '$1=="HG00103" { print $1,$2 }' practical1_1.fam > HG00103fam.indiv
-plink --bfile practical1_1 --keep HG00103fam.indiv --make-bed --out practical1_1.HG00103fam
+awk '$1=="HG00103" || $1=="" { print $1,$2 }' practical1_1.fam > related.indiv
+plink --bfile practical1_1 --remove related.indiv --make-bed --out practical1_1.unrelated
 ```
-Similarly, you can remove a list of samples using `--remove <file>`
 
 ##### -- Basic summary statistics
+Other functions of PLINK are implemented in a similar manner. For example, if you would like to obtain allele frequencies for SNPs, you can use the `--freq` function.
 ```bash
 plink --bfile practical1_1 --freq --out practical1_1
 ```
-
-
-You can combine all commands in one line
+You can combine all commands in one line. For example, to obtain frequency of SNPs in PCSK9 across all unrelated samples, you can use 
+```bash
+plink --bfile practical1_1 --remove related.indiv --extract PCSK9.snp --freq --out practical1_1.unrelated.PCSK9
+```
+:closed_book: **Q:** What are the minor allele frequency of for all unrelated samples?
