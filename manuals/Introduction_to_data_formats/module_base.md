@@ -2,6 +2,13 @@
 
 ## Objectives
 In this practical, you will learn how to use PLINK to manage genotyping data.
+  * [Step 1: Understand the input data formats in PLINK](#step-1--understand-the-input-data-formats-in-plink)
+  * [Step 2: Data conversion in PLINK](#step-2--data-conversion-in-plink)
+  * [Step 3: Data management in PLINK](#step-3--data-management-in-plink)
+    + [- SNP management (Extract / Exclude)](#--snp-management--extract---exclude-)
+    + [- Sample management (Keep / Remove)](#--sample-management--keep---remove-)
+    + [- Basic summary statistics](#--basic-summary-statistics)
+
 
 ## Prerequisites
 We need the following software that is pre-installed in the VM for genotype data management 
