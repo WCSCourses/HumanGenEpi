@@ -17,9 +17,9 @@ wget https://github.com/WCSCourses/HumanGenEpi/raw/main/course_data/Introduction
 tar -xzvf practical1.tar.gz
 ```
 You should get three files, including the two regular PLINK text files (`PED` and `MAP`) and a PLINK set file
-> practical1.map
-> practical1.ped
-> LDLgenes.set
+> practical1.map<br>
+> practical1.ped<br>
+> LDLgenes.set<br>
 
 #### - PLINK text variant file (MAP)
 Let's have a look at the variant `MAP` file
