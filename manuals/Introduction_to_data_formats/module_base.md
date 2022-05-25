@@ -21,7 +21,8 @@ You should get three files, including the two regular PLINK text files (`PED` an
 > practical1.ped<br>
 > LDLgenes.set<br>
 
-#### - PLINK text variant file (MAP)
+#### * PLINK text variant file (MAP)
+***
 Let's have a look at the variant `MAP` file
 ```bash
 head practical1.map
