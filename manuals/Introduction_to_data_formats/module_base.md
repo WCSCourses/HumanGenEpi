@@ -104,7 +104,7 @@ The BIM file is the extended MAP file with first four columns same as the MAP fi
 ## Step 3: Data management in PLINK
 In fact, the PLINK file records the genotype information for SNPs in three chromosomal regions
 ```bash
-cat LDLgenes.bed
+cat LDLgenes.set
 ```
 > 1 55505149 55530526 PCSK9<br>
 > 2 21224301 21266945 APOB<br>
@@ -137,8 +137,8 @@ plink --bfile practical1_1 --chr 1 --from-bp 55505149 --to-bp 55530526 --recode 
 Instead of base pair, you are allowed to specific the position in kb using `--from-kb <kb pos> --to-kb <kb pos>` or in mb using `--from-mb <mb pos> --to-mb <mb pos>`<br>
 To extract multiple regions, you can also use `--extract range <set file>` and specify a set file (in UCSC 1-based coordinate bed file format)
 ```bash
-head -n 2 LDLgenes.bed > non-LDLR.bed
-plink --bfile practical1_1 --extract range non-LDLR.bed --make-bed --out practical1_1.nonLDLR
+head -n 2 LDLgenes.set > non-LDLR.set
+plink --bfile practical1_1 --extract range non-LDLR.set --make-bed --out practical1_1.nonLDLR
 ```
 
 ##### -- Extracting or excluding multiple variants
