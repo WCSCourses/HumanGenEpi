@@ -138,6 +138,9 @@ Instead of base pair, you are allowed to specific the position in kb using `--fr
 To extract multiple regions, you can also use `--extract range <set file>` and specify a set file (in UCSC 1-based coordinate bed file format)
 ```bash
 head -n 2 LDLgenes.set > non-LDLR.set
+cat non-LDLR.set
+```
+```bash
 plink --bfile practical1_1 --extract range non-LDLR.set --make-bed --out practical1_1.nonLDLR
 ```
 
