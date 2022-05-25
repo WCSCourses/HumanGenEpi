@@ -11,7 +11,7 @@ cd practical1
 ```
 Download the zipped file `practical1.tar.gz` into the directory and unzip it
 ```bash
-wget https://github.com/WCSCourses/HumanGenEpi/tree/main/course_data/Introduction_to_data_formats/practical1.tar.gz
+wget https://github.com/WCSCourses/HumanGenEpi/raw/main/course_data/Introduction_to_data_formats/practical1.tar.gz
 ```
 ```bash
 tar -xzvf practical1.tar.gz
