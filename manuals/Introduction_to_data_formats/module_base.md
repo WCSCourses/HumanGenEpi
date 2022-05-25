@@ -163,7 +163,6 @@ plink --bfile practical1_1 --exclude non-PCSK9.snp --make-bed --out practical1_1
 ##### --  Keeping or removing samples
 To obtain genotypes of a particular list of samples, you can use the `--keep` or `--remove` commands to include or exclude a list of samples with specified family and individual IDs, respectively.
 ```bash
-awk '$1=="HG00103" || $1=="" { print $1,$2 }' practical1_1.fam > related.indiv
 plink --bfile practical1_1 --remove related.indiv --make-bed --out practical1_1.unrelated
 ```
 
