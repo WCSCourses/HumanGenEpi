@@ -164,4 +164,4 @@ You can combine all commands in one line. For example, to obtain frequency of SN
 ```bash
 plink --bfile practical1_1 --remove related.indiv --extract PCSK9.snp --freq --out practical1_1.unrelated.PCSK9
 ```
-:closed_book: **Q:** What are the minor allele frequency of for all unrelated samples?
+:closed_book: **Q:** What are the minor allele frequencies of for all unrelated samples?
