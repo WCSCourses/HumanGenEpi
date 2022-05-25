@@ -3,6 +3,10 @@
 ## Objectives
 In this practical, you will learn how to use PLINK to manage genotyping data.
 
+## Prerequisites
+We need the following software that is pre-installed in this VM
+- `PLINK`[1.9 beta](https://www.cog-genomics.org/plink/) for genotype data management 
+
 ## Step 1: Understand the input data formats in PLINK
 First, create a working directory named `practical1` and change to the directory
 ```bash
