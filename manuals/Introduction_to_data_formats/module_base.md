@@ -92,13 +92,12 @@ Read the `practical1` PLINK text fileset and convert to the PLINK binary fileset
 # plink <b>--file practical1</b> --out practical1_1
 # plink <b>--ped practical1.ped --map practical1.map</b> --make-bed --out practical1_1
 </code></pre>
+![PLINK1](https://github.com/WCSCourses/HumanGenEpi/blob/c426a9eb5b4aa144371d1ab4eea2937637441a93/images/practical1.PLINK-makebed.png)
 The command `--file practical1` reads in **practical1**.ped and **practical1**.map and outputs the PLINK binary files with prefix of **practical1_1**
 
 > practical1_1.bed (binary file; not human readable)<br>
 > practical1_1.bim <br>
 > practical1_1.fam <br>
-
-![PLINK1](https://github.com/WCSCourses/HumanGenEpi/blob/c426a9eb5b4aa144371d1ab4eea2937637441a93/images/practical1.PLINK-makebed.png)
 
 The FAM file stores the pedigree information of the PED file (i.e. the first 6 columns).<br>
 The BIM file is the extended MAP file with first four columns same as the MAP file. The 5th and 6th columns record the A1 and A2 alleles:<br>
