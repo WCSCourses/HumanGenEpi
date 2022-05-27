@@ -116,6 +116,10 @@ abline(h=0.02, lwd=2, lty=2, col="darkblue")
 </details>
 
 ## Step_2: Individuals with sex discrepancy
+- Obtain missingness of chr X
+```bash
+plink --bfile chrAll.ASA --chr 23 --missing --out chrX.ASA
+```
 - Check sex
 ```bash
 plink --bfile chrAll.ASA --check-sex --out chrX.ASA
@@ -136,19 +140,32 @@ head(sexcheck)
 # 6 CHSHet002 CHSHet002      1      0 PROBLEM  0.67630
 
 colsex<-c("blue","red")
-plot(sexcheck$F, col=colsex[sexcheck$PEDSEX], main="Sex check", xlab="ASA samples", ylab="chrX Inbreeding coefficient (F)")
+plot(sexcheck$F, col=colsex[sexcheck$PEDSEX], main="Sex check", pch=20, xlab="ASA samples", ylab="chrX Inbreeding coefficient (F)")
+points(row.names(mismatch),mismatch$F,pch=22,bg="green",col="black",lwd=2,cex=2)
+abline(h=0.2, lwd=2, lty=2, col="red")
+abline(h=0.8, lwd=2, lty=2, col="blue")
+legend("bottomright",c("Male PEDSEX","Female PEDSEX","sample with PROBELM"), col=c(colsex,"black"),pt.bg="green", pch=c(20,20,22))
 # =============================================================
 ```
 ![practical2 sexcheck](https://user-images.githubusercontent.com/8644480/170764485-e24326e1-51e9-4322-a560-f218fe8ef76d.png)
 
-- Obtain missingness of chr X
-```bash
-plink --bfile chrAll.ASA --chr 23 --missing --out chrX.ASA
+  - What is the relationship between missingness and inbreeeding coefficient for chrX?
+```R
+# ========================== R code ==========================
+imiss.X <- read.table("chrX.ASA.imiss",h=T)
+sexcheck.imiss <- merge(imiss.X, sexcheck, by="IID")
+plot(sexcheck.imiss$N_MISS, sexcheck.imiss$F, pch=20, col="darkred", xlab="Number of missing genotypes on chrX", ylab="chrX Inbreeding coefficient (F)")
 ```
+
 - Obtain missingness of chr Y
 ```bash
 plink --bfile chrAll.ASA --chr 24 --filter-males --missing --out chrY.ASA.male
 ```
+:closed_book: **Q:** Can you generate a plot to investigate the relationship between missingness and inbreeeding coefficient for chrX?
+<details>
+  <summary> Try your own R codes </summary>
+<p></p>
+</details>  
 
 ### Step_3: Individuals with outlying heterozygosity rate
 To avoid bias by genotyping error of rare variants and SNPs in strong LD, we usually perform the heterogeneity check using only common variants (MAF>=5%), excluding complex regions and SNPs in strong LD
