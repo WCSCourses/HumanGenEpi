@@ -18,7 +18,7 @@ Here we assume that the study design has been conducted appropriately and basic 
 ## The QC protocol: from Sample QC to Variant QC 
 The QC protocol for GWAS typically split into two broad categories, `Sample QC` and `Variant QC`. Sample QC is usually done prior to Variant QC in order to maximise the number of variants remained for association analysis.
 
-<img src="https://user-images.githubusercontent.com/8644480/170681398-e29f945e-fc94-4876-b695-9a8f2250968e.png">
+<img src="https://user-images.githubusercontent.com/8644480/170681398-e29f945e-fc94-4876-b695-9a8f2250968e.png"  width="1024" height="468">
 
 In this practical, we will first generate the summary profiles of 
 + missingness (Sample and variant)
