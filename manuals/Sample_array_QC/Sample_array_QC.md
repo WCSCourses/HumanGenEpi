@@ -76,17 +76,21 @@ hist(imiss$F_MISS, freq=T, col="darkred", border ="black", main="Sample Call Rat
 hist(imiss$F_MISS, breaks=seq(0,0.2,0.01), freq=T, col="darkred", border ="black", main="Sample Call Rate", xlab="F_MISS", ylab="Number of samples",ylim=c(0,20))
 # ============================================================
 </pre>
+![practical2 missing-hist1](https://user-images.githubusercontent.com/8644480/170730926-95e94bab-26a7-487b-beed-92cb352237bc.png)
+![practical2 missing-hist2](https://user-images.githubusercontent.com/8644480/170731155-cad32ec4-a5a9-48a3-bec6-3492cf4e3471.png)
 
 :closed_book: **Q:** Can you try to plot the right number of excluded samples?
 <details>
   <summary>You can try some basic R codes by yourself first</summary>
-<pre><code>
+
 # Answer 1
+<pre><code>
 #==== R =====
 hist(imiss$F_MISS, breaks=50, freq=T, col="darkred", border="black", main="Sample Call Rate", xlab="F_MISS", ylab="Number of samples", ylim=c(0,100), xlim=c(0,0.2))
 abline(v=0.02, lwd=2, lty=2, col="darkblue")
 #abline(v=0.01, lwd=2, lty=2, col="darkgreen")
 </code></pre>
+
 # Answer 2
 <pre><code>
 #==== R =====
@@ -94,14 +98,15 @@ plot(sort(imiss$F_MISS), pch=20, col="darkred", main="Sample Call Rate", xlab="A
 abline(h=0.02, lwd=2, lty=2, col="darkblue")
 #abline(h=0.01, lwd=2, lty=2, col="darkgreen")
 </code></pre>
+
+# Answer 3
 <pre><code>
 #==== R =====
-# Answer 3
 plot(sort(imiss$F_MISS), pch=20, col="darkred", main="Sample Call Rate", xlab="ASA samples", ylab="F_MISS")
 abline(v=0.02, lwd=2, lty=2, col="darkblue")
 #abline(v=0.01, lwd=2, lty=2, col="darkgreen")
 </code></pre>
-
+</details>
 
 
 abline(h=0.02, lwd=2, col="firebrick", lty=2)
