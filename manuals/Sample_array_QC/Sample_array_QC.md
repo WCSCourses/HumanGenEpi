@@ -123,7 +123,7 @@ plink --bfile chrAll.ASA --check-sex --out chrX.ASA
 The function of `--check-sex` normally compares sex assignments in the input pedigree data with inbreeding coefficients (F) imputed from SNPs on X chromosome. By default, the F estimates smaller than 0.2 yield female calls, and values larger than 0.8 yield male calls. 
 
 ```R
-#==== R =====
+# ========================== R code ==========================
 sexcheck<-read.table("chrX.ASA.sexcheck",h=T)
 head(sexcheck)
 
@@ -137,7 +137,7 @@ head(sexcheck)
 
 colsex<-c("blue","red")
 plot(sexcheck$F, col=colsex[sexcheck$PEDSEX], main="Sex check", xlab="ASA samples", ylab="chrX Inbreeding coefficient (F)")
-#===========
+# =============================================================
 ```
 - Obtain missingness of chr X
 ```bash
