@@ -44,7 +44,7 @@ wget https://github.com/WCSCourses/HumanGenEpi/raw/main/course_data/SNP_array_QC
 The dataset used in this practical was simuated from haplotypes of East Asian samples of the 1000 Genomes Project ([Phase 3](https://www.internationalgenome.org/category/phase-3/)). SNPs included in the dataset reflect to those included in the [Illumina Asian Screening array](https://www.illumina.com/products/by-type/microarray-kits/infinium-asian-screening.html) designed to maximize the genomic coverage for East Asian population.
 
 ## Sample-QC
-### Step_1: Individuals with excessive missing genotypes
+## Step_1: Individuals with excessive missing genotypes
 - Obtain profile of missingness per individual and per SNP
 ```bash
 plink --bfile chrAll.ASA --missing --out chrAll.ASA.beforeQC
@@ -81,7 +81,7 @@ hist(imiss$F_MISS, breaks=seq(0,0.2,0.01), freq=T, col="darkred", border ="black
 
 :closed_book: **Q:** Can you try to plot the right number of excluded samples?
 <details>
-  <summary>You can try some basic R codes by yourself first</summary>
+  <summary> Try your own R codes </summary>
 <p></p>
 
 - **Answer 1**
@@ -102,7 +102,7 @@ abline(h=0.02, lwd=2, lty=2, col="darkblue")
 
 - **Answer 3**
 <pre><code>#==== R =====
-plot(sort(imiss$F_MISS), pch=20, col="darkred", main="Sample Call Rate", xlab="ASA samples", ylab="F_MISS")
+plot(imiss$F_MISS,1:nrow(imiss),pch=20,col="darkred", main="Sample Call Rate", xlab="F_MISS", ylab="ASA samples")
 abline(v=0.02, lwd=2, lty=2, col="darkblue")
 #abline(v=0.01, lwd=2, lty=2, col="darkgreen")
 </code></pre>
@@ -110,11 +110,29 @@ abline(v=0.02, lwd=2, lty=2, col="darkblue")
 
 </details>
 
-### Step_2: Individuals with sex discrepancy
-- Sex check
-Extract xchr SNPs
-plink --bfile chrAll.ASA --chr 23 --make-bed --out $DIR/$FILE-xchr
+## Step_2: Individuals with sex discrepancy
+- Obtain missingness of chr Y
+```bash
+plink --bfile chrAll.ASA --chr 24 --missingness --out chrY.ASA
+```
+:closed_book: **Q:** Can you plot the distribution of missingness of SNPs on chrY?
+<details>
+  <summary> Try your own R codes </summary>
+<p></p>
+- **Answer 3**
+<pre><code>#==== R =====
+plot(imiss$F_MISS,1:nrow(imiss),pch=20,col="darkred", main="Sample Call Rate", xlab="F_MISS", ylab="ASA samples")
+abline(v=0.02, lwd=2, lty=2, col="darkblue")
+#abline(v=0.01, lwd=2, lty=2, col="darkgreen")
+</code></pre>
 
+- Obtain missingness of chr X
+```bash
+plink --bfile chrAll.ASA --chr 23 --make-bed --out chrX.ASA
+```
+- Check sex
+```bash
+```
 Run missingness on xchr SNPs
 plink --bfile $DIR/$FILE-xchr --missing --out $DIR/$FILE-xchr-missin
 g
