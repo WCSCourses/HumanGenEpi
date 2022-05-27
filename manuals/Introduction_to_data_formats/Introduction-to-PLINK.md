@@ -92,7 +92,8 @@ Read the `practical1` PLINK text fileset and convert to the PLINK binary fileset
 # plink <b>--file practical1</b> --out practical1_1
 # plink <b>--ped practical1.ped --map practical1.map</b> --make-bed --out practical1_1
 </code></pre>
-![PLINK1](https://github.com/WCSCourses/HumanGenEpi/blob/c426a9eb5b4aa144371d1ab4eea2937637441a93/images/practical1.PLINK-makebed.png)
+![PLINK1](https://github.com/WCSCourses/HumanGenEpi/blob/f4f22840f569ed96e2c9772dd1df4b09014ad974/images/Introduction_to_data_formats/practical1.PLINK-makebed.png)
+
 The command `--file practical1` reads in **practical1**.ped and **practical1**.map and outputs the PLINK binary files with prefix of **practical1_1**
 
 > practical1_1.bed (binary file; not human readable)<br>
