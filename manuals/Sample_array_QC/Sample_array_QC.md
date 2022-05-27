@@ -106,7 +106,7 @@ plot(sort(imiss$F_MISS), pch=20, col="darkred", main="Sample Call Rate", xlab="A
 abline(v=0.02, lwd=2, lty=2, col="darkblue")
 #abline(v=0.01, lwd=2, lty=2, col="darkgreen")
 </code></pre>
-![practical2 missing-hist5](https://user-images.githubusercontent.com/8644480/170732217-70b6a656-e270-4b1f-a09d-be908371f860.png)
+![practical2 missing-hist5](https://user-images.githubusercontent.com/8644480/170734294-93be3fdb-f5e8-439d-8413-034659b9d9cf.png)
 
 </details>
 
