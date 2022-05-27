@@ -154,7 +154,7 @@ legend("bottomright",c("Male PEDSEX","Female PEDSEX","sample with PROBELM"), col
 # ========================== R code ==========================
 imiss.X <- read.table("chrX.ASA.imiss",h=T)
 sexcheck.imiss <- merge(imiss.X, sexcheck, by="IID")
-plot(sexcheck.imiss$N_MISS, sexcheck.imiss$F, pch=20, col="darkred", xlab="Number of missing genotypes on chrX", ylab="chrX Inbreeding coefficient (F)")
+plot(sexcheck.imiss$F_MISS, sexcheck.imiss$F, pch=20, col="darkred", xlab="Number of missing genotypes on chrX", ylab="chrX Inbreeding coefficient (F)")
 ```
 
 - Obtain missingness of chr Y
@@ -170,19 +170,26 @@ plink --bfile chrAll.ASA --chr 24 --filter-males --missing --out chrY.ASA.male
 ### Step_3: Individuals with outlying heterozygosity rate
 To avoid bias by genotyping error of rare variants and SNPs in strong LD, we usually perform the heterogeneity check using only common variants (MAF>=5%), excluding complex regions and SNPs in strong LD
 ```bash
-plink --bfile chrAll.ASA --autosome --maf 0.05 --make-bed --out chrAll.ASA.autosome.maf05
-plink --bfile chrAll.ASA --autosome --extract chrAll.ASA.autosome.maf05.bim --missing --out chrAll.ASA.autosome.maf05
-plink --bfile chrAll.ASA --autosome --exclude chrAll.ASA.autosome.maf05.bim --missing --out chrAll.ASA.autosome.maf-lt-05
+plink --bfile chrAll.ASA --autosome --maf 0.05 --make-bed --out chr1-22.ASA.maf05
+plink --bfile chr1-22.ASA.maf05 --missing --out chr1-22.ASA.maf05
 ```
 - LD pruning using R-squared 0.1
 ```bash
-plink --bfile chrAll.ASA.autosome.maf05 --indep 200 50 0.1 --out chrAll.ASA.autosome.maf05.pruning
-plink --bfile chrAll.ASA.autosome.maf05 --extract chrAll.ASA.autosome.maf05.pruning.prune.in --het --out chrAll.ASA.autosome.maf05.pruned
+plink --bfile chr1-22.ASA.maf05 --indep-pairwise 200 50 0.1 --out chr1-22.ASA.maf05.pruning
+plink --bfile chr1-22.ASA.maf05 --extract chr1-22.ASA.maf05.pruning.prune.in --make-bed --out chr1-22.ASA.maf05.pruned
+plink --bfile chr1-22.ASA.maf05.pruned --het --out chr1-22.ASA.maf05.pruned
+```
+```R
+#imiss.autosome <- read.table("chr1-22.ASA.maf05.imiss",h=T)
+#het.autosome <- read.table("chr1-22.ASA.maf05.pruned.het",h=T)
+imiss.autosome <- read.table("chrAll.ASA.autosome.maf05.imiss",h=T)
+het.autosome <- read.table("chrAll.ASA.autosome.maf05.pruned.het",h=T)
+imiss.het <- merge(imiss.autosome, het.autosome, by="IID")
+imiss.het$PCT_HET <- (imiss.het$N.NM. - imiss.het$O.HOM.)/imiss.het$N.NM.
+plot(imiss.het$F_MISS, imiss.het$PCT_HET, pch=20, col="darkred", xlab="Number of missing genotypes on chrX", ylab="chrX Inbreeding coefficient (F)")
+
 ```
 
-plink --bfile chrAll.ASA.autosome.maf05.pruned --het --out chrAll.ASA.autosome.maf05.pruned
-
-```
 
 :closed_book: **Q:** Can you plot the distribution of missingness of SNPs on chrY?
 <details>
