@@ -70,10 +70,12 @@ head(imiss)
 summary(imiss$F_MISS)
 
 # Plot missingness across samples
-hist(imiss$F_MISS, freq=T, col="darkred", border ="black", main="Sample Call Rate", xlab="F_MISS", ylab="Number of samples")
+hist(imiss$F_MISS, freq=T, col="darkred", border ="black", main="Sample Call Rate", 
+xlab="F_MISS", ylab="Number of samples")
 
 # Plot missingness with altered y-axis for a zoom in view
-hist(imiss$F_MISS, breaks=seq(0,0.2,0.01), freq=T, col="darkred", border ="black", main="Sample Call Rate", xlab="F_MISS", ylab="Number of samples",ylim=c(0,20))
+hist(imiss$F_MISS, breaks=seq(0,0.2,0.01), freq=T, col="darkred", border ="black", 
+main="Sample Call Rate", xlab="F_MISS", ylab="Number of samples",ylim=c(0,20))
 # ============================================================
 </pre>
 ![practical2 missing-hist1](https://user-images.githubusercontent.com/8644480/170730926-95e94bab-26a7-487b-beed-92cb352237bc.png)
@@ -111,9 +113,17 @@ abline(v=0.02, lwd=2, lty=2, col="darkblue")
 </details>
 
 ## Step_2: Individuals with sex discrepancy
+- Check sex
+```bash
+plink --bfile chrAll.ASA --check-sex --out chrX.ASA
+```
+- Obtain missingness of chr X
+```bash
+plink --bfile chrAll.ASA --chr 23 --missing --out chrX.ASA
+```
 - Obtain missingness of chr Y
 ```bash
-plink --bfile chrAll.ASA --chr 24 --missingness --out chrY.ASA
+plink --bfile chrAll.ASA --chr 24 --filter-males --missing --out chrY.ASA.male
 ```
 :closed_book: **Q:** Can you plot the distribution of missingness of SNPs on chrY?
 <details>
@@ -126,16 +136,10 @@ abline(v=0.02, lwd=2, lty=2, col="darkblue")
 #abline(v=0.01, lwd=2, lty=2, col="darkgreen")
 </code></pre>
 
-- Obtain missingness of chr X
-```bash
-plink --bfile chrAll.ASA --chr 23 --make-bed --out chrX.ASA
-```
-- Check sex
-```bash
-```
+
+
 Run missingness on xchr SNPs
-plink --bfile $DIR/$FILE-xchr --missing --out $DIR/$FILE-xchr-missin
-g
+plink --bfile $DIR/$FILE-xchr --missing --out $DIR/$FILE-xchr-missing
 
 ### Step_3: Individuals with outlying heterozygosity rate
 To avoid bias by genotyping error of rare variants and SNPs in strong LD, we usually perform the heterogeneity check using only common variants (MAF>=5%), excluding complex regions and SNPs in strong LD
