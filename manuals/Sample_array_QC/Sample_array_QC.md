@@ -111,7 +111,7 @@ plot(imiss$F_MISS,pch=20,col="darkred", main="Sample Call Rate", xlab="ASA sampl
 abline(h=0.02, lwd=2, lty=2, col="darkblue")
 #abline(h=0.01, lwd=2, lty=2, col="darkgreen")
 ```
-![practical2 missing-hist5](https://user-images.githubusercontent.com/8644480/170734294-93be3fdb-f5e8-439d-8413-034659b9d9cf.png)
+![practical2 missing-hist5](https://user-images.githubusercontent.com/8644480/170764418-9d90ecb2-66f7-40b4-86bb-4daffd0ccc74.png)
 
 </details>
 
@@ -139,6 +139,8 @@ colsex<-c("blue","red")
 plot(sexcheck$F, col=colsex[sexcheck$PEDSEX], main="Sex check", xlab="ASA samples", ylab="chrX Inbreeding coefficient (F)")
 # =============================================================
 ```
+![practical2 sexcheck](https://user-images.githubusercontent.com/8644480/170764485-e24326e1-51e9-4322-a560-f218fe8ef76d.png)
+
 - Obtain missingness of chr X
 ```bash
 plink --bfile chrAll.ASA --chr 23 --missing --out chrX.ASA
