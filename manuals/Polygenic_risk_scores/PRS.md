@@ -26,7 +26,7 @@ head valid
 
 ``` bash
 Rscript /usr/local/bin/PRSice.R --prsice usr/local/bin/PRSice_linux --base
-Height.gwas.txt --target AFR --pheno AFR.height --cov AFR.cov --out trial1
+Height.gwas.txt --target ASN --pheno ASN.height --cov ASN.cov --out trial1
 ```
 Check out the trial1.log file which contains the errors shown above. So, we see that initially
 the all the SNPs in the base file are read. Ambiguous variants are removed to avoid strand
@@ -44,7 +44,7 @@ uniq Height.gwas.txt > Height.gwasqc.txt
 
 ``` bash
 Rscript /usr/local/bin/PRSice.R --prsice usr/local/bin/PRSice_linux --base
-Height.gwasqc.txt --target AFR --pheno AFR.height --cov AFR.cov –-base-info
+Height.gwasqc.txt --target ASN --pheno ASN.height --cov ASN.cov –-base-info
 INFO:0.4 --out Prelim
 ```
 
@@ -57,14 +57,14 @@ PRS R2 and how many SNPs are in the best preforming PRS ?
 
 ``` bash 
 Rscript /usr/local/bin/PRSice.R --prsice usr/local/bin/PRSice_linux --base
-Height.gwasqc.txt --target AFR --pheno AFR.height --cov AFR.cov–-clump-kb
+Height.gwasqc.txt --target ASN --pheno ASN.height --cov ASN.cov–-clump-kb
 500 –clump-r2 0.1 –-base-info INFO:0.4 --out Opt500_0.1
 ```
 *  clump-kb 250 clump-r2 0.3
 
 ``` bash
 Rscript /usr/local/bin/PRSice.R --prsice usr/local/bin/PRSice_linux --base
-Height.gwasqc.txt --target AFR --pheno AFR.height --cov AFR.cov –-clump-kb
+Height.gwasqc.txt --target ASN --pheno ASN.height --cov ASN.cov –-clump-kb
 250 –clump-r2 0.3 –-base-info INFO:0.4 --out Opt250_0.5
 ```
 
@@ -72,7 +72,7 @@ Height.gwasqc.txt --target AFR --pheno AFR.height --cov AFR.cov –-clump-kb
 
 ``` bash
 Rscript /usr/local/bin/PRSice.R --prsice usr/local/bin/PRSice_linux --base
-Height.gwasqc.txt --target AFR --pheno AFR.height --cov AFR.cov –-print-snp
+Height.gwasqc.txt --target ASN --pheno ASN.height --cov ASN.cov –-print-snp
 –-out Validation
 
 ```
