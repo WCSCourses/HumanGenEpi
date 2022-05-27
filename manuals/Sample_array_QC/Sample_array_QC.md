@@ -60,7 +60,7 @@ For both files, the last three columns measure the missingness for each individu
 
 - Plot the distribution of missingness 
 We can then use R script to generate histogram of missingness
-<pre>
+```R
 # ========================== R code ==========================
 # ----------------------------------------------------------#
 #         (1)  SAMPLE CALL RATE    - threshold = 98%        #
@@ -77,7 +77,7 @@ xlab="F_MISS", ylab="Number of samples")
 hist(imiss$F_MISS, breaks=seq(0,0.2,0.01), freq=T, col="darkred", border ="black", 
 main="Sample Call Rate", xlab="F_MISS", ylab="Number of samples",ylim=c(0,20))
 # ============================================================
-</pre>
+```
 ![practical2 missing-hist1](https://user-images.githubusercontent.com/8644480/170730926-95e94bab-26a7-487b-beed-92cb352237bc.png)
 ![practical2 missing-hist2](https://user-images.githubusercontent.com/8644480/170731155-cad32ec4-a5a9-48a3-bec6-3492cf4e3471.png)
 
