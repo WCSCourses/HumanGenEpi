@@ -104,9 +104,9 @@ abline(h=0.02, lwd=2, lty=2, col="darkblue")
 
 - **Answer 3**
 <pre><code>#==== R =====
-plot(imiss$F_MISS,1:nrow(imiss),pch=20,col="darkred", main="Sample Call Rate", xlab="F_MISS", ylab="ASA samples")
-abline(v=0.02, lwd=2, lty=2, col="darkblue")
-#abline(v=0.01, lwd=2, lty=2, col="darkgreen")
+plot(imiss$F_MISS,pch=20,col="darkred", main="Sample Call Rate", xlab="ASA samples", ylab="F_MISS")
+abline(h=0.02, lwd=2, lty=2, col="darkblue")
+#abline(h=0.01, lwd=2, lty=2, col="darkgreen")
 </code></pre>
 ![practical2 missing-hist5](https://user-images.githubusercontent.com/8644480/170734294-93be3fdb-f5e8-439d-8413-034659b9d9cf.png)
 
@@ -117,6 +117,23 @@ abline(v=0.02, lwd=2, lty=2, col="darkblue")
 ```bash
 plink --bfile chrAll.ASA --check-sex --out chrX.ASA
 ```
+The function of `--check-sex` normally compares sex assignments in the input pedigree data with inbreeding coefficients (F) imputed from SNPs on X chromosome. By default, the F estimates smaller than 0.2 yield female calls, and values larger than 0.8 yield male calls. 
+
+```R
+#==== R =====
+sexcheck<-read.table("chrX.ASA.sexcheck",h=T)
+head(sexcheck)
+```
+>         FID       IID PEDSEX SNPSEX  STATUS        F
+> 1 BEB-BEB_1 BEB-BEB_1      2      2      OK -0.08568
+> 2 CHS-BEB_1 CHS-BEB_1      1      1      OK  1.00000
+> 3 CHS-CEU_1 CHS-CEU_1      1      1      OK  1.00000
+> 4 CHS-ITU_1 CHS-ITU_1      1      1      OK  1.00000
+> 5    CHSDel    CHSDel      2      2      OK  0.01933
+> 6 CHSHet002 CHSHet002      1      0 PROBLEM  0.67630
+```R
+plot(sexcheck$F)
+```
 - Obtain missingness of chr X
 ```bash
 plink --bfile chrAll.ASA --chr 23 --missing --out chrX.ASA
@@ -125,21 +142,6 @@ plink --bfile chrAll.ASA --chr 23 --missing --out chrX.ASA
 ```bash
 plink --bfile chrAll.ASA --chr 24 --filter-males --missing --out chrY.ASA.male
 ```
-:closed_book: **Q:** Can you plot the distribution of missingness of SNPs on chrY?
-<details>
-  <summary> Try your own R codes </summary>
-<p></p>
-- **Answer 3**
-<pre><code>#==== R =====
-plot(imiss$F_MISS,1:nrow(imiss),pch=20,col="darkred", main="Sample Call Rate", xlab="F_MISS", ylab="ASA samples")
-abline(v=0.02, lwd=2, lty=2, col="darkblue")
-#abline(v=0.01, lwd=2, lty=2, col="darkgreen")
-</code></pre>
-
-
-
-Run missingness on xchr SNPs
-plink --bfile $DIR/$FILE-xchr --missing --out $DIR/$FILE-xchr-missing
 
 ### Step_3: Individuals with outlying heterozygosity rate
 To avoid bias by genotyping error of rare variants and SNPs in strong LD, we usually perform the heterogeneity check using only common variants (MAF>=5%), excluding complex regions and SNPs in strong LD
@@ -157,6 +159,19 @@ plink --bfile chrAll.ASA.autosome.maf05 --extract chrAll.ASA.autosome.maf05.prun
 plink --bfile chrAll.ASA.autosome.maf05.pruned --het --out chrAll.ASA.autosome.maf05.pruned
 
 ```
+
+:closed_book: **Q:** Can you plot the distribution of missingness of SNPs on chrY?
+<details>
+  <summary> Try your own R codes </summary>
+<p></p>
+- **Answer 3**
+<pre><code>#==== R =====
+plot(imiss$F_MISS,1:nrow(imiss),pch=20,col="darkred", main="Sample Call Rate", xlab="F_MISS", ylab="ASA samples")
+abline(v=0.02, lwd=2, lty=2, col="darkblue")
+#abline(v=0.01, lwd=2, lty=2, col="darkgreen")
+</code></pre>
+</details>
+
 ### Step_4: Duplicated or related individuals
 - Obtain pair-wise IBD for relatedness checking
 ```bash
