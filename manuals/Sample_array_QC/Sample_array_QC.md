@@ -18,7 +18,9 @@ Here we assume that the study design has been conducted appropriately and basic 
 ## The QC protocol: from Sample QC to Variant QC 
 The QC protocol for GWAS typically split into two broad categories, `Sample QC` and `Variant QC`. Sample QC is usually done prior to Variant QC in order to maximise the number of variants remained for association analysis.
 
-![QCprotocol](https://github.com/hmgu-itg/VolosSummerSchool/raw/e8b67a482f4f1b36ae931731bda5bf7b1c7ad7d6/VSS_2019/Workshop2_QC/QCsteps.png)
+<p align="center">
+<img src="https://user-images.githubusercontent.com/8644480/170681398-e29f945e-fc94-4876-b695-9a8f2250968e.png"  width="500" height="300">
+</p>
 
 In this practical, we will first generate the summary profiles of 
 + missingness (Sample and variant)
@@ -48,30 +50,65 @@ The dataset used in this practical was simuated from haplotypes of East Asian sa
 plink --bfile chrAll.ASA --missing --out chrAll.ASA.beforeQC
 ```
 This command generates two files `.imiss` for sample-based and `.lmiss` for variant-based
-> chrAll.ASA.beforeQC.imiss    # per individual
-> chrAll.ASA.beforeQC.lmiss    # per variant
+> chrAll.ASA.beforeQC.imiss    # per individual<br>
+> chrAll.ASA.beforeQC.lmiss    # per variant<br>
 
 For both files, the last three columns measure the missingness for each individual or variant 
-> N_MISS: Number of missing genotype call(s)
-> N_GENO: Number of genotype call(s)
-> F_MISS: Missing call rate
+> N_MISS: Number of missing genotype call(s)<br>
+> N_GENO: Number of genotype call(s)<br>
+> F_MISS: Missing call rate<br>
 
 - Plot the distribution of missingness 
 We can then use R script to generate histogram of missingness
 <pre>
 # ========================== R code ==========================
 # ----------------------------------------------------------#
-#         (1)  SAMPLE CALL RATE    - threshold = 99%        #
+#         (1)  SAMPLE CALL RATE    - threshold = 98%        #
 # ----------------------------------------------------------#
 imiss<-read.table("chrAll.ASA.beforeQC.imiss",h=T)
 head(imiss)
 summary(imiss$F_MISS)
+
+# Plot missingness across samples
+hist(imiss$F_MISS, freq=T, col="darkred", border ="black", main="Sample Call Rate", xlab="F_MISS", ylab="Number of samples")
+
+# Plot missingness with altered y-axis for a zoom in view
+hist(imiss$F_MISS, breaks=seq(0,0.2,0.01), freq=T, col="darkred", border ="black", main="Sample Call Rate", xlab="F_MISS", ylab="Number of samples",ylim=c(0,20))
+# ============================================================
 </pre>
 
+:closed_book: **Q:** Can you try to plot the right number of excluded samples?
+<details>
+  <summary>You can try some basic R codes by yourself first</summary>
+<pre><code>
+# Answer 1
+#==== R =====
+hist(imiss$F_MISS, breaks=50, freq=T, col="darkred", border="black", main="Sample Call Rate", xlab="F_MISS", ylab="Number of samples", ylim=c(0,100), xlim=c(0,0.2))
+abline(v=0.02, lwd=2, lty=2, col="darkblue")
+#abline(v=0.01, lwd=2, lty=2, col="darkgreen")
+</code></pre>
+# Answer 2
+<pre><code>
+#==== R =====
+plot(sort(imiss$F_MISS), pch=20, col="darkred", main="Sample Call Rate", xlab="ASA samples", ylab="F_MISS")
+abline(h=0.02, lwd=2, lty=2, col="darkblue")
+#abline(h=0.01, lwd=2, lty=2, col="darkgreen")
+</code></pre>
+<pre><code>
+#==== R =====
+# Answer 3
+plot(sort(imiss$F_MISS), pch=20, col="darkred", main="Sample Call Rate", xlab="ASA samples", ylab="F_MISS")
+abline(v=0.02, lwd=2, lty=2, col="darkblue")
+#abline(v=0.01, lwd=2, lty=2, col="darkgreen")
+</code></pre>
 
-<pre>
-# ========================== R code ==========================
-hist(imiss$F_MISS, freq=TRUE, col="blue", border ="black", main = "Sample Call Rate", sub = Cohort, xlab="F_MISS", ylab="Frequency")
+
+
+abline(h=0.02, lwd=2, col="firebrick", lty=2)
+#3
+plot(y=rnorm(nrow(imiss)), x=imiss$F_MISS, pch=20, main = "Sample Call Rate", sub = Cohort, xlab="F_MISS", ylab="VSS samples")
+abline(v=0.02, lwd=2, col="firebrick", lty=2)
+
 
 pdf(imiss,"missingness.bySample.pdf")
 plot(imiss$)
