@@ -87,27 +87,30 @@ main="Sample Call Rate", xlab="F_MISS", ylab="Number of samples",ylim=c(0,20))
 <p></p>
 
 - **Answer 1**
-<pre><code>#==== R =====
+```R
+#==== R =====
 hist(imiss$F_MISS, breaks=50, freq=T, col="darkred", border="black", main="Sample Call Rate", xlab="F_MISS", ylab="Number of samples", ylim=c(0,100), xlim=c(0,0.2))
 abline(v=0.02, lwd=2, lty=2, col="darkblue")
 #abline(v=0.01, lwd=2, lty=2, col="darkgreen")
-</code></pre>
+```
 ![practical2 missing-hist3](https://user-images.githubusercontent.com/8644480/170732092-20f91ff2-1aa2-4d70-9d5b-7943f4e1954e.png)
 
 - **Answer 2**
-<pre><code>#==== R =====
+```R
+ #==== R =====
 plot(sort(imiss$F_MISS), pch=20, col="darkred", main="Sample Call Rate", xlab="ASA samples", ylab="F_MISS")
 abline(h=0.02, lwd=2, lty=2, col="darkblue")
 #abline(h=0.01, lwd=2, lty=2, col="darkgreen")
-</code></pre>
+```
 ![practical2 missing-hist4](https://user-images.githubusercontent.com/8644480/170732149-7791c2b8-48e9-4f73-a8ea-83b2b6025dda.png)
 
 - **Answer 3**
-<pre><code>#==== R =====
+```R
+#==== R =====
 plot(imiss$F_MISS,pch=20,col="darkred", main="Sample Call Rate", xlab="ASA samples", ylab="F_MISS")
 abline(h=0.02, lwd=2, lty=2, col="darkblue")
 #abline(h=0.01, lwd=2, lty=2, col="darkgreen")
-</code></pre>
+```
 ![practical2 missing-hist5](https://user-images.githubusercontent.com/8644480/170734294-93be3fdb-f5e8-439d-8413-034659b9d9cf.png)
 
 </details>
@@ -123,16 +126,18 @@ The function of `--check-sex` normally compares sex assignments in the input ped
 #==== R =====
 sexcheck<-read.table("chrX.ASA.sexcheck",h=T)
 head(sexcheck)
-```
->         FID       IID PEDSEX SNPSEX  STATUS        F
-> 1 BEB-BEB_1 BEB-BEB_1      2      2      OK -0.08568
-> 2 CHS-BEB_1 CHS-BEB_1      1      1      OK  1.00000
-> 3 CHS-CEU_1 CHS-CEU_1      1      1      OK  1.00000
-> 4 CHS-ITU_1 CHS-ITU_1      1      1      OK  1.00000
-> 5    CHSDel    CHSDel      2      2      OK  0.01933
-> 6 CHSHet002 CHSHet002      1      0 PROBLEM  0.67630
-```R
-plot(sexcheck$F)
+
+#         FID       IID PEDSEX SNPSEX  STATUS        F
+# 1 BEB-BEB_1 BEB-BEB_1      2      2      OK -0.08568
+# 2 CHS-BEB_1 CHS-BEB_1      1      1      OK  1.00000
+# 3 CHS-CEU_1 CHS-CEU_1      1      1      OK  1.00000
+# 4 CHS-ITU_1 CHS-ITU_1      1      1      OK  1.00000
+# 5    CHSDel    CHSDel      2      2      OK  0.01933
+# 6 CHSHet002 CHSHet002      1      0 PROBLEM  0.67630
+
+colsex<-c("blue","red")
+plot(sexcheck$F, col=colsex[sexcheck$PEDSEX], main="Sex check", xlab="ASA samples", ylab="chrX Inbreeding coefficient (F)")
+#===========
 ```
 - Obtain missingness of chr X
 ```bash
