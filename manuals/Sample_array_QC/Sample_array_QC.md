@@ -168,7 +168,7 @@ plink --bfile chrAll.ASA --chr 24 --filter-males --missing --out chrY.ASA.male
 </details>  
 
 ### Step_3: Individuals with outlying heterozygosity rate
-To avoid bias by genotyping error of rare variants and SNPs in strong LD, we usually perform the heterogeneity check using only common variants (MAF>=5%), excluding complex regions and SNPs in strong LD
+To avoid bias by genotyping error of rare variants and linkage disequilibrium, we usually perform the heterogeneity check using only common variants (MAF>=5%), excluding complex regions and SNPs in strong LD
 ```bash
 plink --bfile chrAll.ASA --autosome --maf 0.05 --make-bed --out chr1-22.ASA.maf05
 plink --bfile chr1-22.ASA.maf05 --missing --out chr1-22.ASA.maf05
