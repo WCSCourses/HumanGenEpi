@@ -74,12 +74,12 @@ hist(imiss$F_MISS, freq=T, col="darkred", border ="black", main="Sample Call Rat
 xlab="F_MISS", ylab="Number of samples")
 
 # Plot missingness with altered y-axis for a zoom in view
-hist(imiss$F_MISS, breaks=seq(0,0.2,0.01), freq=T, col="darkred", border ="black", 
-main="Sample Call Rate", xlab="F_MISS", ylab="Number of samples",ylim=c(0,20))
+hist(imiss$F_MISS, breaks=seq(0,0.6,0.05), freq=T, col="darkred", border ="black", 
+main="Sample Call Rate", xlab="F_MISS", ylab="Number of samples",ylim=c(0,10))
 # ============================================================
 ```
-![practical2 missing-hist1](https://user-images.githubusercontent.com/8644480/170730926-95e94bab-26a7-487b-beed-92cb352237bc.png)
-![practical2 missing-hist2](https://user-images.githubusercontent.com/8644480/170731155-cad32ec4-a5a9-48a3-bec6-3492cf4e3471.png)
+![practical2 missing-hist1](https://user-images.githubusercontent.com/8644480/170830897-4eb7a450-bc51-42ea-b68b-bf5ea98197ab.png)
+![practical2 missing-hist2](https://user-images.githubusercontent.com/8644480/170830900-ef75c54a-ba80-4393-9c77-7502ac7c319a.png)
 
 :closed_book: **Q:** Can you try to plot the right number of excluded samples?
 <details>
@@ -89,29 +89,29 @@ main="Sample Call Rate", xlab="F_MISS", ylab="Number of samples",ylim=c(0,20))
 - **Answer 1**
 ```R
 #==== R =====
-hist(imiss$F_MISS, breaks=50, freq=T, col="darkred", border="black", main="Sample Call Rate", xlab="F_MISS", ylab="Number of samples", ylim=c(0,100), xlim=c(0,0.2))
+hist(imiss$F_MISS, breaks=seq(0,0.6,0.01), freq=T, col="darkred", border="black", main="Sample Call Rate", xlab="F_MISS", ylab="Number of samples", ylim=c(0,100))
 abline(v=0.02, lwd=2, lty=2, col="darkblue")
-#abline(v=0.01, lwd=2, lty=2, col="darkgreen")
+abline(v=0.01, lwd=2, lty=2, col="darkgreen")
 ```
-![practical2 missing-hist3](https://user-images.githubusercontent.com/8644480/170732092-20f91ff2-1aa2-4d70-9d5b-7943f4e1954e.png)
+![practical2 missing-hist3](https://user-images.githubusercontent.com/8644480/170831053-f941b2df-090a-4880-8711-0dd7a4b3fb77.png)
 
 - **Answer 2**
 ```R
  #==== R =====
 plot(sort(imiss$F_MISS), pch=20, col="darkred", main="Sample Call Rate", xlab="ASA samples", ylab="F_MISS")
 abline(h=0.02, lwd=2, lty=2, col="darkblue")
-#abline(h=0.01, lwd=2, lty=2, col="darkgreen")
+abline(h=0.01, lwd=2, lty=2, col="darkgreen")
 ```
-![practical2 missing-hist4](https://user-images.githubusercontent.com/8644480/170732149-7791c2b8-48e9-4f73-a8ea-83b2b6025dda.png)
+![practical2 missing-hist4](https://user-images.githubusercontent.com/8644480/170831061-7d3811a0-8502-4a6e-bc22-e4d5a45eb52e.png)
 
 - **Answer 3**
 ```R
 #==== R =====
 plot(imiss$F_MISS,pch=20,col="darkred", main="Sample Call Rate", xlab="ASA samples", ylab="F_MISS")
 abline(h=0.02, lwd=2, lty=2, col="darkblue")
-#abline(h=0.01, lwd=2, lty=2, col="darkgreen")
+abline(h=0.01, lwd=2, lty=2, col="darkgreen")
 ```
-![practical2 missing-hist5](https://user-images.githubusercontent.com/8644480/170764418-9d90ecb2-66f7-40b4-86bb-4daffd0ccc74.png)
+![practical2 missing-hist5](https://user-images.githubusercontent.com/8644480/170831069-58dd61a8-b4db-4ee2-a6a7-e63968b35108.png)
 
 </details>
 
@@ -131,13 +131,13 @@ The function of `--check-sex` normally compares sex assignments in the input ped
 sexcheck <- read.table("chrX.ASA.sexcheck",h=T)
 head(sexcheck)
 
-#         FID       IID PEDSEX SNPSEX  STATUS        F
-# 1 BEB-BEB_1 BEB-BEB_1      2      2      OK -0.08568
-# 2 CHS-BEB_1 CHS-BEB_1      1      1      OK  1.00000
-# 3 CHS-CEU_1 CHS-CEU_1      1      1      OK  1.00000
-# 4 CHS-ITU_1 CHS-ITU_1      1      1      OK  1.00000
-# 5    CHSDel    CHSDel      2      2      OK  0.01933
-# 6 CHSHet002 CHSHet002      1      0 PROBLEM  0.67630
+#       FID      IID PEDSEX SNPSEX  STATUS       F
+# 1 id1_0211 id2_0211      2      2      OK -1.0180
+# 2 id1_1202 id2_1202      2      0 PROBLEM  0.6545
+# 3 id1_1130 id2_1130      2      2      OK -0.7449
+# 4 id1_1064 id2_1064      2      2      OK -0.2048
+# 5 id1_1109 id2_1109      2      0 PROBLEM  0.7954
+# 6 id1_0108 id2_0108      2      0 PROBLEM  0.3521
 
 mismatch <- sexcheck[sexcheck$STATUS=="PROBLEM",]
 
@@ -149,24 +149,63 @@ abline(h=0.8, lwd=2, lty=2, col="blue")
 legend("bottomright",c("Male PEDSEX","Female PEDSEX","sample with PROBELM"), col=c(colsex,"black"),pt.bg="green", pch=c(20,20,22))
 # =============================================================
 ```
-![practical2 sexcheck](https://user-images.githubusercontent.com/8644480/170764485-e24326e1-51e9-4322-a560-f218fe8ef76d.png)
+![practical2 sexcheck](https://user-images.githubusercontent.com/8644480/170831468-747d54ae-1b5a-4057-aa00-319f9a2a4864.png)
 
-  - What is the relationship between missingness and inbreeeding coefficient for chrX?
+- What is the relationship between missingness and inbreeeding coefficient for chrX?
 ```R
 # ========================== R code ==========================
 imiss.X <- read.table("chrX.ASA.imiss",h=T)
 sexcheck.imiss <- merge(imiss.X, sexcheck, by="IID")
-plot(sexcheck.imiss$F_MISS, sexcheck.imiss$F, pch=20, col="darkred", xlab="Number of missing genotypes on chrX", ylab="chrX Inbreeding coefficient (F)")
+mismatch.imiss <- sexcheck.imiss[sexcheck.imiss$STATUS=="PROBLEM",]
+plot(sexcheck.imiss$F_MISS, sexcheck.imiss$F, pch=20, col=colsex[sexcheck.imiss$PEDSEX], xlab="Number of missing genotypes on chrX", ylab="chrX Inbreeding coefficient (F)")
+points(mismatch.imiss$F_MISS, mismatch.imiss$F, pch=22, bg="green", col="black", lwd=2, cex=1.5)
+abline(h=0.2, lwd=2, lty=2, col="red")
+abline(h=0.8, lwd=2, lty=2, col="blue")
+legend("bottomleft",c("Male PEDSEX","Female PEDSEX","sample with PROBELM"), col=c(colsex,"black"),pt.bg="green", pch=c(20,20,22))
+# =============================================================
 ```
+![practical2 sexcheck-fmiss](https://user-images.githubusercontent.com/8644480/170832150-fb1471ed-be27-4e1e-80eb-cdf78989d21f.png)
 
-- Obtain missingness of chr Y
+In addition to poor sample or genotyping quality, X chromosome aneuploidy, such as Turner syndrome (e.g. 45,X0) and Klinefelter syndrome (47, XXY), may lead to abnormal heterogenity. Missingness for SNPs on chr Y can be used to impute sex using `--check-sex ycount [female max F] [male min F] [female max Y obs] [male min Y obs]`. Before determining the minimum and maximum threshold of observed chrY variants, we can first set [female max Y obs] to maximum number of chrY variants and [male min Y obs] to 0  
 ```bash
-plink --bfile chrAll.ASA --chr 24 --filter-males --missing --out chrY.ASA.male
+plink --bfile chrAll.ASA --check-sex ycount 0.2 0.8 805 0 --out chrXY.ASA
 ```
-:closed_book: **Q:** Can you generate a plot to investigate the relationship between missingness and inbreeeding coefficient for chrX?
+:closed_book: **Q:** Do samples with sex discrepancy or abnormal heterogenity look like having X chromosome aneuploidy?
 <details>
-  <summary> Try your own R codes </summary>
+  <summary> Try your own PLINK / R codes </summary>
 <p></p>
+  
+- ** 1 **
+```bash
+egrep PROBlEM chrXY.ASA.sexcheck
+#         FID       IID PEDSEX SNPSEX  STATUS       F YCOUNT
+#    id1_1202  id2_1202      2      0 PROBLEM 0.65450    607
+#    id1_1109  id2_1109      2      0 PROBLEM 0.79540    636
+#    id1_0108  id2_0108      2      0 PROBLEM 0.35210    569
+#   CHSHet002 CHSHet002      1      0 PROBLEM 0.67790    804
+#     id1_300   id2_300      1      2 PROBLEM 0.03826      2
+#     id1_301   id2_301      2      1 PROBLEM 1.00000    799
+#     id1_500   id2_500      1      2 PROBLEM 0.01425      2 
+#     id1_501   id2_501      2      1 PROBLEM 1.00000    805
+```
+- ** 2 **
+```R
+# ========================== R code ==========================
+sexcheck.XY <- read.table("chrXY.ASA.sexcheck",h=T)
+mismatch.XY <- sexcheck.XY[sexcheck.XY$STATUS=="PROBLEM",]
+colsex <- c("darkblue","darkred")
+plot(sexcheck.XY$YCOUNT, sexcheck.XY$F, pch=20, col=colsex[sexcheck.XY$PEDSEX], xlab="Number of non-missing genotypes on chrY", ylab="chrX Inbreeding coefficient (F)")
+points(mismatch.XY$YCOUNT, mismatch.XY$F, pch=22, bg=colsex[mismatch.XY$PEDSEX], col="white", lwd=1, cex=1.5)
+abline(h=0.2, lwd=2, lty=2, col="red")
+abline(h=0.8, lwd=2, lty=2, col="blue")
+# =============================================================
+```  
+![practical2 sexcheck-XY](https://user-images.githubusercontent.com/8644480/170838631-9463a53c-2f21-4151-bf44-b91d5d33111e.png)
+```bash
+plink --bfile chrAll.ASA --check-sex ycount 0.2 0.8 100 700 --out chrXY.ASA.2
+egrep -h PROBLEM chrXY.ASA.sexcheck chrXY.ASA.2.sexcheck | sort | uniq -u
+```
+  
 </details>  
 
 ### Step_3: Individuals with outlying heterozygosity rate
