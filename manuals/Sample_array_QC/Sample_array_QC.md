@@ -253,11 +253,12 @@ excl.up3SD <- imiss.het.mind02[imiss.het.mind02$F>up3sd,]
 excl.low3SD <- imiss.het.mind02[imiss.het.mind02$F<low3sd,]
 write.table(rbind(excl.up3SD[,1:2], excl.low3SD[,1:2]), "to-remove.het3D.indiv", quote=F, row.names=F, col.names=F)
 # =============================================================
-
+```
+  
 ### Step_4: Duplicated or related individuals
 - Obtain pair-wise IBD for relatedness checking
 ```bash
-plink --bfile chrAll.ASA.autosome.maf05.pruned --genome
+plink --bfile chr1-22.ASA.maf05.pruned --genome
 ```
 
 ### Step_5: Ethnicity outliers
