@@ -49,7 +49,7 @@ The dataset used in this practical was simuated from haplotypes of East Asian sa
 ```bash
 plink --bfile chrAll.ASA --missing --out chrAll.ASA.beforeQC
 ```
-This command generates two files `.imiss` for sample-based and `.lmiss` for variant-based
+This command generates two files, including `.imiss` for sample-based and `.lmiss` for variant-based missingness
 > chrAll.ASA.beforeQC.imiss    # per individual<br>
 > chrAll.ASA.beforeQC.lmiss    # per variant<br>
 
