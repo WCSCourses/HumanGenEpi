@@ -208,7 +208,7 @@ You can now run `--check-sex` with appropriate [female max Y obs] and [male min 
 plink --bfile chrAll.ASA --check-sex ycount 0.2 0.8 100 700 --out chrXY.ASA.2
 egrep -h PROBLEM chrXY.ASA.sexcheck chrXY.ASA.2.sexcheck | sort | uniq -u
 ```
-:closed_book: **Q:** What is the most likely karyotype for id2_669 sample?
+:closed_book: **Q:** What is the most likely karyotype for the **id2_669** sample?
 
 ### Step_3: Individuals with outlying heterozygosity rate
 To avoid bias by genotyping error of rare variants and linkage disequilibrium, we usually perform the heterogeneity check using only common variants (MAF>=5%), excluding complex regions and SNPs in strong LD
@@ -241,7 +241,8 @@ legend("bottomleft", c("Below 3SD","Above 3SD"), pt.bg=c("blue","red"), pch=21)
 ```
 ![practical2 het-fmiss](https://user-images.githubusercontent.com/8644480/170840625-0763918e-5686-41ef-b6c5-b3de77468ee6.png)
   
-- Remove samples with high missingness (call rate < 0.98) and redo the heterogeneity check.
+Samples with high missingness usually have abnormal number of heterozygous genotypes called (too many or too few). 
+- Remove these samples with high missingness (call rate < 0.98) and redo the heterogeneity check. Use 3 standard deviation (SD) as cut-off and record the samples with abnormally high or low heterogeneity to be removed.
 ```R
 # ========================== R code ==========================
 imiss.het.mind02<-imiss.het[imiss.het$F_MISS<0.02,]
