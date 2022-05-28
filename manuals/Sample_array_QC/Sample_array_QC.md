@@ -205,7 +205,8 @@ abline(v=0.02, lwd=2, lty=2, col="darkblue")
 </code></pre>
 </details>
 
-<img width="473" alt="BA ASA FMISS_hetF" src="https://user-images.githubusercontent.com/8644480/170811059-ad4c2fa7-e7f6-488f-a93c-b8805fea39eb.png">
+<img width="466" alt="BA ASA FMISS_hetF" src="https://user-images.githubusercontent.com/8644480/170811103-cb0d77fe-4290-4b9f-9cd6-a270730b9c8a.png">
+
 
 ### Step_4: Duplicated or related individuals
 - Obtain pair-wise IBD for relatedness checking
