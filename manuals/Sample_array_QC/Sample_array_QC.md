@@ -223,15 +223,20 @@ plink --bfile chr1-22.ASA.maf05 --extract chr1-22.ASA.maf05.pruning.prune.in --m
 plink --bfile chr1-22.ASA.maf05.pruned --het --out chr1-22.ASA.maf05.pruned
 ```
 ```R
-#imiss.autosome <- read.table("chr1-22.ASA.maf05.imiss",h=T)
-#het.autosome <- read.table("chr1-22.ASA.maf05.pruned.het",h=T)
-imiss.autosome <- read.table("chrAll.ASA.autosome.maf05.imiss",h=T)
-het.autosome <- read.table("chrAll.ASA.autosome.maf05.pruned.het",h=T)
-imiss.het <- merge(imiss.autosome, het.autosome, by="IID")
-imiss.het$PCT_HET <- (imiss.het$N.NM. - imiss.het$O.HOM.)/imiss.het$N.NM.
-plot(imiss.het$F_MISS, imiss.het$PCT_HET, pch=20, col="darkred", xlab="Number of missing genotypes on chrX", ylab="chrX Inbreeding coefficient (F)")
+imiss.common <- read.table("chr1-22.ASA.maf05.imiss",h=T)
+het.common.pruned <- read.table("chr1-22.ASA.maf05.pruned.het",h=T)
+imiss.het <- merge(imiss.common, het.common.pruned, by="IID")
 
+up3sd<-mean(imiss.het$F)+3*sd(imiss.het$F)
+lower3sd<-mean(imiss.het$F)-3*sd(imiss.het$F)
+             
+plot(imiss.het$F_MISS, imiss.het$F, pch=20, col="darkgrey", xlab="F_MISS",ylab="Inbreeding coefficient (F)")
+points(imiss.het$F_MISS[imiss.het$F<lower3sd], imiss.het$F[imiss.het$F<lower3sd], bg="blue", pch=21)
+points(imiss.het$F_MISS[imiss.het$F>up3sd], imiss.het$F[imiss.het$F>up3sd], bg="red", pch=21)
+abline(h=up3sd, col="red", lwd=2, lty=2)
+abline(h=lower3sd, col="blue", lwd=2, lty=2)
 ```
+![practical2 het-fmiss](https://user-images.githubusercontent.com/8644480/170840299-daf15218-c6c2-4ba2-8cc6-1ec8587a92cd.png)
 
 
 :closed_book: **Q:** Can you plot the distribution of missingness of SNPs on chrY?
