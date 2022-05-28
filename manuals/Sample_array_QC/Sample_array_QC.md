@@ -161,7 +161,7 @@ plot(sexcheck.imiss$F_MISS, sexcheck.imiss$F, pch=20, col=colsex[sexcheck.imiss$
 points(mismatch.imiss$F_MISS, mismatch.imiss$F, pch=22, bg="green", col="black", lwd=2, cex=1.5)
 abline(h=0.2, lwd=2, lty=2, col="red")
 abline(h=0.8, lwd=2, lty=2, col="blue")
-legend("bottomleft",c("Male PEDSEX","Female PEDSEX","sample with PROBELM"), col=c(colsex,"black"),pt.bg="green", pch=c(20,20,22))
+legend("bottomleft", c("Male PEDSEX","Female PEDSEX","sample with PROBELM"), col=c(colsex,"black"),pt.bg="green", pch=c(20,20,22))
 # =============================================================
 ```
 ![practical2 sexcheck-fmiss](https://user-images.githubusercontent.com/8644480/170832150-fb1471ed-be27-4e1e-80eb-cdf78989d21f.png)
@@ -201,14 +201,14 @@ abline(h=0.8, lwd=2, lty=2, col="blue")
 # =============================================================
 ```  
 ![practical2 sexcheck-XY](https://user-images.githubusercontent.com/8644480/170838631-9463a53c-2f21-4151-bf44-b91d5d33111e.png)
-
+</details> 
+  
 You can now run `--check-sex` with appropriate [female max Y obs] and [male min Y obs] thresholds, e.g. 100 and 700. Samples with abormal number of non-missing genotypes on chrY will be flagged as ambiguous in `SNPSEX`.         
 ```bash
 plink --bfile chrAll.ASA --check-sex ycount 0.2 0.8 100 700 --out chrXY.ASA.2
 egrep -h PROBLEM chrXY.ASA.sexcheck chrXY.ASA.2.sexcheck | sort | uniq -u
 ```
-  
-</details>  
+:closed_book: **Q:** What is the most likely karyotype for id2_669 sample?
 
 ### Step_3: Individuals with outlying heterozygosity rate
 To avoid bias by genotyping error of rare variants and linkage disequilibrium, we usually perform the heterogeneity check using only common variants (MAF>=5%), excluding complex regions and SNPs in strong LD
@@ -223,36 +223,35 @@ plink --bfile chr1-22.ASA.maf05 --extract chr1-22.ASA.maf05.pruning.prune.in --m
 plink --bfile chr1-22.ASA.maf05.pruned --het --out chr1-22.ASA.maf05.pruned
 ```
 ```R
+# ========================== R code ==========================
 imiss.common <- read.table("chr1-22.ASA.maf05.imiss",h=T)
 het.common.pruned <- read.table("chr1-22.ASA.maf05.pruned.het",h=T)
 imiss.het <- merge(imiss.common, het.common.pruned, by="IID")
 
 up3sd<-mean(imiss.het$F)+3*sd(imiss.het$F)
-lower3sd<-mean(imiss.het$F)-3*sd(imiss.het$F)
+lowesd<-mean(imiss.het$F)-3*sd(imiss.het$F)
              
 plot(imiss.het$F_MISS, imiss.het$F, pch=20, col="darkgrey", xlab="F_MISS",ylab="Inbreeding coefficient (F)")
-points(imiss.het$F_MISS[imiss.het$F<lower3sd], imiss.het$F[imiss.het$F<lower3sd], bg="blue", pch=21)
+points(imiss.het$F_MISS[imiss.het$F<low3sd], imiss.het$F[imiss.het$F<low3sd], bg="blue", pch=21)
 points(imiss.het$F_MISS[imiss.het$F>up3sd], imiss.het$F[imiss.het$F>up3sd], bg="red", pch=21)
 abline(h=up3sd, col="red", lwd=2, lty=2)
-abline(h=lower3sd, col="blue", lwd=2, lty=2)
+abline(h=low3sd, col="blue", lwd=2, lty=2)
+legend("bottomleft", c("Below 3SD","Above 3SD"), pt.bg=c("blue","red"), pch=21)
+# =============================================================
 ```
-![practical2 het-fmiss](https://user-images.githubusercontent.com/8644480/170840299-daf15218-c6c2-4ba2-8cc6-1ec8587a92cd.png)
+![practical2 het-fmiss](https://user-images.githubusercontent.com/8644480/170840625-0763918e-5686-41ef-b6c5-b3de77468ee6.png)
+  
+- Remove samples with high missingness (call rate < 0.98) and redo the heterogeneity check.
+```R
+# ========================== R code ==========================
+imiss.het.mind02<-imiss.het[imiss.het$F_MISS<0.02,]
+up3sd<-mean(imiss.het.mind02$F)+3*sd(imiss.het.mind02$F)
+low3sd<-mean(imiss.het.mind02$F)-3*sd(imiss.het.mind02$F)
 
-
-:closed_book: **Q:** Can you plot the distribution of missingness of SNPs on chrY?
-<details>
-  <summary> Try your own R codes </summary>
-<p></p>
-- **Answer 3**
-<pre><code>#==== R =====
-plot(imiss$F_MISS,1:nrow(imiss),pch=20,col="darkred", main="Sample Call Rate", xlab="F_MISS", ylab="ASA samples")
-abline(v=0.02, lwd=2, lty=2, col="darkblue")
-#abline(v=0.01, lwd=2, lty=2, col="darkgreen")
-</code></pre>
-</details>
-
-<img width="466" alt="BA ASA FMISS_hetF" src="https://user-images.githubusercontent.com/8644480/170811103-cb0d77fe-4290-4b9f-9cd6-a270730b9c8a.png">
-
+excl.up3SD <- imiss.het.mind02[imiss.het.mind02$F>up3sd,]
+excl.low3SD <- imiss.het.mind02[imiss.het.mind02$F<low3sd,]
+write.table(rbind(excl.up3SD[,1:2], excl.low3SD[,1:2]), "to-remove.het3D.indiv", quote=F, row.names=F, col.names=F)
+# =============================================================
 
 ### Step_4: Duplicated or related individuals
 - Obtain pair-wise IBD for relatedness checking
