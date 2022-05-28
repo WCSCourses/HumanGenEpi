@@ -97,7 +97,7 @@ abline(v=0.01, lwd=2, lty=2, col="darkgreen")
 
 - **Answer 2**
 ```R
- #==== R =====
+#==== R =====
 plot(sort(imiss$F_MISS), pch=20, col="darkred", main="Sample Call Rate", xlab="ASA samples", ylab="F_MISS")
 abline(h=0.02, lwd=2, lty=2, col="darkblue")
 abline(h=0.01, lwd=2, lty=2, col="darkgreen")
