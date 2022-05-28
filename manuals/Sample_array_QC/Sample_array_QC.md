@@ -201,6 +201,8 @@ abline(h=0.8, lwd=2, lty=2, col="blue")
 # =============================================================
 ```  
 ![practical2 sexcheck-XY](https://user-images.githubusercontent.com/8644480/170838631-9463a53c-2f21-4151-bf44-b91d5d33111e.png)
+
+You can now run `--check-sex` with appropriate [female max Y obs] and [male min Y obs] thresholds, e.g. 100 and 700. Samples with abormal number of non-missing genotypes on chrY will be flagged as ambiguous in `SNPSEX`.         
 ```bash
 plink --bfile chrAll.ASA --check-sex ycount 0.2 0.8 100 700 --out chrXY.ASA.2
 egrep -h PROBLEM chrXY.ASA.sexcheck chrXY.ASA.2.sexcheck | sort | uniq -u
