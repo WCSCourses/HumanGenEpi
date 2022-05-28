@@ -65,7 +65,7 @@ We can then use R script to generate histogram of missingness
 # ----------------------------------------------------------#
 #         (1)  SAMPLE CALL RATE    - threshold = 98%        #
 # ----------------------------------------------------------#
-imiss<-read.table("chrAll.ASA.beforeQC.imiss",h=T)
+imiss <- read.table("chrAll.ASA.beforeQC.imiss",h=T)
 head(imiss)
 summary(imiss$F_MISS)
 
@@ -128,7 +128,7 @@ The function of `--check-sex` normally compares sex assignments in the input ped
 
 ```R
 # ========================== R code ==========================
-sexcheck<-read.table("chrX.ASA.sexcheck",h=T)
+sexcheck <- read.table("chrX.ASA.sexcheck",h=T)
 head(sexcheck)
 
 #         FID       IID PEDSEX SNPSEX  STATUS        F
@@ -139,7 +139,9 @@ head(sexcheck)
 # 5    CHSDel    CHSDel      2      2      OK  0.01933
 # 6 CHSHet002 CHSHet002      1      0 PROBLEM  0.67630
 
-colsex<-c("blue","red")
+mismatch <- sexcheck[sexcheck$STATUS=="PROBLEM",]
+
+colsex <- c("darkblue","darkred")
 plot(sexcheck$F, col=colsex[sexcheck$PEDSEX], main="Sex check", pch=20, xlab="ASA samples", ylab="chrX Inbreeding coefficient (F)")
 points(row.names(mismatch),mismatch$F,pch=22,bg="green",col="black",lwd=2,cex=2)
 abline(h=0.2, lwd=2, lty=2, col="red")
