@@ -224,8 +224,8 @@ egrep -h PROBLEM chrXY.ASA.without-ycount.sexcheck chrXY.ASA.with-ycount.sexchec
 awk '$5=="PROBLEM"{ print $1,$2 }' chrXY.ASA.with-ycount.sexcheck > to-remove.sexmismatch.indiv
 ```
 
-### Step 3: Individuals with outlying heterozygosity rate
-To avoid bias by genotyping error of rare variants and linkage disequilibrium, we usually perform the heterogeneity check using only common variants (MAF>=5%), excluding complex regions and SNPs in strong LD
+## Step 3: Individuals with outlying heterozygosity rate
+To avoid bias by genotyping error of rare variants and linkage disequilibrium, we usually perform the heterogeneity check using only common variants (MAF>=5%) and SNPs in strong LD
 - Filter out low frequency and rare variants with MAF cut-off of 5%
 ```bash
 plink --bfile chrAll.ASA --autosome --maf 0.05 --make-bed --missing --out chr1-22.ASA.maf05
@@ -272,7 +272,7 @@ write.table(rbind(excl.up3SD[,2], excl.low3SD[,2]), "to-remove.het3D.iid", quote
 # =============================================================
 ```
   
-### Step 4: Duplicated or related individuals
+## Step 4: Duplicated or related individuals
 For case-control association analysis, we need to make sure that the samples are biologically unrelated. Usually, samples with second (PI_HAT>0.25) or third degree (PI_HAT>0.125) relatedness are removed.
 
 - Obtain pair-wise IBD for relatedness checking
@@ -303,28 +303,37 @@ CHSQUAD C2
 # the type "Ctrl-D" to quit
 ```
 
-### Step_5: Ethnicity outliers
+## Step 5: Population outliers
 To validate the self-reported ethnicity and to ensure no population outlier, we merge the genotype data of unrelated samples with the 1000 Genomes Project reference panel and then perform principal component analysis (PCA) using PLINK.
+  
 - Perform PCA after removing samples with high missingness and related samples
 ```bash
-plink --bfile chrAll.ASA --remove to-remove.QC_steps1to3.indiv --update-name ASA.1000G.to-update-name.snp --make-bed --out chrAll.ASA.id-1000G.afterSampleQC
-plink --bfile chrAll.ASA.id-1000G.afterSampleQC --bmerge chrAll.ASA.1000GP-All --make-bed --out merged.chrAll.ASA.1000G.afterSampleQC
+cat to-remove.mind02.indiv to-remove.related.indiv > to-remove.mind02_related.indiv
+plink --bfile chrAll.ASA --remove to-remove.mind02_related.indiv --update-name ASA.1000G.to-update-name.snp --make-bed --out chrAll.ASA.id-1000G.rm-mind02_related
+plink --bfile chrAll.ASA.id-1000G.rm-mind02_related --bmerge chrAll.ASA.1000GP-All --make-bed --out merged.chrAll.ASA.1000G.rm-mind02_related
 ```
 ```bash
-plink --bfile merged.chrAll.ASA.1000G.afterSampleQC --maf 0.05 --hwe 1e-5 --geno 0.05 --indep-pairwise 200 50 0.1 --out merged.chrAll.ASA.1000G.afterSampleQC
-plink --bfile merged.chrAll.ASA.1000G.afterSampleQC --extract merged.chrAll.ASA.1000G.prune.in --pca 3 --out merged.chrAll.ASA.1000G.afterSampleQC.pruned --threads 1
+plink --bfile merged.chrAll.ASA.1000G.rm-mind02_related --maf 0.05 --hwe 1e-5 --geno 0.05 --indep-pairwise 200 50 0.1 --out merged.chrAll.ASA.1000G.rm-mind02_related
+plink --bfile merged.chrAll.ASA.1000G.rm-mind02_related --extract merged.chrAll.ASA.1000G.prune.in --pca 3 --out merged.chrAll.ASA.1000G.rm-mind02_related.pruned --threads 1
 ```
 - Generate PCA plot
 ```bash
-Rscript practical2.PCAplot.R merged.chrAll.ASA.1000G.afterSampleQC.pruned.eigenvec
+Rscript practical2.PCAplot.R merged.chrAll.ASA.1000G.rm-mind02_related.pruned.eigenvec
 ```
-  
-- Repeat with removal of all samples not passing QC
+<img src="https://user-images.githubusercontent.com/8644480/170877252-273d5367-dbf8-4bd5-8b47-e3cf4b2b17c4.png" width=500>
+
+#### **QC: Combine all sample outliers' files and remove these outliers to obtain a new PLINK file with samples passing QC**
+```bash
+cat to-remove.QC_steps1to3.indiv to-remove.related.indiv > to-remove.QC_steps1to4.indiv
+plink --bfile chrAll.ASA --remove to-remove.QC_steps1to4.indiv --make-bed --out chrAll.ASA.afterSampleQC
+```
+
+- Validate the absence of population outliers with removal of all samples not passing QC
 <details>
   <summary> Try your own PLINK / R codes </summary>
 
 ```bash
-plink --bfile chrAll.ASA --remove to-remove.QC_steps1to3.indiv --update-name ASA.1000G.to-update-name.snp --make-bed --out chrAll.ASA.id-1000G.afterSampleQC
+plink --bfile chrAll.ASA.afterSampleQC --update-name ASA.1000G.to-update-name.snp --make-bed --out chrAll.ASA.id-1000G.afterSampleQC
 plink --bfile chrAll.ASA.id-1000G.afterSampleQC --bmerge chrAll.ASA.1000GP-All --make-bed --out merged.chrAll.ASA.1000G.afterSampleQC
 ```
 ```bash
@@ -335,3 +344,21 @@ plink --bfile merged.chrAll.ASA.1000G.afterSampleQC --extract merged.chrAll.ASA.
 
 </details>
 
+## Variant-QC
+It consists of (at least) three steps:
+
++ Excluding variants with an excessive missing genotype
++ Excluding variants violating Hardy-Weinberg equilibrium (HWE)
++ Excluding variants with a low MAF
+
+The threshold used for filtering depends on sample and genotyping data quality, which vary from study to study. Variant QC should be done carefully as variants removed can be the disease causal variants in which the signals of association may not be completely recovered by imputation.
+
+Here we are using the following thresholds:
++ Call rate: 98%
++ Hwe: p <= 1x10-4
++ MAF = 1%
+
+We can combine all these variant QCs into one single PLINK command:
+```bash
+plink --bfile chrAll.ASA.afterSampleQC --geno 0.02 --hwe 1e-4 --maf 0.01 --make-bed --out chrAll.ASA.afterSampleQC.afterVariantQC
+```
