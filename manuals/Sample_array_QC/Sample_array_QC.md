@@ -41,6 +41,10 @@ cd ~/practical2_QC
 ```bash
 wget https://github.com/WCSCourses/HumanGenEpi/raw/main/course_data/SNP_array_QC/practical2.tar.gz
 ```
+- Move the 1000 Genomes Project files for detecting population outliers to the current directory
+```bash
+mv ~/1000gData/* .
+```
 
 ### Dataset
 The dataset used in this practical was simuated from haplotypes of East Asian samples of the 1000 Genomes Project ([Phase 3](https://www.internationalgenome.org/category/phase-3/)). SNPs included in the dataset reflect to those assayed in the [Illumina Asian Screening array](https://www.illumina.com/products/by-type/microarray-kits/infinium-asian-screening.html) designed to maximize the genomic coverage for East Asian population.
