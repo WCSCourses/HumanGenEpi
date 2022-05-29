@@ -358,9 +358,9 @@ It consists of (at least) three steps:
 The threshold used for filtering depends on sample and genotyping data quality, which vary from study to study. Variant QC should be done carefully as variants removed can be the disease causal variants in which the signals of association may not be completely recovered by imputation.
 
 Here we are using the following thresholds:
-+ Call rate: 98%
-+ Hwe: p <= 1x10-4
-+ MAF = 1%
++ Call rate <= 98%
++ HWE p < 1x10-4
++ MAF >= 1%
 
 We can combine all these variant QCs into one single PLINK command:
 ```bash
