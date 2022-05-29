@@ -305,15 +305,33 @@ CHSQUAD C2
 
 ### Step_5: Ethnicity outliers
 To validate the self-reported ethnicity and to ensure no population outlier, we merge the genotype data of unrelated samples with the 1000 Genomes Project reference panel and then perform principal component analysis (PCA) using PLINK.
+- Perform PCA after removing samples with high missingness and related samples
 ```bash
-plink --bfile chrAll.ASA --remove to-remove.QC_steps1to3.indiv --update-name ASA.1000G.to-update-name.snp --make-bed --out chrAll.ASA.id-1000G.afterQC
-plink --bfile chrAll.ASA.id-1000G.afterQC --bmerge chrAll.ASA.1000GP-All --make-bed --out merged.chrAll.ASA.1000G
+plink --bfile chrAll.ASA --remove to-remove.QC_steps1to3.indiv --update-name ASA.1000G.to-update-name.snp --make-bed --out chrAll.ASA.id-1000G.afterSampleQC
+plink --bfile chrAll.ASA.id-1000G.afterSampleQC --bmerge chrAll.ASA.1000GP-All --make-bed --out merged.chrAll.ASA.1000G.afterSampleQC
 ```
 ```bash
-plink --bfile merged.chrAll.ASA.1000G --maf 0.05 --hwe 1e-5 --geno 0.05 --indep-pairwise 200 50 0.1 --out merged.chrAll.ASA.1000G
-plink --bfile merged.chrAll.ASA.1000G --extract merged.chrAll.ASA.1000G.prune.in --pca 3 --out merged.chrAll.ASA.1000G.pruned --threads 1
+plink --bfile merged.chrAll.ASA.1000G.afterSampleQC --maf 0.05 --hwe 1e-5 --geno 0.05 --indep-pairwise 200 50 0.1 --out merged.chrAll.ASA.1000G.afterSampleQC
+plink --bfile merged.chrAll.ASA.1000G.afterSampleQC --extract merged.chrAll.ASA.1000G.prune.in --pca 3 --out merged.chrAll.ASA.1000G.afterSampleQC.pruned --threads 1
 ```
 - Generate PCA plot
 ```bash
-Rscript practical2.PCAplot.R merged.chrAll.ASA.1000G.pruned.eigenvec
+Rscript practical2.PCAplot.R merged.chrAll.ASA.1000G.afterSampleQC.pruned.eigenvec
 ```
+  
+- Repeat with removal of all samples not passing QC
+<details>
+  <summary> Try your own PLINK / R codes </summary>
+
+```bash
+plink --bfile chrAll.ASA --remove to-remove.QC_steps1to3.indiv --update-name ASA.1000G.to-update-name.snp --make-bed --out chrAll.ASA.id-1000G.afterSampleQC
+plink --bfile chrAll.ASA.id-1000G.afterSampleQC --bmerge chrAll.ASA.1000GP-All --make-bed --out merged.chrAll.ASA.1000G.afterSampleQC
+```
+```bash
+plink --bfile merged.chrAll.ASA.1000G.afterSampleQC --maf 0.05 --hwe 1e-5 --geno 0.05 --indep-pairwise 200 50 0.1 --out merged.chrAll.ASA.1000G.afterSampleQC
+plink --bfile merged.chrAll.ASA.1000G.afterSampleQC --extract merged.chrAll.ASA.1000G.prune.in --pca 3 --out merged.chrAll.ASA.1000G.afterSampleQC.pruned --threads 1
+```
+<img src="https://user-images.githubusercontent.com/8644480/170875864-98e95f97-b673-4fd9-9126-d4cf545923bd.png" width=500>
+
+</details>
+
