@@ -58,6 +58,11 @@ For both files, the last three columns measure the missingness for each individu
 > N_GENO: Number of genotype call(s)<br>
 > F_MISS: Missing call rate<br>
 
+Write the sample IDs for those with call rate < 0.8
+```bash
+awk 'NR>1 && $6>=0.02 { print $2 }' chrAll.ASA.beforeQC.imiss > to-remove.mind02.iid
+```
+
 - Plot the distribution of missingness 
 We can then use R script to generate histogram of missingness
 ```R
@@ -114,6 +119,7 @@ abline(h=0.01, lwd=2, lty=2, col="darkgreen")
 ![practical2 missing-hist5](https://user-images.githubusercontent.com/8644480/170831069-58dd61a8-b4db-4ee2-a6a7-e63968b35108.png)
 
 </details>
+
 
 ## Step_2: Individuals with sex discrepancy
 - Obtain missingness of chr X
@@ -229,7 +235,7 @@ het.common.pruned <- read.table("chr1-22.ASA.maf05.pruned.het",h=T)
 imiss.het <- merge(imiss.common, het.common.pruned, by="IID")
 
 up3sd<-mean(imiss.het$F)+3*sd(imiss.het$F)
-lowesd<-mean(imiss.het$F)-3*sd(imiss.het$F)
+low3sd<-mean(imiss.het$F)-3*sd(imiss.het$F)
              
 plot(imiss.het$F_MISS, imiss.het$F, pch=20, col="darkgrey", xlab="F_MISS",ylab="Inbreeding coefficient (F)")
 points(imiss.het$F_MISS[imiss.het$F<low3sd], imiss.het$F[imiss.het$F<low3sd], bg="blue", pch=21)
@@ -245,20 +251,28 @@ Samples with high missingness usually have abnormal number of heterozygous genot
 - Remove these samples with high missingness (call rate < 0.98) and redo the heterogeneity check. Use 3 standard deviation (SD) as cut-off and record the samples with abnormally high or low heterogeneity to be removed.
 ```R
 # ========================== R code ==========================
-imiss.het.mind02<-imiss.het[imiss.het$F_MISS<0.02,]
-up3sd<-mean(imiss.het.mind02$F)+3*sd(imiss.het.mind02$F)
-low3sd<-mean(imiss.het.mind02$F)-3*sd(imiss.het.mind02$F)
+imiss.het.mind02 <- imiss.het[imiss.het$F_MISS<0.02,]
+up3sd  <- mean(imiss.het.mind02$F)+3*sd(imiss.het.mind02$F)
+low3sd <- mean(imiss.het.mind02$F)-3*sd(imiss.het.mind02$F)
 
-excl.up3SD <- imiss.het.mind02[imiss.het.mind02$F>up3sd,]
+excl.up3SD  <- imiss.het.mind02[imiss.het.mind02$F>up3sd,]
 excl.low3SD <- imiss.het.mind02[imiss.het.mind02$F<low3sd,]
-write.table(rbind(excl.up3SD[,1:2], excl.low3SD[,1:2]), "to-remove.het3D.indiv", quote=F, row.names=F, col.names=F)
+write.table(rbind(excl.up3SD[,2], excl.low3SD[,2]), "to-remove.het3D.iid", quote=F, row.names=F, col.names=F)
 # =============================================================
 ```
   
 ### Step_4: Duplicated or related individuals
 - Obtain pair-wise IBD for relatedness checking
 ```bash
-plink --bfile chr1-22.ASA.maf05.pruned --genome
+plink --bfile chr1-22.ASA.maf05.pruned --genome full --out chr1-22.ASA.maf05.pruned.IBDcheck
+```
+- Check the IBD0, IBD1, IBD2 and PI_hat for samples with high missingness
+```bash
+egrep -wf to-remove.mind02.iid chr1-22.ASA.maf05.pruned.IBDcheck.genome | sort --key 10 -gr | less
+```
+- Check the IBD0, IBD1, IBD2 and PI_hat for other samples
+```bash
+egrep -wvf to-remove.mind02.iid chr1-22.ASA.maf05.pruned.IBDcheck.genome | sort --key 10 -gr | less
 ```
 
 ### Step_5: Ethnicity outliers
