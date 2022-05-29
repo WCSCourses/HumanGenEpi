@@ -1,7 +1,7 @@
 # Sample-based and Variant-based Quality Control (QC)
 
 ## Objectives
-In this practical, you will learn the basic steps of data quality assessment and perform QC on genotype data that are typically carried out in genome wide association studies (GWAS).
+In this practical, you will learn the basic steps of data quality assessment and QC on genotype data that are typically carried out in genome-wide association studies (GWAS).
 * [Sample QC](#Sample-QC)
 * [Variant QC](#Variant-QC)
 
@@ -22,29 +22,31 @@ The QC protocol for GWAS typically split into two broad categories, `Sample QC` 
 <img src="https://user-images.githubusercontent.com/8644480/170681398-e29f945e-fc94-4876-b695-9a8f2250968e.png"  width="500" height="300">
 </p>
 
-In this practical, we will first generate the summary profiles of 
-+ missingness (Sample and variant)
-+ sex chromosome heterogeneity and missingness
-+ 
+In this practical, we will investigate the
++ **Missingness** for samples and variants
++ **Heterogeneity** in terms of inbreeding coefficient for sex chromosomes and autosomes
++ Identify-by-descent (IBD) and coefficient of relationship (PI_hat) for **relatedness** assessment
++ Principal component analysis (PCA) for identification **population outliers**
++ Hardy-weinberg equilibrium
 
 ## Step 0: Download the genotype data
-- First, create a directory named `QC` for this practical section
+- First, create a directory named `practical2_QC` for this practical section
 
 ```bash
 mkdir ~/practical2_QC
 cd ~/practical2_QC
 ```
 
-- Download the raw genotype data in binary format and save it to the current directory
+- Download the raw genotype data in PLINK binary format and save it to the current directory
 ```bash
 wget https://github.com/WCSCourses/HumanGenEpi/raw/main/course_data/SNP_array_QC/practical2.tar.gz
 ```
 
 ### Dataset
-The dataset used in this practical was simuated from haplotypes of East Asian samples of the 1000 Genomes Project ([Phase 3](https://www.internationalgenome.org/category/phase-3/)). SNPs included in the dataset reflect to those included in the [Illumina Asian Screening array](https://www.illumina.com/products/by-type/microarray-kits/infinium-asian-screening.html) designed to maximize the genomic coverage for East Asian population.
+The dataset used in this practical was simuated from haplotypes of East Asian samples of the 1000 Genomes Project ([Phase 3](https://www.internationalgenome.org/category/phase-3/)). SNPs included in the dataset reflect to those assayed in the [Illumina Asian Screening array](https://www.illumina.com/products/by-type/microarray-kits/infinium-asian-screening.html) designed to maximize the genomic coverage for East Asian population.
 
 ## Sample-QC
-## Step_1: Individuals with excessive missing genotypes
+## Step 1: Individuals with excessive missing genotypes
 - Obtain profile of missingness per individual and per SNP
 ```bash
 plink --bfile chrAll.ASA --missing --out chrAll.ASA.beforeQC
@@ -58,9 +60,10 @@ For both files, the last three columns measure the missingness for each individu
 > N_GENO: Number of genotype call(s)<br>
 > F_MISS: Missing call rate<br>
 
-Write the sample IDs for those with call rate < 0.8
+#### **QC: Record the sample IDs with call rate <= 0.98 for removal**
 ```bash
-awk 'NR>1 && $6>=0.02 { print $2 }' chrAll.ASA.beforeQC.imiss > to-remove.mind02.iid
+awk 'NR>1 && $6>0.02 { print $1,$2 }' chrAll.ASA.beforeQC.imiss > to-remove.mind02.indiv
+cut -d' ' -f 2 to-remove.mind02.indiv > to-remove.mind02.iid
 ```
 
 - Plot the distribution of missingness 
@@ -119,18 +122,18 @@ abline(h=0.01, lwd=2, lty=2, col="darkgreen")
 ![practical2 missing-hist5](https://user-images.githubusercontent.com/8644480/170831069-58dd61a8-b4db-4ee2-a6a7-e63968b35108.png)
 
 </details>
+We typically remove samples and variants with high degree of missingness using less stringent threshold (e.g. missingness > 5% or 10%) at early stages of the QC steps; however, to illustrate how bad calling related to different QC measures, we keep all samples till the end of the QC practical.
 
-
-## Step_2: Individuals with sex discrepancy
+## Step 2: Individuals with sex discrepancy
 - Obtain missingness of chr X
 ```bash
-plink --bfile chrAll.ASA --chr 23 --missing --out chrX.ASA
+plink --bfile chrAll.ASA --chr 23 --missing --out chrX.ASA.beforeQC
 ```
 - Check sex
 ```bash
 plink --bfile chrAll.ASA --check-sex --out chrX.ASA
 ```
-The function of `--check-sex` normally compares sex assignments in the input pedigree data with inbreeding coefficients (F) imputed from SNPs on X chromosome. By default, the F estimates smaller than 0.2 yield female calls, and values larger than 0.8 yield male calls. 
+The function of `--check-sex` normally compares the sex assignments in the input pedigree file (`PEDSEX`) with inbreeding coefficients (F) imputed from SNPs on chromosome X. By default, the F estimates smaller than 0.2 yield female calls, and values larger than 0.8 yield male calls for `SNPSEX`. 
 
 ```R
 # ========================== R code ==========================
@@ -160,7 +163,7 @@ legend("bottomright",c("Male PEDSEX","Female PEDSEX","sample with PROBELM"), col
 - What is the relationship between missingness and inbreeeding coefficient for chrX?
 ```R
 # ========================== R code ==========================
-imiss.X <- read.table("chrX.ASA.imiss",h=T)
+imiss.X <- read.table("chrX.ASA.beforeQC.imiss",h=T)
 sexcheck.imiss <- merge(imiss.X, sexcheck, by="IID")
 mismatch.imiss <- sexcheck.imiss[sexcheck.imiss$STATUS=="PROBLEM",]
 plot(sexcheck.imiss$F_MISS, sexcheck.imiss$F, pch=20, col=colsex[sexcheck.imiss$PEDSEX], xlab="Number of missing genotypes on chrX", ylab="chrX Inbreeding coefficient (F)")
@@ -174,7 +177,7 @@ legend("bottomleft", c("Male PEDSEX","Female PEDSEX","sample with PROBELM"), col
 
 In addition to poor sample or genotyping quality, X chromosome aneuploidy, such as Turner syndrome (e.g. 45,X0) and Klinefelter syndrome (47, XXY), may lead to abnormal heterogenity. Missingness for SNPs on chr Y can be used to impute sex using `--check-sex ycount [female max F] [male min F] [female max Y obs] [male min Y obs]`. Before determining the minimum and maximum threshold of observed chrY variants, we can first set [female max Y obs] to maximum number of chrY variants and [male min Y obs] to 0  
 ```bash
-plink --bfile chrAll.ASA --check-sex ycount 0.2 0.8 805 0 --out chrXY.ASA
+plink --bfile chrAll.ASA --check-sex ycount 0.2 0.8 805 0 --out chrXY.ASA.without-ycount
 ```
 :closed_book: **Q:** Do samples with sex discrepancy or abnormal heterogenity look like having X chromosome aneuploidy?
 <details>
@@ -183,7 +186,7 @@ plink --bfile chrAll.ASA --check-sex ycount 0.2 0.8 805 0 --out chrXY.ASA
   
 - ** 1 **
 ```bash
-egrep PROBlEM chrXY.ASA.sexcheck
+egrep PROBLEM chrXY.ASA.without-ycount.sexcheck
 #         FID       IID PEDSEX SNPSEX  STATUS       F YCOUNT
 #    id1_1202  id2_1202      2      0 PROBLEM 0.65450    607
 #    id1_1109  id2_1109      2      0 PROBLEM 0.79540    636
@@ -197,7 +200,7 @@ egrep PROBlEM chrXY.ASA.sexcheck
 - ** 2 **
 ```R
 # ========================== R code ==========================
-sexcheck.XY <- read.table("chrXY.ASA.sexcheck",h=T)
+sexcheck.XY <- read.table("chrXY.ASA.without-ycount.sexcheck",h=T)
 mismatch.XY <- sexcheck.XY[sexcheck.XY$STATUS=="PROBLEM",]
 colsex <- c("darkblue","darkred")
 plot(sexcheck.XY$YCOUNT, sexcheck.XY$F, pch=20, col=colsex[sexcheck.XY$PEDSEX], xlab="Number of non-missing genotypes on chrY", ylab="chrX Inbreeding coefficient (F)")
@@ -209,18 +212,23 @@ abline(h=0.8, lwd=2, lty=2, col="blue")
 ![practical2 sexcheck-XY](https://user-images.githubusercontent.com/8644480/170838631-9463a53c-2f21-4151-bf44-b91d5d33111e.png)
 </details> 
   
-You can now run `--check-sex` with appropriate [female max Y obs] and [male min Y obs] thresholds, e.g. 100 and 700. Samples with abormal number of non-missing genotypes on chrY will be flagged as ambiguous in `SNPSEX`.         
+You can now rerun `--check-sex` with appropriate [female max Y obs] and [male min Y obs] thresholds, e.g. 100 and 700. Samples with abormal number of non-missing genotypes on chrY will be flagged as ambiguous in `SNPSEX`.         
 ```bash
-plink --bfile chrAll.ASA --check-sex ycount 0.2 0.8 100 700 --out chrXY.ASA.2
-egrep -h PROBLEM chrXY.ASA.sexcheck chrXY.ASA.2.sexcheck | sort | uniq -u
+plink --bfile chrAll.ASA --check-sex ycount 0.2 0.8 100 700 --out chrXY.ASA.with-ycount
+egrep -h PROBLEM chrXY.ASA.without-ycount.sexcheck chrXY.ASA.with-ycount.sexcheck | sort | uniq -u
 ```
 :closed_book: **Q:** What is the most likely karyotype for the **id2_669** sample?
 
-### Step_3: Individuals with outlying heterozygosity rate
-To avoid bias by genotyping error of rare variants and linkage disequilibrium, we usually perform the heterogeneity check using only common variants (MAF>=5%), excluding complex regions and SNPs in strong LD
+#### **QC: Record the sample IDs with sex discrepancy problem for removal**
 ```bash
-plink --bfile chrAll.ASA --autosome --maf 0.05 --make-bed --out chr1-22.ASA.maf05
-plink --bfile chr1-22.ASA.maf05 --missing --out chr1-22.ASA.maf05
+awk '$5=="PROBLEM"{ print $1,$2 }' chrXY.ASA.with-ycount.sexcheck > to-remove.sexmismatch.indiv
+```
+
+### Step 3: Individuals with outlying heterozygosity rate
+To avoid bias by genotyping error of rare variants and linkage disequilibrium, we usually perform the heterogeneity check using only common variants (MAF>=5%), excluding complex regions and SNPs in strong LD
+- Filter out low frequency and rare variants with MAF cut-off of 5%
+```bash
+plink --bfile chrAll.ASA --autosome --maf 0.05 --make-bed --missing --out chr1-22.ASA.maf05
 ```
 - LD pruning using R-squared 0.1
 ```bash
@@ -249,6 +257,8 @@ legend("bottomleft", c("Below 3SD","Above 3SD"), pt.bg=c("blue","red"), pch=21)
   
 Samples with high missingness usually have abnormal number of heterozygous genotypes called (too many or too few). 
 - Remove these samples with high missingness (call rate < 0.98) and redo the heterogeneity check. Use 3 standard deviation (SD) as cut-off and record the samples with abnormally high or low heterogeneity to be removed.
+
+#### **QC: Record the sample IDs with abnormal heterogeneity (outside 3SD) for removal**
 ```R
 # ========================== R code ==========================
 imiss.het.mind02 <- imiss.het[imiss.het$F_MISS<0.02,]
@@ -257,22 +267,53 @@ low3sd <- mean(imiss.het.mind02$F)-3*sd(imiss.het.mind02$F)
 
 excl.up3SD  <- imiss.het.mind02[imiss.het.mind02$F>up3sd,]
 excl.low3SD <- imiss.het.mind02[imiss.het.mind02$F<low3sd,]
+write.table(rbind(excl.up3SD[,1:2], excl.low3SD[,1:2]), "to-remove.het3D.indiv", quote=F, row.names=F, col.names=F)
 write.table(rbind(excl.up3SD[,2], excl.low3SD[,2]), "to-remove.het3D.iid", quote=F, row.names=F, col.names=F)
 # =============================================================
 ```
   
-### Step_4: Duplicated or related individuals
+### Step 4: Duplicated or related individuals
+For case-control association analysis, we need to make sure that the samples are biologically unrelated. Usually, samples with second (PI_HAT>0.25) or third degree (PI_HAT>0.125) relatedness are removed.
+
 - Obtain pair-wise IBD for relatedness checking
 ```bash
-plink --bfile chr1-22.ASA.maf05.pruned --genome full --out chr1-22.ASA.maf05.pruned.IBDcheck
+plink --bfile chr1-22.ASA.maf05.pruned --genome --out chr1-22.ASA.maf05.pruned.IBDcheck
 ```
 - Check the IBD0, IBD1, IBD2 and PI_hat for samples with high missingness
 ```bash
 egrep -wf to-remove.mind02.iid chr1-22.ASA.maf05.pruned.IBDcheck.genome | sort --key 10 -gr | less
 ```
+- Check the IBD0, IBD1, IBD2 and PI_hat for samples with abnormal heterogeneity
+```bash
+egrep -wf to-remove.het3D.iid chr1-22.ASA.maf05.pruned.IBDcheck.genome | sort --key 10 -gr | less
+```
 - Check the IBD0, IBD1, IBD2 and PI_hat for other samples
 ```bash
-egrep -wvf to-remove.mind02.iid chr1-22.ASA.maf05.pruned.IBDcheck.genome | sort --key 10 -gr | less
+cat to-remove.*indiv | sort | uniq > to-remove.QC_steps1to3.indiv
+cut -d' ' -f 2 to-remove.QC_steps1to3.indiv > to-remove.QC_steps1to3.iid
+egrep -wvf to-remove.QC_steps1to3.iid chr1-22.ASA.maf05.pruned.IBDcheck.genome | sort --key 10 -gr | less
+```
+:closed_book: **Q:** What are the samples in CHSQUAD family related?
+
+- For those pairs of sample estimated to be closer than second degree kinship (PI_HAT>0.25), remove at least one sample (usually the one with lower call rate) per pair.
+```bash
+cat > to-remove.related.indiv
+CHSQUAD C1
+CHSQUAD C2
+# the type "Ctrl-D" to quit
 ```
 
 ### Step_5: Ethnicity outliers
+To validate the self-reported ethnicity and to ensure no population outlier, we merge the genotype data of unrelated samples with the 1000 Genomes Project reference panel and then perform principal component analysis (PCA) using PLINK.
+```bash
+plink --bfile chrAll.ASA --remove to-remove.QC_steps1to3.indiv --update-name ASA.1000G.to-update-name.snp --make-bed --out chrAll.ASA.id-1000G.afterQC
+plink --bfile chrAll.ASA.id-1000G.afterQC --bmerge chrAll.ASA.1000GP-All --make-bed --out merged.chrAll.ASA.1000G
+```
+```bash
+plink --bfile merged.chrAll.ASA.1000G --maf 0.05 --hwe 1e-5 --geno 0.05 --indep-pairwise 200 50 0.1 --out merged.chrAll.ASA.1000G
+plink --bfile merged.chrAll.ASA.1000G --extract merged.chrAll.ASA.1000G.prune.in --pca 3 --out merged.chrAll.ASA.1000G.pruned --threads 1
+```
+- Generate PCA plot
+```bash
+Rscript practical2.PCAplot.R merged.chrAll.ASA.1000G.pruned.eigenvec
+```
