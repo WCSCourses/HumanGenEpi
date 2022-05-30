@@ -37,14 +37,25 @@ mkdir ~/practical2_QC
 cd ~/practical2_QC
 ```
 
-- Download the raw genotype data in PLINK binary format and save it to the current directory
+- Download the raw genotype data in PLINK binary format and unzip it to the current directory
 ```bash
-wget https://github.com/WCSCourses/HumanGenEpi/raw/main/course_data/SNP_array_QC/practical2.tar.gz
+wget https://github.com/WCSCourses/HumanGenEpi/raw/main/course_data/Sample_array_QC/practical2.tar.gz
+tar -zxvf practical2.tar.gz
 ```
 - Move the 1000 Genomes Project files for detecting population outliers to the current directory
 ```bash
 mv ~/1000gData/* .
 ```
+- Now your current folder should contain these files
+> ASA.1000G.to-update-name.snp<br>
+> chrAll.ASA.1000GP-All.bed<br>
+> chrAll.ASA.1000GP-All.bim<br>
+> chrAll.ASA.1000GP-All.fam<br>
+> chrAll.ASA.bed<br>
+> chrAll.ASA.bim<br>
+> chrAll.ASA.fam<br>
+> integrated_call_samples_v3.20130502.ALL.panel<br>
+> practical2.PCAplot.R<br>
 
 ### Dataset
 The dataset used in this practical was simuated from haplotypes of East Asian samples of the 1000 Genomes Project ([Phase 3](https://www.internationalgenome.org/category/phase-3/)). SNPs included in the dataset reflect to those assayed in the [Illumina Asian Screening array](https://www.illumina.com/products/by-type/microarray-kits/infinium-asian-screening.html) designed to maximize the genomic coverage for East Asian population.
@@ -84,7 +95,8 @@ summary(imiss$F_MISS)
 # Plot missingness across samples
 hist(imiss$F_MISS, freq=T, col="darkred", border ="black", main="Sample Call Rate", 
 xlab="F_MISS", ylab="Number of samples")
-
+```
+```R
 # Plot missingness with altered y-axis for a zoom in view
 hist(imiss$F_MISS, breaks=seq(0,0.6,0.05), freq=T, col="darkred", border ="black", 
 main="Sample Call Rate", xlab="F_MISS", ylab="Number of samples",ylim=c(0,10))
@@ -237,7 +249,11 @@ plink --bfile chrAll.ASA --autosome --maf 0.05 --make-bed --missing --out chr1-2
 - LD pruning using R-squared 0.1
 ```bash
 plink --bfile chr1-22.ASA.maf05 --indep-pairwise 200 50 0.1 --out chr1-22.ASA.maf05.pruning
+```
+```bash
 plink --bfile chr1-22.ASA.maf05 --extract chr1-22.ASA.maf05.pruning.prune.in --make-bed --out chr1-22.ASA.maf05.pruned
+```
+```bash
 plink --bfile chr1-22.ASA.maf05.pruned --het --out chr1-22.ASA.maf05.pruned
 ```
 ```R
@@ -271,8 +287,8 @@ low3sd <- mean(imiss.het.mind02$F)-3*sd(imiss.het.mind02$F)
 
 excl.up3SD  <- imiss.het.mind02[imiss.het.mind02$F>up3sd,]
 excl.low3SD <- imiss.het.mind02[imiss.het.mind02$F<low3sd,]
-write.table(rbind(excl.up3SD[,1:2], excl.low3SD[,1:2]), "to-remove.het3D.indiv", quote=F, row.names=F, col.names=F)
-write.table(rbind(excl.up3SD[,2], excl.low3SD[,2]), "to-remove.het3D.iid", quote=F, row.names=F, col.names=F)
+write.table(rbind(excl.up3SD,excl.low3SD)[,1:2], "to-remove.het3D.indiv", quote=F, row.names=F, col.names=F)
+write.table(rbind(excl.up3SD,excl.low3SD)[,2], "to-remove.het3D.iid", quote=F, row.names=F, col.names=F)
 # =============================================================
 ```
   
@@ -291,26 +307,27 @@ egrep -wf to-remove.mind02.iid chr1-22.ASA.maf05.pruned.IBDcheck.genome | sort -
 ```bash
 egrep -wf to-remove.het3D.iid chr1-22.ASA.maf05.pruned.IBDcheck.genome | sort --key 10 -gr | less
 ```
+:closed_book: **Q:** Which sample(s) looks like having contamination?
+  
 - Check the IBD0, IBD1, IBD2 and PI_hat for other samples
 ```bash
 cat to-remove.*indiv | sort | uniq > to-remove.QC_steps1to3.indiv
 cut -d' ' -f 2 to-remove.QC_steps1to3.indiv > to-remove.QC_steps1to3.iid
 egrep -wvf to-remove.QC_steps1to3.iid chr1-22.ASA.maf05.pruned.IBDcheck.genome | sort --key 10 -gr | less
 ```
-:closed_book: **Q:** What are the samples in CHSQUAD family related?
+:closed_book: **Q:** How are the samples in CHSQUAD family related?
 
 - For those pairs of sample estimated to be closer than second degree kinship (PI_HAT>0.25), remove at least one sample (usually the one with lower call rate) per pair.
-```bash
-cat > to-remove.related.indiv
+<pre> cat > to-remove.related.indiv
 CHSQUAD C1
 CHSQUAD C2
 # the type "Ctrl-D" to quit
-```
+</pre>
 
 ## Step 5: Population outliers
 To validate the self-reported ethnicity and to ensure no population outlier, we merge the genotype data of unrelated samples with the 1000 Genomes Project reference panel and then perform principal component analysis (PCA) using PLINK.
   
-- Perform PCA after removing samples with high missingness and related samples
+- Perform pruning and then PCA after removing samples with high missingness and related samples
 ```bash
 cat to-remove.mind02.indiv to-remove.related.indiv > to-remove.mind02_related.indiv
 plink --bfile chrAll.ASA --remove to-remove.mind02_related.indiv --update-name ASA.1000G.to-update-name.snp --make-bed --out chrAll.ASA.id-1000G.rm-mind02_related
@@ -318,7 +335,9 @@ plink --bfile chrAll.ASA.id-1000G.rm-mind02_related --bmerge chrAll.ASA.1000GP-A
 ```
 ```bash
 plink --bfile merged.chrAll.ASA.1000G.rm-mind02_related --maf 0.05 --hwe 1e-5 --geno 0.05 --indep-pairwise 200 50 0.1 --out merged.chrAll.ASA.1000G.rm-mind02_related
-plink --bfile merged.chrAll.ASA.1000G.rm-mind02_related --extract merged.chrAll.ASA.1000G.prune.in --pca 3 --out merged.chrAll.ASA.1000G.rm-mind02_related.pruned --threads 1
+```
+```bash
+plink --bfile merged.chrAll.ASA.1000G.rm-mind02_related --extract merged.chrAll.ASA.1000G.rm-mind02_related.prune.in --pca 3 --out merged.chrAll.ASA.1000G.rm-mind02_related.pruned --threads 1
 ```
 - Generate PCA plot
 ```bash
@@ -326,13 +345,16 @@ Rscript practical2.PCAplot.R merged.chrAll.ASA.1000G.rm-mind02_related.pruned.ei
 ```
 <img src="https://user-images.githubusercontent.com/8644480/170877252-273d5367-dbf8-4bd5-8b47-e3cf4b2b17c4.png" width=500>
 
+:closed_book: **Q:** Can you find the population outliers?
+:closed_book: **Q:** Can you relate the results of the PCA and heterogeneity analyses for these samples?
+  
 #### **QC: Combine all sample outliers' files and remove these outliers to obtain a new PLINK file with samples passing QC**
 ```bash
 cat to-remove.QC_steps1to3.indiv to-remove.related.indiv > to-remove.QC_steps1to4.indiv
 plink --bfile chrAll.ASA --remove to-remove.QC_steps1to4.indiv --make-bed --out chrAll.ASA.afterSampleQC
 ```
 
-- Validate the absence of population outliers with removal of all samples not passing QC
+- Retry the PCA with removal of all samples not passing QC, including those failed heterogeneity tests in Steps 2 and 3
 <details>
   <summary> Try your own PLINK / R codes </summary>
 
@@ -342,8 +364,12 @@ plink --bfile chrAll.ASA.id-1000G.afterSampleQC --bmerge chrAll.ASA.1000GP-All -
 ```
 ```bash
 plink --bfile merged.chrAll.ASA.1000G.afterSampleQC --maf 0.05 --hwe 1e-5 --geno 0.05 --indep-pairwise 200 50 0.1 --out merged.chrAll.ASA.1000G.afterSampleQC
-plink --bfile merged.chrAll.ASA.1000G.afterSampleQC --extract merged.chrAll.ASA.1000G.prune.in --pca 3 --out merged.chrAll.ASA.1000G.afterSampleQC.pruned --threads 1
+plink --bfile merged.chrAll.ASA.1000G.afterSampleQC --extract merged.chrAll.ASA.1000G.afterSampleQC.prune.in --pca 3 --out merged.chrAll.ASA.1000G.afterSampleQC.pruned --threads 1
 ```
+```bash
+Rscript practical2.PCAplot.R merged.chrAll.ASA.1000G.afterSampleQC.pruned.eigenvec 
+```
+  
 <img src="https://user-images.githubusercontent.com/8644480/170875864-98e95f97-b673-4fd9-9126-d4cf545923bd.png" width=500>
 
 </details>
@@ -358,9 +384,9 @@ It consists of (at least) three steps:
 The threshold used for filtering depends on sample and genotyping data quality, which vary from study to study. Variant QC should be done carefully as variants removed can be the disease causal variants in which the signals of association may not be completely recovered by imputation.
 
 Here we are using the following thresholds:
-+ Call rate <= 98%
-+ HWE p < 1x10-4
-+ MAF >= 1%
++ `--mind 0.02` Call rate <= 98%
++ `--hwe 1e-4`  HWE p < 1x10-4
++ `--maf 0.01`  MAF >= 1%
 
 We can combine all these variant QCs into one single PLINK command:
 ```bash
