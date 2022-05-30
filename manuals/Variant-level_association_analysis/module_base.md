@@ -4,15 +4,10 @@
 In this practical, you will learn how to perform association analysis in genome-wide scale while adjusting for confounding factors.
 
 ## Prequisites
-We still start with the PLINK file after QC from the previous **Sample array QC** practical. To ensure that dataset is the right file
+We will start with the dataset of 480,780 variants for 992 samples passing QC from the previous **Sample array QC** practical. To ensure that we are on the same dataset,
 
 ```bash
-mkdir ~/practical3_associationtest
-cd ~/practical3_associationtest
-```
-```bash
 md5sum ~/practical2_QC/chrAll.ASA.afterSampleQC.afterVariantQC.*
-cp ~/practical2_QC/chrAll.ASA.afterSampleQC.afterVariantQC.* ~/practical3_associationtest/
 ```
 
 | Md5sum                           | File                                        |
@@ -21,6 +16,15 @@ cp ~/practical2_QC/chrAll.ASA.afterSampleQC.afterVariantQC.* ~/practical3_associ
 | dd8f8e4c40207a8b5aff1ec60c25fe83 | chrAll.ASA.afterSampleQC.afterVariantQC.bim |
 | 798746e8bcc2c18110dac62ee78ff602 | chrAll.ASA.afterSampleQC.afterVariantQC.fam |
  
-
+If the md5sum values are consistent, you can copy the PLINK binary file to a new folder named as `practical3_associationtest`
+```bash
+mkdir ~/practical3_associationtest
+cd ~/practical3_associationtest
+cp ~/practical2_QC/chrAll.ASA.afterSampleQC.afterVariantQC.* ~/practical3_associationtest/
+```
+Otherwise, please download the dataset passing QC using the following command
+```bash
+wget xxxx
+```
   
   
