@@ -22,9 +22,25 @@ This virtual course will provide participants with ‘hands-on’ practical exer
 [Course website](https://coursesandconferences.wellcomeconnectingscience.org/event/human-genomic-epidemiology-asia-virtual-20220613/)
 
 ## Instructors
-- [...](), University of ...
 
+Pak Sham, University of Hong Kong
+Clara Tang, University of Hong Kong
+Qasim Ayub, Monash University Malaysia
 
+Hon-Cheong So, University of Hong Kong
+Miaoxin Li, University of Hong Kong
+Konstantinos Hatzikotoulas, Helmholtz Zentrum München
+Maude E. Phipps, Monash University Malaysia
+Wee Wei Yee, Monash University Malaysia
+Eva Maria Cutiongco-De La Paz, Philippines Genome Centre
+Ananyo Choudhury, Sydney Brenner Institute for Molecular Bioscience, University of the Witwatersrand
+Dhriti Sengupta, Sydney Brenner Institute for Molecular Bioscience, University of the Witwatersrand
+Tinashe Chikoware, Sydney Brenner Institute for Molecular Bioscience, University of the Witwatersrand
+
+## Speakers
+
+Eleftheria Zeggini, Institute of Translational Genomics, Helmholtz Zentrum München
+Sathiya Maran ,Monash University Malaysia
 
 ## Timetable
 ### Overview
@@ -59,10 +75,7 @@ This virtual course will provide participants with ‘hands-on’ practical exer
                                                                                                                        
 <a href="https://github.com/WCSCourses/HumanGenEpi/blob/main/manuals/Variant-level_association_analysis/module_base.md" target="_blank">Variant Level Association Analysis</a>                                                                                                                       
 
-  
-**Task 1 - **  
 
-**Task 2 - **  
 
 **Appendix**  
 
