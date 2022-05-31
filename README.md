@@ -53,27 +53,42 @@ Sathiya Maran ,Monash University Malaysia
 ## Course manual
 <a href="https://github.com/WCSCourses/HumanGenEpi/blob/main/manuals/Computational_resources/module_base.md" target="blank">Computational Resources</a>
 
-<a href="https://github.com/WCSCourses/HumanGenEpi/blob/main/manuals/Data_sharing_and_ELSI/module_base.md" target="_blank">Data Sharing and ELSI</a>
-
-<a href="https://github.com/WCSCourses/HumanGenEpi/blob/main/manuals/Fine_mapping/Day4_Finemapping_manual.pdf" target="_blank">Fine Mapping</a>
-                                                                                                                             
-<a href="https://github.com/WCSCourses/HumanGenEpi/blob/main/manuals/GWAS_project/module_base.md" target="_blank">GWAS Project</a>
-
-<a href="https://github.com/WCSCourses/HumanGenEpi/blob/main/manuals/Gene_and_pathway_association_analysis/module_base.md" target="_blank">Gene and Pathway Association Analysis</a>
-
-<a href="https://github.com/WCSCourses/HumanGenEpi/blob/main/manuals/Imputation/Day3_Imputation_manual.pdf" target="_blank">Imputation</a>
-
 <a href="https://github.com/WCSCourses/HumanGenEpi/blob/main/manuals/Introduction_to_data_formats/Introduction-to-PLINK.md" target="_blank">Introduction to Plink</a>
 
-<a href="https://github.com/WCSCourses/HumanGenEpi/blob/main/manuals/Meta_analysis/module_base.md" target="_blank">Meta Analysis</a>
+<a href="https://github.com/WCSCourses/HumanGenEpi/blob/main/manuals/Sample_array_QC/Sample_array_QC.md" target="_blank">Sample Array QC</a>
 
-<a href="https://github.com/WCSCourses/HumanGenEpi/blob/main/manuals/Polygenic_risk_scores/PRS.md" target="_blank">Polygenic Risk Scores</a>
+<a href="https://github.com/WCSCourses/HumanGenEpi/blob/main/manuals/Variant-level_association_analysis/module_base.md" target="_blank">Variant Level Association Analysis</a>
 
 <a href="https://github.com/WCSCourses/HumanGenEpi/blob/main/manuals/Population_stratification/Day3_Popstructure_manual.pdf" target="_blank">Population Stratification</a>
 
-<a href="https://github.com/WCSCourses/HumanGenEpi/blob/main/manuals/Sample_array_QC/Sample_array_QC.md" target="_blank">Sample Array QC</a>
+<a href="https://github.com/WCSCourses/HumanGenEpi/blob/main/manuals/Meta_analysis/module_base.md" target="_blank">Meta Analysis and Replication</a>
+
+<a href="https://github.com/WCSCourses/HumanGenEpi/blob/main/manuals/Imputation/Day3_Imputation_manual.pdf" target="_blank">Imputation</a>
+
+<a href="https://github.com/WCSCourses/HumanGenEpi/blob/main/manuals/Fine_mapping/Day4_Finemapping_manual.pdf" target="_blank">Independence Signals and Fine Mapping</a>
+
+<a href="https://github.com/WCSCourses/HumanGenEpi/blob/main/manuals/Gene_and_pathway_association_analysis/module_base.md" target="_blank">Gene and Pathway Association Analysis</a>
+
+<a href="https://github.com/WCSCourses/HumanGenEpi/blob/main/manuals/Polygenic_risk_scores/PRS.md" target="_blank">Polygenic Risk Scores</a>
+
+<a href="https://github.com/WCSCourses/HumanGenEpi/blob/main/manuals/Data_sharing_and_ELSI/module_base.md" target="_blank">Data sharing and Ethical Legal and Social Issues (ELSI)</a>
+
+Public bioinformatics resources for GWAS interpretation
+                                                                                                                             
+<a href="https://github.com/WCSCourses/HumanGenEpi/blob/main/manuals/GWAS_project/module_base.md" target="_blank">GWAS Project</a>
+
+
+
+
+
+
+
+
+
+
+
                                                                                                                        
-<a href="https://github.com/WCSCourses/HumanGenEpi/blob/main/manuals/Variant-level_association_analysis/module_base.md" target="_blank">Variant Level Association Analysis</a>                                                                                                                       
+                                                                                                                       
 
 
 
