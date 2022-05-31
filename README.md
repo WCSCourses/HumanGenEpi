@@ -35,7 +35,7 @@ This virtual course will provide participants with ‘hands-on’ practical exer
 
 
 ## Course manual
-<a href="https://github.com/WCSCourses/HumanGenEpi/blob/main/manuals/Data_sharing_and_ELSI/module_base.md">Data Sharing and ELSI</a>
+<a href="https://github.com/WCSCourses/HumanGenEpi/blob/main/manuals/Data_sharing_and_ELSI/module_base.md" target="_blank">Data Sharing and ELSI</a>
 
 **Module 2 - **  
 
