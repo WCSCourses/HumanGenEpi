@@ -35,7 +35,7 @@ This virtual course will provide participants with ‘hands-on’ practical exer
 
 
 ## Course manual
-Computational Resources(https://github.com/WCSCourses/HumanGenEpi/tree/main/manuals/Computational_resources)
+Computational Resources
 
 **Module 2 - **  
 
