@@ -23,23 +23,23 @@ This virtual course will provide participants with ‘hands-on’ practical exer
 
 ## Instructors
 
-Pak Sham, University of Hong Kong
-Clara Tang, University of Hong Kong
-Qasim Ayub, Monash University Malaysia
+Pak Sham, University of Hong Kong<br>
+Clara Tang, University of Hong Kong<br>
+Qasim Ayub, Monash University Malaysia<br>
 
-Hon-Cheong So, University of Hong Kong
-Miaoxin Li, University of Hong Kong
-Konstantinos Hatzikotoulas, Helmholtz Zentrum München
-Maude E. Phipps, Monash University Malaysia
-Wee Wei Yee, Monash University Malaysia
-Eva Maria Cutiongco-De La Paz, Philippines Genome Centre
-Ananyo Choudhury, Sydney Brenner Institute for Molecular Bioscience, University of the Witwatersrand
-Dhriti Sengupta, Sydney Brenner Institute for Molecular Bioscience, University of the Witwatersrand
-Tinashe Chikoware, Sydney Brenner Institute for Molecular Bioscience, University of the Witwatersrand
+Hon-Cheong So, University of Hong Kong<br>
+Miaoxin Li, University of Hong Kong<br>
+Konstantinos Hatzikotoulas, Helmholtz Zentrum München<br>
+Maude E. Phipps, Monash University Malaysia<br>
+Wee Wei Yee, Monash University Malaysia<br>
+Eva Maria Cutiongco-De La Paz, Philippines Genome Centre<br>
+Ananyo Choudhury, Sydney Brenner Institute for Molecular Bioscience, University of the Witwatersrand<br>
+Dhriti Sengupta, Sydney Brenner Institute for Molecular Bioscience, University of the Witwatersrand<br>
+Tinashe Chikoware, Sydney Brenner Institute for Molecular Bioscience, University of the Witwatersrand<br>
 
 ## Speakers
 
-Eleftheria Zeggini, Institute of Translational Genomics, Helmholtz Zentrum München
+Eleftheria Zeggini, Institute of Translational Genomics, Helmholtz Zentrum München<br>
 Sathiya Maran ,Monash University Malaysia
 
 ## Timetable
