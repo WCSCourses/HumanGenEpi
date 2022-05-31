@@ -79,19 +79,6 @@ Public bioinformatics resources for GWAS interpretation
 
 
 
-
-
-
-
-
-
-
-
-                                                                                                                       
-                                                                                                                       
-
-
-
 **Appendix**  
 
 
