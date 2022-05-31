@@ -55,7 +55,7 @@ This virtual course will provide participants with ‘hands-on’ practical exer
 
 <a href="https://github.com/WCSCourses/HumanGenEpi/blob/main/manuals/Population_stratification/Day3_Popstructure_manual.pdf" target="_blank">Population Stratification</a>
 
-<a href="https://github.com/WCSCourses/HumanGenEpi/blob/main/manuals/Sample_array_QC/Sample_array_QC.md target="_blank">Sample Array QC</a>
+<a href="https://github.com/WCSCourses/HumanGenEpi/blob/main/manuals/Sample_array_QC/Sample_array_QC.md" target="_blank">Sample Array QC</a>
                                                                                                                        
 <a href="https://github.com/WCSCourses/HumanGenEpi/blob/main/manuals/Variant-level_association_analysis/module_base.md" target="_blank">Variant Level Association Analysis</a>                                                                                                                       
 
