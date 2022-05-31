@@ -35,20 +35,11 @@ This virtual course will provide participants with ‘hands-on’ practical exer
 
 
 ## Course manual
+<a href="https://github.com/WCSCourses/HumanGenEpi/blob/main/manuals/Computational_resources/module_base.md" target="blank">Computational Resources</a>
 <a href="https://github.com/WCSCourses/HumanGenEpi/blob/main/manuals/Data_sharing_and_ELSI/module_base.md" target="_blank">Data Sharing and ELSI</a>
+<a href="https://github.com/WCSCourses/HumanGenEpi/blob/main/manuals/Fine_mapping/Day4_Finemapping_manual.pdf target="_blank">Fine Mapping</a>
+<a href="https://github.com/WCSCourses/HumanGenEpi/blob/main/manuals/GWAS_project/module_base.md target="_blank">GWAS Project</a>
 
-**Module 2 - **  
-
-  
-**Module 3 - **  
-
-  
-**Module 4 - **  
-
-**Module 5 - **  
-
-**Module 6 - **  
-  
   
 **Task 1 - **  
 
