@@ -6,8 +6,7 @@ In this practical, you will learn how to perform association analysis in genome-
 ## Prequisites
 We will start with the dataset of 480,780 variants for 992 samples passing QC from the previous **Sample array QC** practical. To ensure that we are on the same dataset,
 
-<pre><code>
-md5sum ~/Practicals/<b>[yourname]</b>/practical2_QC/chrAll.ASA.afterSampleQC.afterVariantQC.*
+<pre><code>md5sum ~/Practicals/<b>[yourname]</b>/practical2_QC/chrAll.ASA.afterSampleQC.afterVariantQC.*
 </code></pre>
 
 | Md5sum                           | File                                        |
