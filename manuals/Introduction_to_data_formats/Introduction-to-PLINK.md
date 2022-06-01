@@ -20,7 +20,7 @@ First, create a working directory named `practical1` and change to the directory
 cd ~/Practicals/<b>[yourname]</b>/practical1
 </code></pre>
 
-Copy the files under `~/Day1_Introduction-to-PLINK/` into your current directory
+Copy the files under `~/Day1_Introduction-to-PLINK/` to your current directory
 ```bash
 cp ~/Day1_Introduction-to-PLINK/* .
 ```
