@@ -31,7 +31,7 @@ Hon-Cheong So, University of Hong Kong<br>
 Miaoxin Li, University of Hong Kong<br>
 Konstantinos Hatzikotoulas, Helmholtz Zentrum München<br>
 Maude E. Phipps, Monash University Malaysia<br>
-Wee Wei Yee, Monash University Malaysia<br>
+Gavin Yee, Monash University Malaysia<br>
 Eva Maria Cutiongco-De La Paz, Philippines Genome Centre<br>
 Ananyo Choudhury, Sydney Brenner Institute for Molecular Bioscience, University of the Witwatersrand<br>
 Dhriti Sengupta, Sydney Brenner Institute for Molecular Bioscience, University of the Witwatersrand<br>
