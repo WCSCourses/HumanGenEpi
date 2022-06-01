@@ -16,18 +16,16 @@ We need the following software that is pre-installed in the VM for genotype data
 
 ## Step 1: Understand the input data formats in PLINK
 First, create a working directory named `practical1` and change to the directory
+<pre><code>mkdir ~/Practicals/<b>[yourname]</b>/practical1
+cd ~/Practicals/<b>[yourname]</b>/practical1
+</code></pre>
+
+Copy the files under `~/Day1_Introduction-to-PLINK/` into your current directory
 ```bash
-mkdir ~/Practicals/<yourname>/practical1
-cd ~/Practicals/<yourname>/practical1
+cp ~/Day1_Introduction-to-PLINK/* .
 ```
-Download the gzipped tar file `practical1.tar.gz` into the directory and unzip it
-```bash
-wget https://github.com/WCSCourses/HumanGenEpi/raw/main/course_data/Introduction_to_data_formats/practical1.tar.gz
-```
-```bash
-tar -xzvf practical1.tar.gz
-```
-You should get three files, including the two regular PLINK text files (`PED` and `MAP`) and a PLINK set file
+
+Use `ls` to list the files in your current directory. You should get three files, including the two regular PLINK text files (`PED` and `MAP`) and a PLINK set file
 > practical1.map<br>
 > practical1.ped<br>
 > LDLgenes.set<br>
@@ -188,3 +186,8 @@ You can combine all commands in one line. For example, to obtain frequency of SN
 plink --bfile practical1_1 --remove related.indiv --extract PCSK9.snp --freq --out practical1_1.unrelated.PCSK9
 ```
 :closed_book: **Q:** What are the minor allele frequencies for the two SNPs, rs693 and exm175886, in _APOB_ across all unrelated samples?
+<details>
+  <summary>ONLY CLICK when you have the answer</summary>
+  
+  <pre>plink --bfile practical1_1 --remove related.indiv --snps rs693,exm175886 --freq --out practical1_1.unrelated.APOB_2snps</pre>
+</details>
