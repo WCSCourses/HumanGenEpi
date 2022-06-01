@@ -107,7 +107,9 @@ The BIM file is the extended MAP file with first four columns same as the MAP fi
 :closed_book: **Q:** What is the minor allele of the second SNP?
 <details>
   <summary>You can try some basic unix commands by yourself first</summary>
-  
+
+  **Answer:** T
+ 
   <pre>head -n 2 practical1_1.bim     # output the first 2 rows </pre>
   <pre>head -n 2 practical1_1.bim | tail -n 1 | cut -f 5   # output the first 2 rows -> output the last row -> cut out the 5th column </pre>
   <pre>sed -n 2p practical1_1.bim | cut -f 5 # output the 2nd row and cut out the 5th column </pre>
@@ -134,6 +136,10 @@ plink --bfile practical1_1 --snp rs1367117 --recode --out practical1_1.rs1367117
 ```
 <details>
   <summary>You can try some basic unix commands by yourself first</summary>
+ 
+  **Answers:** 
+  - **Who?** too many to be shown 
+  - **How many?** 755
   
   <pre> awk '$7=="A" || $8=="A"' practical1_1.rs1367117.ped </pre>  
   <pre> awk '$7=="A" || $8=="A"' practical1_1.rs1367117.ped | wc </pre>
@@ -189,5 +195,14 @@ plink --bfile practical1_1 --remove related.indiv --extract PCSK9.snp --freq --o
 <details>
   <summary>ONLY CLICK when you have the answer</summary>
   
+  **Answer:**
+  | SNP       | MAF      |
+  |-----------|----------|
+  | rs693     | 0.251    |
+  | exm175886 | 0.003994 |
+ 
+  **Possible code:**
   <pre>plink --bfile practical1_1 --remove related.indiv --snps rs693,exm175886 --freq --out practical1_1.unrelated.APOB_2snps</pre>
+
+
 </details>
