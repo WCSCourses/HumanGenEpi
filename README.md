@@ -30,9 +30,11 @@ Qasim Ayub, Monash University Malaysia<br>
 Hon-Cheong So, University of Hong Kong<br>
 Miaoxin Li, University of Hong Kong<br>
 Konstantinos Hatzikotoulas, Helmholtz Zentrum München<br>
-Maude E. Phipps, Monash University Malaysia<br>
-Gavin Yee, Monash University Malaysia<br>
+Maude E. Phipps, Monash University, Malaysia<br>
+Gavin Yee, Monash University, Malaysia<br>
+Sathiya Maran, Monash University, Malaysia<br>
 Eva Maria Cutiongco-De La Paz, Philippines Genome Centre<br>
+Segun Fatumo, London School of Hygiene and Tropical Medicine<br>
 Ananyo Choudhury, Sydney Brenner Institute for Molecular Bioscience, University of the Witwatersrand<br>
 Dhriti Sengupta, Sydney Brenner Institute for Molecular Bioscience, University of the Witwatersrand<br>
 Tinashe Chikoware, Sydney Brenner Institute for Molecular Bioscience, University of the Witwatersrand<br>
