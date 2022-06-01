@@ -32,19 +32,18 @@ In this practical, we will investigate the
 ## Step 0: Download the genotype data
 - First, create a directory named `practical2_QC` for this practical section
 
-```bash
-mkdir ~/practical2_QC
-cd ~/practical2_QC
-```
+<pre>mkdir ~/Practicals/<b>[yourname]</b>/practical2_QC
+cd ~/Practicals/<b>[yourname]</b>/practical2_QC
+</pre>
 
-- Download the raw genotype data in PLINK binary format and unzip it to the current directory
+- Copy all files under it to your current directory
 ```bash
-wget https://github.com/WCSCourses/HumanGenEpi/raw/main/course_data/Sample_array_QC/practical2.tar.gz
-tar -zxvf practical2.tar.gz
+cp ~/Day2_Sample-array-QC/* .
 ```
-- Move the 1000 Genomes Project files for detecting population outliers to the current directory
 ```bash
-mv ~/1000gData/* .
+# for those without VM to try
+# wget https://github.com/WCSCourses/HumanGenEpi/raw/main/course_data/Sample_array_QC/practical2.tar.gz
+# tar -zxvf practical2.tar.gz
 ```
 - Now your current folder should contain these files
 > ASA.1000G.to-update-name.snp<br>
@@ -195,7 +194,7 @@ In addition to poor sample or genotyping quality, X chromosome aneuploidy, such 
 ```bash
 plink --bfile chrAll.ASA --check-sex ycount 0.2 0.8 805 0 --out chrXY.ASA.without-ycount
 ```
-:closed_book: **Q:** Do samples with sex discrepancy or abnormal heterogenity look like having X chromosome aneuploidy?
+:closed_book: **Q:** Do the samples detected by sex discrepancy or abnormal heterogenity look like having X chromosome aneuploidy?
 <details>
   <summary> Try your own PLINK / R codes </summary>
 <p></p>
@@ -234,7 +233,13 @@ plink --bfile chrAll.ASA --check-sex ycount 0.2 0.8 100 700 --out chrXY.ASA.with
 egrep -h PROBLEM chrXY.ASA.without-ycount.sexcheck chrXY.ASA.with-ycount.sexcheck | sort | uniq -u
 ```
 :closed_book: **Q:** What is the most likely karyotype for the **id2_669** sample?
-
+<details>
+  <summary> Answer </summary>
+  
+ The **id2_669** individual is likely to have Turner syndrome with 45,X0 or 45,X karyotype. Copy number variation analysis on SNP array data is needed to confirm the number of copy of X chromosome.
+</details>
+  
+  
 #### **QC: Record the sample IDs with sex discrepancy problem for removal**
 ```bash
 awk '$5=="PROBLEM"{ print $1,$2 }' chrXY.ASA.with-ycount.sexcheck > to-remove.sexmismatch.indiv
@@ -308,7 +313,12 @@ egrep -wf to-remove.mind02.iid chr1-22.ASA.maf05.pruned.IBDcheck.genome | sort -
 egrep -wf to-remove.het3D.iid chr1-22.ASA.maf05.pruned.IBDcheck.genome | sort --key 10 -gr | less
 ```
 :closed_book: **Q:** Which sample(s) looks like having contamination?
+<details>
+  <summary> Answer </summary>
   
+  - CHSHet002 looks like contaminated sample with high heterogeneity.
+</details>
+
 - Check the IBD0, IBD1, IBD2 and PI_hat for other samples
 ```bash
 cat to-remove.*indiv | sort | uniq > to-remove.QC_steps1to3.indiv
@@ -316,9 +326,14 @@ cut -d' ' -f 2 to-remove.QC_steps1to3.indiv > to-remove.QC_steps1to3.iid
 egrep -wvf to-remove.QC_steps1to3.iid chr1-22.ASA.maf05.pruned.IBDcheck.genome | sort --key 10 -gr | less
 ```
 :closed_book: **Q:** How are the samples in CHSQUAD family related?
-
+<details>
+  <summary> Answer </summary>
+  
+  - CHSQUAD is a quad with F1 being the father and M1 being the mother. C1 and C2 are siblings.
+</details>
+  
 - For those pairs of sample estimated to be closer than second degree kinship (PI_HAT>0.25), remove at least one sample (usually the one with lower call rate) per pair.
-<pre> cat > to-remove.related.indiv
+<pre>cat > to-remove.related.indiv
 CHSQUAD C1
 CHSQUAD C2
 # the type "Ctrl-D" to quit
@@ -327,26 +342,44 @@ CHSQUAD C2
 ## Step 5: Population outliers
 To validate the self-reported ethnicity and to ensure no population outlier, we merge the genotype data of unrelated samples with the 1000 Genomes Project reference panel and then perform principal component analysis (PCA) using PLINK.
   
-- Perform pruning and then PCA after removing samples with high missingness and related samples
+- Remove samples with high missingness and related samples and merge with the 1000 Genomes Project data
 ```bash
 cat to-remove.mind02.indiv to-remove.related.indiv > to-remove.mind02_related.indiv
 plink --bfile chrAll.ASA --remove to-remove.mind02_related.indiv --update-name ASA.1000G.to-update-name.snp --make-bed --out chrAll.ASA.id-1000G.rm-mind02_related
 plink --bfile chrAll.ASA.id-1000G.rm-mind02_related --bmerge chrAll.ASA.1000GP-All --make-bed --out merged.chrAll.ASA.1000G.rm-mind02_related
 ```
+- Extract only common variants not violating Hardy-Weinberg equilibrium and perform pruning to remove SNPs in LD
 ```bash
-plink --bfile merged.chrAll.ASA.1000G.rm-mind02_related --maf 0.05 --hwe 1e-5 --geno 0.05 --indep-pairwise 200 50 0.1 --out merged.chrAll.ASA.1000G.rm-mind02_related
+plink --bfile merged.chrAll.ASA.1000G.rm-mind02_related \
+  --maf 0.05 --hwe 1e-5 --geno 0.05 \
+  --indep-pairwise 200 50 0.1 \
+  --out merged.chrAll.ASA.1000G.rm-mind02_related
 ```
-```bash
-plink --bfile merged.chrAll.ASA.1000G.rm-mind02_related --extract merged.chrAll.ASA.1000G.rm-mind02_related.prune.in --pca 3 --out merged.chrAll.ASA.1000G.rm-mind02_related.pruned --threads 1
-```
+- Perform PCA on pruned dataset (PS: You can speed up this step by using more than **1 thread** if your VM is setup with multiple processors)
+<pre><code>plink --bfile merged.chrAll.ASA.1000G.rm-mind02_related \
+  --extract merged.chrAll.ASA.1000G.rm-mind02_related.prune.in \
+  --pca 3 \
+  --out merged.chrAll.ASA.1000G.rm-mind02_related.pruned \
+  <b>--threads 1</b>
+</code></pre>
+  
 - Generate PCA plot
 ```bash
 Rscript practical2.PCAplot.R merged.chrAll.ASA.1000G.rm-mind02_related.pruned.eigenvec
 ```
 <img src="https://user-images.githubusercontent.com/8644480/170877252-273d5367-dbf8-4bd5-8b47-e3cf4b2b17c4.png" width=500>
 
-:closed_book: **Q:** Can you find the population outliers?
+:closed_book: **Q:** Can you find the population outliers?<br>
 :closed_book: **Q:** Can you relate the results of the PCA and heterogeneity analyses for these samples?
+<details>
+  <summary> Answer </summary>
+  
+  ```bash
+  cut -d' ' -f 2 chrAll.ASA.fam > chrAll.ASA.iid
+  awk '$3<0.015' merged.chrAll.ASA.1000G.rm-mind02_related.pruned.eigenvec | egrep -f chrAll.ASA.iid
+  cat to-remove.het3D.iid
+  ```
+</details>  
   
 #### **QC: Combine all sample outliers' files and remove these outliers to obtain a new PLINK file with samples passing QC**
 ```bash
@@ -362,10 +395,19 @@ plink --bfile chrAll.ASA --remove to-remove.QC_steps1to4.indiv --make-bed --out 
 plink --bfile chrAll.ASA.afterSampleQC --update-name ASA.1000G.to-update-name.snp --make-bed --out chrAll.ASA.id-1000G.afterSampleQC
 plink --bfile chrAll.ASA.id-1000G.afterSampleQC --bmerge chrAll.ASA.1000GP-All --make-bed --out merged.chrAll.ASA.1000G.afterSampleQC
 ```
-```bash
-plink --bfile merged.chrAll.ASA.1000G.afterSampleQC --maf 0.05 --hwe 1e-5 --geno 0.05 --indep-pairwise 200 50 0.1 --out merged.chrAll.ASA.1000G.afterSampleQC
-plink --bfile merged.chrAll.ASA.1000G.afterSampleQC --extract merged.chrAll.ASA.1000G.afterSampleQC.prune.in --pca 3 --out merged.chrAll.ASA.1000G.afterSampleQC.pruned --threads 1
-```
+<pre><code>
+plink --bfile merged.chrAll.ASA.1000G.afterSampleQC \
+  --maf 0.05 --hwe 1e-5 --geno 0.05 \
+  --indep-pairwise 200 50 0.1 \
+  --out merged.chrAll.ASA.1000G.afterSampleQC
+  
+plink --bfile merged.chrAll.ASA.1000G.afterSampleQC \
+  --extract merged.chrAll.ASA.1000G.afterSampleQC.prune.in \
+  --pca 3 \
+  --out merged.chrAll.ASA.1000G.afterSampleQC.pruned \
+  <b>--threads 1</b>
+</code></pre>
+  
 ```bash
 Rscript practical2.PCAplot.R merged.chrAll.ASA.1000G.afterSampleQC.pruned.eigenvec 
 ```
@@ -384,11 +426,18 @@ It consists of (at least) three steps:
 The threshold used for filtering depends on sample and genotyping data quality, which vary from study to study. Variant QC should be done carefully as variants removed can be the disease causal variants in which the signals of association may not be completely recovered by imputation.
 
 Here we are using the following thresholds:
-+ `--mind 0.02` Call rate <= 98%
++ `--geno 0.02` Call rate <= 98%
 + `--hwe 1e-4`  HWE p < 1x10-4
 + `--maf 0.01`  MAF >= 1%
 
-We can combine all these variant QCs into one single PLINK command:
+**QC: We can combine all these variant QCs into one single PLINK command:**
 ```bash
-plink --bfile chrAll.ASA.afterSampleQC --geno 0.02 --hwe 1e-4 --maf 0.01 --make-bed --out chrAll.ASA.afterSampleQC.afterVariantQC
+plink --bfile chrAll.ASA.afterSampleQC \
+  --geno 0.02 \
+  --hwe 1e-4 \
+  --maf 0.01 \
+  --make-bed \
+  --out chrAll.ASA.afterSampleQC.afterVariantQC
 ```
+  
+At the end, you will end up with a dataset of 992 samples and 480780 variants passing sample-based and variant-based QCs.
