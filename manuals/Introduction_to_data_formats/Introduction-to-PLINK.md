@@ -17,8 +17,8 @@ We need the following software that is pre-installed in the VM for genotype data
 ## Step 1: Understand the input data formats in PLINK
 First, create a working directory named `practical1` and change to the directory
 ```bash
-mkdir practical1
-cd practical1
+mkdir ~/Practicals/<yourname>/practical1
+cd ~/Practicals/<yourname>/practical1
 ```
 Download the gzipped tar file `practical1.tar.gz` into the directory and unzip it
 ```bash
