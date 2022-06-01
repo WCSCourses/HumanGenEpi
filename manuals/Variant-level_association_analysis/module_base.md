@@ -40,3 +40,16 @@ Use R to examine the phenotypes
 - How many cornoary artery disease (CAD) cases are there?
 - Is the low density lipoprotein (LDL) level normally distributed?
 - Is there any relationship between age, LDL and CAD?
+- 
+### Step 2: Performing association analysis
+```bash  
+plink --bfile chrAll.ASA.afterSampleQC.afterVariantQC --set-hh-missing --pheno practical3.pheno --pheno-name LDL --assoc --adjust --out assoc/LDL
+plink --bfile chrAll.ASA.afterSampleQC.afterVariantQC --set-hh-missing --pheno practical3.pheno --pheno-name LDL --linear --adjust --out assoc/LDL
+plink --bfile chrAll.ASA.afterSampleQC.afterVariantQC --set-hh-missing --pheno practical3.pheno --pheno-name LDL --linear --covar practical3.pheno --covar-name AGE --adjust --out assoc/LDL.adj-AGE
+
+plink --bfile chrAll.ASA.afterSampleQC.afterVariantQC --set-hh-missing --pheno practical3.pheno --pheno-name CAD --logistic --out assoc/CAD
+plink --bfile chrAll.ASA.afterSampleQC.afterVariantQC --set-hh-missing --pheno practical3.pheno --pheno-name CAD --covar practical3.pheno --covar-name AGE --logistic --out assoc/CAD.adj-AGE
+```
+
+### Step 3: Visualizing the association results
+### Step 4: Annotating the association findings
