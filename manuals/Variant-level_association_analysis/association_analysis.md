@@ -196,16 +196,21 @@ awk 'BEGIN { OFS="\t"; a2["SNP"]="A2" } NR==FNR { a1[$2]=$5; a2[$2]=$6 } NR!=FNR
 # (iii) index the association file
 tabix -s 1 -b 3 -e 3 --skip-lines 1 -f LDL.adj-AGE.assoc.linear.forLocuszoom.gz
 ```
- + First, make sure that `GWAS` and the right genome assembly are chosen, i.e. `GRCh37` for this example dataset
-<img src="https://user-images.githubusercontent.com/8644480/171670740-86b20b26-cc20-4512-81cc-d43940be970c.png" width=1000>
++ First, make sure that `GWAS` and the right genome assembly are chosen, i.e. `GRCh37` for this example dataset
+<img src="https://user-images.githubusercontent.com/8644480/171670740-86b20b26-cc20-4512-81cc-d43940be970c.png" width=800>
  
- + Click `Add tab-indexed datafile` > `Browse` to add the LDL.adj-AGE.assoc.linear.forLocuszoom**.gz** and **.gz.tbi** files
-<img src="https://user-images.githubusercontent.com/8644480/171672261-3cf5120d-a24b-455a-96e6-959e262b2ef6.png" width=250 height=400>
-<img src="https://user-images.githubusercontent.com/8644480/171672531-00848874-2530-446a-aad4-102475c2ea62.png" width=700 height=400>
++ Click `Add tab-indexed datafile` > `Browse` to add the LDL.adj-AGE.assoc.linear.forLocuszoom **.gz** and **.gz.tbi** files
+<img src="https://user-images.githubusercontent.com/8644480/171672531-00848874-2530-446a-aad4-102475c2ea62.png" width=800>
++ Choose `GWAS scattered plot` as `Type`
+<img src="https://user-images.githubusercontent.com/8644480/171672261-3cf5120d-a24b-455a-96e6-959e262b2ef6.png" width=250>
  
-+ Choose the major allele `A2` as `Ref` allele and the minor allele `A1` as the `Alt` allele
++ Under `Variant from columns` > Choose the major allele `A2` as `Ref` allele and the minor allele `A1` as the `Alt` allele
 <img src="https://user-images.githubusercontent.com/8644480/171672887-bc1c4203-0880-44a5-9f66-64b376a155a9.png" width=500>
 
-+ Go to the region of `rs2075650` and 
++ Next > Accept option > Type `rs2075650` in the box > Go to the region
++ Choose `LD population: EAS`
++ You can also change the range of region to `19:45300000-455000000` for a zoom in view
+<img src="https://user-images.githubusercontent.com/8644480/171678660-f12f0ff9-c4d1-4472-bf9d-089ad58d0164.png" width=800>
+
 
  - FUMA
