@@ -37,19 +37,79 @@ cp ~/Day2_association_analysis/CAD_LDL.pheno .
 Besides the 6th column in PLINK .ped and .fam file, you can supply another phenotype file via the command of `--pheno [filename]`.
 
 Use R to examine the phenotypes
-- How many cornoary artery disease (CAD) cases are there?
-- Is the low density lipoprotein (LDL) level normally distributed?
-- Is there any relationship between age, LDL and CAD?
-- 
-### Step 2: Performing association analysis
-```bash  
-plink --bfile chrAll.ASA.afterSampleQC.afterVariantQC --set-hh-missing --pheno practical3.pheno --pheno-name LDL --assoc --adjust --out assoc/LDL
-plink --bfile chrAll.ASA.afterSampleQC.afterVariantQC --set-hh-missing --pheno practical3.pheno --pheno-name LDL --linear --adjust --out assoc/LDL
-plink --bfile chrAll.ASA.afterSampleQC.afterVariantQC --set-hh-missing --pheno practical3.pheno --pheno-name LDL --linear --covar practical3.pheno --covar-name AGE --adjust --out assoc/LDL.adj-AGE
+1. How many cornoary artery disease (CAD) cases are there?
+2. Is the low density lipoprotein (LDL) level normally distributed?
+3. Is there any relationship between age, LDL and CAD?
 
-plink --bfile chrAll.ASA.afterSampleQC.afterVariantQC --set-hh-missing --pheno practical3.pheno --pheno-name CAD --logistic --out assoc/CAD
-plink --bfile chrAll.ASA.afterSampleQC.afterVariantQC --set-hh-missing --pheno practical3.pheno --pheno-name CAD --covar practical3.pheno --covar-name AGE --logistic --out assoc/CAD.adj-AGE
+<details>
+<summary></summary>
+```R
+# ========================== R code ==========================
+pheno <- read.table("CAD_LDL.pheno",h=T)
+summary(pheno)
+table(pheno$CAD)
+```
+```R
+# Plot the histogram to assess if the LDL level is normally distributed
+hist(pheno$LDL, freq=T, col="darkred", border ="black", xlab="LDL level", ylab="Number of samples")
+
+# Plot the QQ plot to assess if the LDL level is normally distributed
+qqnorm(pheno$LDL)
+qqline(pheno$LDL)
+```
+```R
+# Test if age is associated with LDL and CAD
+summary(glm(LDL ~ AGE, data=pheno))
+summary(glm(CAD==2 ~ AGE, family="binomial", data=pheno))
+by(pheno$AGE, pheno$CAD, summary)
+```
+# ============================================================
+```
+</details>
+
+### Step 2: Performing association analysis
+Next, we will use PLINK to perform association test
+1. Perform linear regression WITHOUT adjusting for age to test for association with LDL 
+```bash  
+plink --bfile chrAll.ASA.afterSampleQC.afterVariantQC --set-hh-missing --pheno CAD_LDL.pheno --pheno-name LDL --linear --adjust --out LDL
+```
+The `--adjust` option generates an .adjusted file containing several basic multiple testing corrections (e.g. FDR) for the raw p-values. By default, it will also estimate the genomic control factor (lambda) from the data.
+
+:closed_book: **Q:** Which SNP is the top SNP? Can you give the effect size in beta (95% CI)?
+<details>
+  <summary> Answer </summary>
+  
+** Answer 1 **
+** Answer 2 **
+Add `--ci 0.95` while running the regression test in PLINK
+</details>  
+
+- Plot the quantile-quantile plot to examine for inflation 
+```bash 
+Rscript practical3.QQPlot.R LDL.assoc.linear QQPlot.LDL
+```
+:closed_book: **Q:** What is the lamda? Do the lamda and QQ plot indicate inflation of the association statistics?
+<details>
+  <summary> Answer </summary>
+
+- lamda=1.00219. No inflation of summary statistics.
+<details>
+
+2.  Perform linear regression adjusted for age 
+```bash  
+plink --bfile chrAll.ASA.afterSampleQC.afterVariantQC --set-hh-missing --pheno CAD_LDL.pheno --pheno-name LDL --covar CAD_LDL.pheno --covar-name AGE --hide-covar --linear --adjust --out LDL.adj-AGE
+```
+- Plot and compare the association results with and without adjustment of age
+```bash 
+Rscript practical3.manhattanPlot.R LDL.assoc.linear manhattanPlot.LDL
+Rscript practical3.manhattanPlot.R LDL.adj-AGE.assoc.linear manhattanPlot.LDL.adj-AGE
+```
+
+3.  Perform logistic regression adjusted for age to test for association with CAD
+```bash 
+plink --bfile chrAll.ASA.afterSampleQC.afterVariantQC --set-hh-missing --pheno practical3.pheno --pheno-name CAD --covar CAD_LDL.pheno --covar-name AGE --logistic --out CAD.adj-AGE
 ```
 
 ### Step 3: Visualizing the association results
+
 ### Step 4: Annotating the association findings
