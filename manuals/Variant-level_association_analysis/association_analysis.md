@@ -87,15 +87,18 @@ by(pheno$AGE, pheno$CAD, summary)
 ## Step 2: Performing association analysis
 Next, we will use PLINK to perform association test
  
-1. Perform linear regression WITHOUT adjusting for age to test for association with LDL 
+### 1. Perform linear regression WITHOUT adjusting for age to test for association with LDL 
 ```bash  
 plink --bfile chrAll.ASA.afterSampleQC.afterVariantQC \
+  --chr 1-22,X,XY \
   --pheno CAD_LDL.pheno \
   --pheno-name LDL \
   --linear --adjust \
   --out LDL
 ```
 The `--adjust` option generates an .adjusted file containing several basic multiple testing corrections (e.g. FDR) for the raw p-values. By default, it will also estimate the genomic control factor (lambda) from the data.
+ 
+By default, sex is automatically added as a covariate for all X chromosome SNPs but not anywhere else.
 
 :closed_book: **Q1.** Which SNP is the top SNP? Can you give the effect size in beta and the confidence intervals (CI)?
 <details>
@@ -124,7 +127,13 @@ U95
 # ============================================================
 ```
 </details>  
-
+ 
+- Plot the manhattan plot to visualize the association results  
+```bash 
+# Rscript practical3.manhattanPlot.R <assoc_file> <outpu_prefix>
+Rscript practical3.manhattanPlot.R LDL.assoc.linear QQPlot.LDL
+```
+ 
 - Plot the quantile-quantile plot to examine for inflation 
 ```bash 
 Rscript practical3.QQPlot.R LDL.assoc.linear QQPlot.LDL
@@ -134,32 +143,43 @@ Rscript practical3.QQPlot.R LDL.assoc.linear QQPlot.LDL
 <details>
   <summary> Answer </summary>
 
-+ lamda=1.00219. No inflation of summary statistics.
-<details>
++ lamda=1.00219. No inflation in summary statistics.
+</details>
 
-2.  Perform linear regression while adjusted for age 
-```bash  
+### 2.  Perform linear regression while adjusted for age
+You can use `--covar <filename>` to specify the file with covariate(s), i.e. `CAD_LDL.pheno` in this example. The covariate(s) used for adjustment is specified through `--covar-name`.
+<pre><code>
 plink --bfile chrAll.ASA.afterSampleQC.afterVariantQC \
-  --set-hh-missing \
+  --chr 1-22,X,XY \
   --pheno CAD_LDL.pheno \
   --pheno-name LDL \
-  --covar CAD_LDL.pheno \
-  --covar-name AGE \
-  --hide-covar \
+  <b>--covar CAD_LDL.pheno \</b>
+  <b>--covar-name AGE \</b>
+  <b>--hide-covar \</b>
   --linear --adjust \
   --out LDL.adj-AGE
 ```
-- Plot and compare the association results with and without adjustment of age
+
+- Plot the association results without adjustment of age and compare with the one without adjustment
 ```bash 
-Rscript practical3.manhattanPlot.R LDL.assoc.linear manhattanPlot.LDL
 Rscript practical3.manhattanPlot.R LDL.adj-AGE.assoc.linear manhattanPlot.LDL.adj-AGE
 ```
 
 3.  Perform logistic regression adjusted for age to test for association with CAD
 ```bash 
-plink --bfile chrAll.ASA.afterSampleQC.afterVariantQC --set-hh-missing --pheno practical3.pheno --pheno-name CAD --covar CAD_LDL.pheno --covar-name AGE --logistic --out CAD.adj-AGE
+plink --bfile chrAll.ASA.afterSampleQC.afterVariantQC \
+ --chr 1-22,X,XY \
+ --pheno CAD_LDL.pheno --pheno-name CAD \
+ --covar CAD_LDL.pheno --covar-name AGE --hide-covar \
+ --logistic \
+ --out CAD.adj-AGE
 ```
 
+- Plot the manhattan plot and QQ plot to evaluate the association
+```bash 
+Rscript practical3.QQPlot.R CAD.adj-AGE.assoc.logistic QQPlot.CAD.adj-AGE
+Rscript practical3.manhattanPlot.R CAD.adj-AGE.assoc.logistic manhattanPlot.CAD.adj-AGE
+```
 ### Step 3: Visualizing the association results
 
 ### Step 4: Annotating the association findings
