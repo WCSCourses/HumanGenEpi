@@ -24,6 +24,7 @@ cp ~/Practicals/<b>[yourname]</b>/practical2_QC/chrAll.ASA.afterSampleQC.afterVa
 Otherwise, please copy the dataset passing QC from the `~/Day2_association_analysis/` directory
 <details>
  <summary>Code to copy</summary>
+ 
 ```bash
 cp ~/Day2_association_analysis/chrAll.ASA.afterSampleQC.afterVariantQC.* .
 ```
@@ -36,33 +37,42 @@ cp ~/Day2_association_analysis/CAD_LDL.pheno .
 ```
 Besides the 6th column in PLINK .ped and .fam file, you can supply another phenotype file via the command of `--pheno [filename]`.
 
-Use R to examine the phenotypes
+First, let's use R to examine the content of the `CAD_LDL.pheno` phenotype file
 1. How many cornoary artery disease (CAD) cases are there?
 2. Is the low density lipoprotein (LDL) level normally distributed?
 3. Is there any relationship between age, LDL and CAD?
 
 <details>
-<summary></summary>
+<summary> Answers </summary>
+
+1. 496 cases and 496 controls
 ```R
 # ========================== R code ==========================
 pheno <- read.table("CAD_LDL.pheno",h=T)
 summary(pheno)
 table(pheno$CAD)
+# ============================================================
 ```
+
+2. Yes. The LDL level is normally distributed and no further transformation is needed
 ```R
+# ========================== R code ==========================
 # Plot the histogram to assess if the LDL level is normally distributed
 hist(pheno$LDL, freq=T, col="darkred", border ="black", xlab="LDL level", ylab="Number of samples")
 
 # Plot the QQ plot to assess if the LDL level is normally distributed
 qqnorm(pheno$LDL)
 qqline(pheno$LDL)
+# ============================================================
 ```
+
+3. CAD patients are generally older than controls and LDL level increases by age in general.
 ```R
+# ========================== R code ==========================
 # Test if age is associated with LDL and CAD
 summary(glm(LDL ~ AGE, data=pheno))
 summary(glm(CAD==2 ~ AGE, family="binomial", data=pheno))
 by(pheno$AGE, pheno$CAD, summary)
-```
 # ============================================================
 ```
 </details>
@@ -75,13 +85,13 @@ plink --bfile chrAll.ASA.afterSampleQC.afterVariantQC --set-hh-missing --pheno C
 ```
 The `--adjust` option generates an .adjusted file containing several basic multiple testing corrections (e.g. FDR) for the raw p-values. By default, it will also estimate the genomic control factor (lambda) from the data.
 
-:closed_book: **Q:** Which SNP is the top SNP? Can you give the effect size in beta (95% CI)?
+:closed_book: **Q:** Which SNP is the top SNP after adjusting for age? Can you give the effect size in beta and the confidence intervals?
 <details>
-  <summary> Answer </summary>
+  <summary> Answers </summary>
   
 ** Answer 1 **
 ** Answer 2 **
-Add `--ci 0.95` while running the regression test in PLINK
+You can add `--ci 0.95` while running the regression test in PLINK
 </details>  
 
 - Plot the quantile-quantile plot to examine for inflation 
