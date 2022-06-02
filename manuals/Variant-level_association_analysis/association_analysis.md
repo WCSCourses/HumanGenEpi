@@ -200,11 +200,11 @@ tabix -s 1 -b 3 -e 3 --skip-lines 1 -f LDL.adj-AGE.assoc.linear.forLocuszoom.gz
 <img src="https://user-images.githubusercontent.com/8644480/171670740-86b20b26-cc20-4512-81cc-d43940be970c.png" width=1000>
  
  + Click `Add tab-indexed datafile` > `Browse` to add the LDL.adj-AGE.assoc.linear.forLocuszoom**.gz** and **.gz.tbi** files
-<img src="https://user-images.githubusercontent.com/8644480/171672261-3cf5120d-a24b-455a-96e6-959e262b2ef6.png" width=300>
-<img src="https://user-images.githubusercontent.com/8644480/171672531-00848874-2530-446a-aad4-102475c2ea62.png" width=700>
+<img src="https://user-images.githubusercontent.com/8644480/171672261-3cf5120d-a24b-455a-96e6-959e262b2ef6.png" width=250 height=400>
+<img src="https://user-images.githubusercontent.com/8644480/171672531-00848874-2530-446a-aad4-102475c2ea62.png" width=700 height=400>
  
 + Choose the major allele `A2` as `Ref` allele and the minor allele `A1` as the `Alt` allele
-<img src="https://user-images.githubusercontent.com/8644480/171672887-bc1c4203-0880-44a5-9f66-64b376a155a9.png" width=700>
+<img src="https://user-images.githubusercontent.com/8644480/171672887-bc1c4203-0880-44a5-9f66-64b376a155a9.png" width=500>
 
 + Go to the region of `rs2075650` and 
 
