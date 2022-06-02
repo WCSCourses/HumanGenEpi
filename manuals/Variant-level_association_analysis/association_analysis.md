@@ -148,8 +148,7 @@ Rscript practical3.QQPlot.R LDL.assoc.linear QQPlot.LDL
 
 ### 2.  Perform linear regression while adjusted for age
 You can use `--covar <filename>` to specify the file with covariate(s), i.e. `CAD_LDL.pheno` in this example. The covariate(s) used for adjustment is specified through `--covar-name`.
-<pre><code>
-plink --bfile chrAll.ASA.afterSampleQC.afterVariantQC \
+<pre><code>plink --bfile chrAll.ASA.afterSampleQC.afterVariantQC \
   --chr 1-22,X,XY \
   --pheno CAD_LDL.pheno \
   --pheno-name LDL \
@@ -158,14 +157,26 @@ plink --bfile chrAll.ASA.afterSampleQC.afterVariantQC \
   <b>--hide-covar \</b>
   --linear --adjust \
   --out LDL.adj-AGE
-```
+</code></pre>
 
 - Plot the association results without adjustment of age and compare with the one without adjustment
 ```bash 
 Rscript practical3.manhattanPlot.R LDL.adj-AGE.assoc.linear manhattanPlot.LDL.adj-AGE
 ```
 
-3.  Perform logistic regression adjusted for age to test for association with CAD
+### 3. Perform logistic regression with and without adjusting for age to test for association with CAD
+```bash 
+plink --bfile chrAll.ASA.afterSampleQC.afterVariantQC \
+ --chr 1-22,X,XY \
+ --pheno CAD_LDL.pheno --pheno-name CAD \
+ --logistic \
+ --out CAD
+```
+- Plot the manhattan plot and QQ plot to evaluate the association
+```bash 
+Rscript practical3.QQPlot.R CAD QQPlot.CAD
+Rscript practical3.manhattanPlot.R CAD manhattanPlot.CAD
+```
 ```bash 
 plink --bfile chrAll.ASA.afterSampleQC.afterVariantQC \
  --chr 1-22,X,XY \
