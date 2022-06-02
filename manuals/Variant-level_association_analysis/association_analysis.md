@@ -183,7 +183,7 @@ Rscript practical3.manhattanPlot.R CAD.adj-AGE.assoc.logistic manhattanPlot.CAD.
 ```
 
 ### Step 3: Annotating the association findings
-- LocusZoom (https://statgen.github.io/localzoom/)
+#### LocusZoom (https://statgen.github.io/localzoom/)<br>
 LocalZoom is a tool for generating regional association plot via web browser or offline. For the web-based js version without uploading the summary statistics, a tabix-indexed tab-delimited text file is needed. If you are comfortable uploading your data to a server, you can consider using the my.locuszoom.org upload service with more custom function.
 ```bash
 # (i) convert "fixed width" PLINK association result format to "tab-delimited"
@@ -212,5 +212,4 @@ tabix -s 1 -b 3 -e 3 --skip-lines 1 -f LDL.adj-AGE.assoc.linear.forLocuszoom.gz
 + You can also change the range of region to `19:45300000-455000000` for a zoom in view
 <img src="https://user-images.githubusercontent.com/8644480/171678660-f12f0ff9-c4d1-4472-bf9d-089ad58d0164.png" width=800>
 
-
- - FUMA
+#### FUMA (https://fuma.ctglab.nl/)
