@@ -16,13 +16,15 @@ We need the following software that is pre-installed in the VM for genotype data
 
 ## Step 1: Understand the input data formats in PLINK
 First, create a working directory named `practical1` and change to the directory
-<pre><code>mkdir ~/Practicals/<b>[yourname]</b>/practical1
-cd ~/Practicals/<b>[yourname]</b>/practical1
-</code></pre>
-
-Copy the files under `~/Day1_Introduction-to-PLINK/` to your current directory
 ```bash
-cp ~/Day1_Introduction-to-PLINK/* .
+mkdir ~/practical1
+cd ~/practical1
+```
+
+Download the compressed data file to your current directory and unzip the file
+```bash
+wget https://github.com/WCSCourses/HumanGenEpi/raw/main/course_data/Introduction_to_data_formats/practical1.tar.gz
+tar -zxvf practical1.tar.gz
 ```
 
 Use `ls` to list the files in your current directory. You should get three files, including the two regular PLINK text files (`PED` and `MAP`) and a PLINK set file
