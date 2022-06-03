@@ -6,7 +6,7 @@ In this practical, you will learn how to perform association analysis in genome-
 ## Prequisites
 We will start with the dataset of 480,780 variants for 992 samples passing QC from the previous **Sample array QC** practical. To ensure that we are using the same dataset, let's check the md5sum of these PLINK files
 
-<pre><code>md5sum ~/Practicals/<b>[yourname]</b>/practical2_QC/chrAll.ASA.afterSampleQC.afterVariantQC.*
+<pre><code>md5sum ~/practical2_QC/<b>chrAll.ASA.afterSampleQC.afterVariantQC.*</b>
 </code></pre>
 
 | Md5sum                           | File                                        |
@@ -15,19 +15,25 @@ We will start with the dataset of 480,780 variants for 992 samples passing QC fr
 | dd8f8e4c40207a8b5aff1ec60c25fe83 | chrAll.ASA.afterSampleQC.afterVariantQC.bim |
 | 798746e8bcc2c18110dac62ee78ff602 | chrAll.ASA.afterSampleQC.afterVariantQC.fam |
  
-If the md5sum values are consistent, you can copy the PLINK binary files to a new folder and named it as `practical3_associationtest`
-<pre><code>mkdir ~/Practicals/<b>[yourname]</b>/practical3_associationtest
-cd ~/Practicals/<b>[yourname]</b>/practical3_associationtest
-cp ~/Practicals/<b>[yourname]</b>/practical2_QC/chrAll.ASA.afterSampleQC.afterVariantQC.* .
++ If the md5sum values are consistent, you can copy the PLINK binary files to a new folder and named it as `practical3_associationtest`
+<pre><code>mkdir ~/practical3_associationtest
+cd ~/practical3_associationtest
+cp ~/practical2_QC/chrAll.ASA.afterSampleQC.afterVariantQC.* .
 </code></pre>
-Otherwise, please copy the whole dataset passing QC from the `~/Day2_association_analysis/` directory
+Otherwise, you can download the whole dataset passing QC from the github
 <details>
  <summary>Code to copy</summary>
  
 ```bash
-cp ~/Day2_association_analysis/chrAll.ASA.afterSampleQC.afterVariantQC.* .
+wget https://github.com/WCSCourses/HumanGenEpi/raw/main/course_data/Variant-level_association_analysis/practical3.PLINK-QCed.tar.gz 
 ```
 </details>
+
++ Download the phenotype file and R code for visualizing the association results
+```bash
+wget https://github.com/WCSCourses/HumanGenEpi/raw/main/course_data/Variant-level_association_analysis/CAD_LDL.pheno
+wget https://github.com/WCSCourses/HumanGenEpi/raw/main/course_data/Variant-level_association_analysis/practical3.manhattanPlot.R
+```
 
 ## Association analysis
 ## Step 1: Examining the phenotype file
