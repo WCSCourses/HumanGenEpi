@@ -32,19 +32,17 @@ In this practical, we will investigate the
 ## Step 0: Download the genotype data
 - First, create a directory named `practical2_QC` for this practical section
 
-<pre>mkdir ~/Practicals/<b>[yourname]</b>/practical2_QC
-cd ~/Practicals/<b>[yourname]</b>/practical2_QC
-</pre>
+```bash
+mkdir ~/practical2_QC
+cd ~/practical2_QC
+```
 
-- Copy all files under it to your current directory
+- Download all zip file under it to your current directory
 ```bash
-cp ~/Day2_Sample-array-QC/* .
+wget https://github.com/WCSCourses/HumanGenEpi/raw/main/course_data/Sample_array_QC/practical2.tar.gz
+tar -zxvf practical2.tar.gz
 ```
-```bash
-# for those without VM to try
-# wget https://github.com/WCSCourses/HumanGenEpi/raw/main/course_data/Sample_array_QC/practical2.tar.gz
-# tar -zxvf practical2.tar.gz
-```
+
 - Now your current folder should contain these files
 > ASA.1000G.to-update-name.snp<br>
 > chrAll.ASA.1000GP-All.bed<br>
