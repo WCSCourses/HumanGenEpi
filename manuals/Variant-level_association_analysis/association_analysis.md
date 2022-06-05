@@ -15,7 +15,7 @@ We will start with the dataset of 480,780 variants for 992 samples passing QC fr
 | dd8f8e4c40207a8b5aff1ec60c25fe83 | chrAll.ASA.afterSampleQC.afterVariantQC.bim |
 | 798746e8bcc2c18110dac62ee78ff602 | chrAll.ASA.afterSampleQC.afterVariantQC.fam |
  
-+ If the md5sum values are consistent, you can copy the PLINK binary files to a new folder and named it as `practical3_associationtest`
++ If the md5sum values are consistent, you can copy the PLINK binary files to a new folder and named the new folder as `practical3_associationtest`
 <pre><code>mkdir ~/practical3_associationtest
 cd ~/practical3_associationtest
 cp ~/practical2_QC/chrAll.ASA.afterSampleQC.afterVariantQC.* .
@@ -29,7 +29,7 @@ wget https://github.com/WCSCourses/HumanGenEpi/raw/main/course_data/Variant-leve
 ```
 </details>
 
-+ Download the phenotype file and R code for visualizing the association results
++ Download the phenotype file and the R code for visualizing the association results
 ```bash
 wget https://github.com/WCSCourses/HumanGenEpi/raw/main/course_data/Variant-level_association_analysis/CAD_LDL.pheno
 wget https://github.com/WCSCourses/HumanGenEpi/raw/main/course_data/Variant-level_association_analysis/practical3.manhattanPlot.R
@@ -40,7 +40,7 @@ wget https://github.com/WCSCourses/HumanGenEpi/raw/main/course_data/Variant-leve
 ```bash
 cp ~/Day2_association_analysis/CAD_LDL.pheno .
 ```
-Besides the 6th column in PLINK .ped and .fam file, you can use another phenotype file via the command of `--pheno [filename]`.
+Besides the 6th column in PLINK .ped and .fam file, you can use another phenotype file via the command of `--pheno [filename]` in PLINK.
 
 First, let's use R to examine the content of the `CAD_LDL.pheno` phenotype file<br>
 :closed_book: **Q1.** How many cornoary artery disease (CAD) patients and controls are there in this dataset? 
@@ -102,7 +102,7 @@ plink --bfile chrAll.ASA.afterSampleQC.afterVariantQC \
   --linear --adjust \
   --out LDL
 ```
-By default, sex is automatically added as a covariate for all X chromosome SNPs but not anywhere else. The `--adjust` option generates an .adjusted file with basic multiple testing corrections (e.g. FDR) for the raw p-values. It also estimates the genomic control factor (lambda) from the data.
+By default, sex is automatically added as a covariate for all X chromosome SNPs but not anywhere else. The `--adjust` option generates an `.adjusted` file with basic multiple testing corrections (e.g. FDR) for the raw p-values. It also estimates the genomic control factor (lambda) from the data.
  
 :closed_book: **Q1.** Which SNP is the top SNP? Can you give the effect size and the confidence interval (CI)?
 <details>
@@ -219,3 +219,6 @@ tabix -s 1 -b 3 -e 3 --skip-lines 1 -f LDL.adj-AGE.assoc.linear.forLocuszoom.gz
 <img src="https://user-images.githubusercontent.com/8644480/171678660-f12f0ff9-c4d1-4472-bf9d-089ad58d0164.png" width=800>
 
 #### FUMA (https://fuma.ctglab.nl/)
+You can also use the SNP2GENE function in FUMA (Functional Mapping and Annotation of Genome-Wide Association Studies) for annotating, prioritizing, and interpreting the GWAS results. The SNP2GENE function takes GWAS summary statistics as input, and provides functional annotation for all SNPs in genomic areas identified by lead SNPs.
++ SNP2GENE result for [CAD](https://fuma.ctglab.nl/browse/461)
++ SNP2GENE result for [LDL](https://fuma.ctglab.nl/browse/462)
