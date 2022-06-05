@@ -59,7 +59,7 @@ Sathiya Maran ,Monash University Malaysia
 
 <a href="https://github.com/WCSCourses/HumanGenEpi/blob/main/manuals/Sample_array_QC/Sample_array_QC.md" target="_blank">Sample Array QC</a>
 
-<a href="https://github.com/WCSCourses/HumanGenEpi/blob/main/manuals/Variant-level_association_analysis/module_base.md" target="_blank">Variant Level Association Analysis</a>
+<a href="https://github.com/WCSCourses/HumanGenEpi/blob/main/manuals/Variant-level_association_analysis/association_analysis.md" target="_blank">Variant Level Association Analysis</a>
 
 <a href="https://github.com/WCSCourses/HumanGenEpi/blob/main/manuals/Population_stratification/Day3_Popstructure_manual.pdf" target="_blank">Population Stratification</a>
 
