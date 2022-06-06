@@ -1,0 +1,79 @@
+Data-mining analysis of GWAS summary statistics for complex diseases 
+—The use of KGGSEE to infer susceptibility genes, pathways, tissues/cell-types, heritability of schizophrenia 
+By Miaoxin Li
+
+The best way to learn how to use KGGSEE is to look up our online manual https://kggsee.readthedocs.io/en/latest/index.html !!!
+
+
+Pre-install tools:
+1.	Java Running Environment (1.8) : https://www.java.com/en/download/manual.jsp
+2.	Notepad++: https://notepad-plus-plus.org/
+3.	KGGSEE (Resource bundle)
+
+Data:
+Primary input: GWAS summary statistics of schizophrenia, scz_gwas_eur_chr1.tsv.gz
+Resource data:  
+	Whole-genome genotypes of 1KG samples
+	Gene expression data in over 50 tissues from GTEx
+	eQTL data calculated based on GTEx samples.
+
+Instructions
+1.	Download a KGGSEE package for tutorial from http://pmglab.top/kggsee/#/download.
+2.	Copy the kggsee.zip into your D disk.
+3.	Browse the file structure of kggsee in  “kggsee” folder.  
+4.	Open KGGSEE “Online Manual” by your Web Browser. “https://pmg-lab-docs.readthedocs.io/en/latest/KGGSEE_doc/KGGSEE.html” .
+5.	Open your CommandPrompt in your windows OS by typing CMD; and type “powershell” to open the powershell. 
+6.	Ender the tutorials folder of kggsee working folder by typing “cd tutorials”.
+7.	Take a look at the files and folders in the working directory. 
+
+Goals:  
+1.	Infer associated genes of schizophrenia based on coordinates of variants;
+2.	Infer associated transcripts of schizophrenia based on eQTLs;
+3.	Infer associated tissues and prioritize susceptibility genes of schizophrenia;
+4.	Infer associated gene-sets or pathways of schizophrenia;
+5.	Infer causal genes/transcripts of schizophrenia by Mendelian randomization;
+6.	Estimate heritability of each associated genes of schizophrenia.
+
+Options for the goals:
+Take a look at the input GWAS summary statistics file by ty opening “scz_gwas_eur_chr1.tsv.gz”  in Notepad
+
+1.       Perform gene-based association analysis by ECS and GATES
+java -Xmx4g -jar ../kggsee.jar --out test1 --sum-file ./scz_gwas_eur_chr1.tsv.gz --vcf-ref ./1kg_hg19_eur_chr*.vcf.gz --keep-ref --gene-assoc
+ 
+2.        Perform gene-based association analysis guided by eQTLs:
+java -Xmx4g -jar ../kggsee.jar --out test2 --sum-file ./scz_gwas_eur_chr1.tsv.gz --saved-ref VCFRefhg19 --eqtl-file GTEx_v8_gene_BrainBA9.eqtl.txt.gz --gene-assoc
+
+3.       Perform transcript-based association analysis guided by eQTLs
+java -Xmx4g -jar ../kggsee.jar --out test3 --sum-file ./scz_gwas_eur_chr1.tsv.gz --saved-ref VCFRefhg19 --eqtl-file GTEx_v8_transcript_BrainBA9.eqtl.txt.gz --gene-assoc
+ 
+4.       Perform conditional gene-based association analysis with tissue-selective expression of genes by DESE
+java -Xmx4g -jar ../kggsee.jar --out test4 --sum-file ./scz_gwas_eur_chr1.tsv.gz --saved-ref VCFRefhg19 --expression-file ./GTEx_v8_TMM.gene.meanSE.txt.gz --gene-finemapping
+
+5.       Perform conditional gene-based association analysis with tissue-selective expression of transcripts by DESE
+java -Xmx4g -jar ../kggsee.jar --out test5 --sum-file ./scz_gwas_eur_chr1.tsv.gz --saved-ref VCFRefhg19 --expression-file ./GTEx_v8_TMM.transcript.meanSE.txt.gz --gene-finemapping
+
+6.       Perform pathway/geneset-based association analysis guided by tissue-selective expression of transcripts
+java -Xmx4g -jar ../kggsee.jar --out test6 --sum-file ./scz_gwas_eur_chr1.tsv.gz --saved-ref VCFRefhg19 --expression-file ./GTEx_v8_TMM.transcript.meanSE.txt.gz --geneset-db cura --gene-finemapping
+
+#Users can customize their own gene set file as well.
+java -Xmx4g -jar ../kggsee.jar --out test6.1 --sum-file ./scz_gwas_eur_chr1.tsv.gz --saved-ref VCFRefhg19 --expression-file ./GTEx_v8_TMM.transcript.meanSE.txt.gz --geneset-file path/to/geneset-file --gene-finemapping
+
+7.	Perform gene-based causation analysis guided by EMIC:
+java -Xmx4g -jar ../kggsee.jar --out test7 --sum-file ./scz_gwas_eur_chr1.tsv.gz --beta-col OR --se-col SE --freq-a1-col FRQ_A --beta-type 2 --saved-ref VCFRefhg19 --eqtl-file GTEx_v8_gene_BrainBA9.eqtl.txt.gz --emic
+
+#Users can estimate causal transcripts as well.
+java -Xmx4g -jar ../kggsee.jar --out test7 --sum-file ./scz_gwas_eur_chr1.tsv.gz --beta-col OR --se-col SE --freq-a1-col FRQ_A --beta-type 2 --saved-ref VCFRefhg19 --eqtl-file GTEx_v8_transcript_BrainBA9.eqtl.txt.gz --emic
+
+8.       Estimate heritability of genes 
+java -Xmx4g -jar ../kggsee.jar --out test8 --sum-file ./scz_gwas_eur_chr1.tsv.gz --case-col Nca --control-col Nco --saved-ref VCFRefhg19 --estimate-heritability
+
+Questions: 
+1.	What are the purposes of three different types of resource data?
+2.	How many different significant genes by ECS and GATES?
+3.	How many different significant genes based on gene-level eQTLs an transcript-level eQTLs?
+4.	What is the most significant brain regions for schizophrenia?
+5.	Do the significant genesets have biological sense?
+6.	How many significant cause genes estimated by EMIC? Why is it much fewer than the associated genes?
+7.	What is the gene with the largest heritability? What can the heritability value tell us?
+
+
