@@ -73,7 +73,7 @@ Sathiya Maran ,Monash University Malaysia
 
 <a href="https://github.com/WCSCourses/HumanGenEpi/blob/main/manuals/Polygenic_risk_scores/PRS.md" target="_blank">Polygenic Risk Scores</a>
 
-<a href="https://github.com/WCSCourses/HumanGenEpi/blob/main/manuals/Data_sharing_and_ELSI/module_base.md" target="_blank">Data sharing and Ethical Legal and Social Issues (ELSI)</a>
+<a href="https://github.com/WCSCourses/HumanGenEpi/blob/main/manuals/Data_sharing_and_ELSI/" target="_blank">Data sharing and Ethical Legal and Social Issues (ELSI)</a>
 
 Public bioinformatics resources for GWAS interpretation
                                                                                                                              
