@@ -53,7 +53,7 @@ Sathiya Maran ,Monash University Malaysia
 
 
 ## Course manual
-<a href="https://github.com/WCSCourses/HumanGenEpi/blob/main/manuals/Computational_resources/module_base.md" target="blank">Computational Resources</a>
+<a href="https://github.com/WCSCourses/HumanGenEpi/blob/main/manuals/Computational_resources/" target="blank">Computational Resources</a>
 
 <a href="https://github.com/WCSCourses/HumanGenEpi/blob/main/manuals/Introduction_to_data_formats/Introduction-to-PLINK.md" target="_blank">Introduction to Plink</a>
 
@@ -63,7 +63,7 @@ Sathiya Maran ,Monash University Malaysia
 
 <a href="https://github.com/WCSCourses/HumanGenEpi/blob/main/manuals/Population_stratification/Day3_Popstructure_manual.pdf" target="_blank">Population Stratification</a>
 
-<a href="https://github.com/WCSCourses/HumanGenEpi/blob/main/manuals/Meta_analysis/module_base.md" target="_blank">Meta Analysis and Replication</a>
+<a href="https://github.com/WCSCourses/HumanGenEpi/blob/main/manuals/Meta_analysis/" target="_blank">Meta Analysis and Replication</a>
 
 <a href="https://github.com/WCSCourses/HumanGenEpi/blob/main/manuals/Imputation/Day3_Imputation_manual.pdf" target="_blank">Imputation</a>
 
@@ -77,7 +77,7 @@ Sathiya Maran ,Monash University Malaysia
 
 Public bioinformatics resources for GWAS interpretation
                                                                                                                              
-<a href="https://github.com/WCSCourses/HumanGenEpi/blob/main/manuals/GWAS_project/module_base.md" target="_blank">GWAS Project</a>
+<a href="https://github.com/WCSCourses/HumanGenEpi/blob/main/manuals/GWAS_project/" target="_blank">GWAS Project</a>
 
 
 
