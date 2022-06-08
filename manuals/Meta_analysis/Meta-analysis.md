@@ -1,7 +1,7 @@
 
 In this module you will learn how to perform GWAS meta-analysis using the software **Metal** (https://genome.sph.umich.edu/wiki/METAL_Documentation)
 
-We will start by familiarising with the config file that we will indicate the studies which whose summary statistics we want to aggregate.
+We will start by familiarising with the config file that indicates the studies for the metaanalysis.
 ``` bash
 
 cat metal.txt
@@ -52,28 +52,42 @@ PROCESS magic_SARDINIA.tbl
 ANALYZE
 ```
 
-We have two GWAS summary statistics files indicate below and we should edit the *metal.txt* config file above to match with these files
+We have two GWAS summary statistics files indicated below and we should edit the *metal.txt* config file above to match with the headers of these files
 
 ```bash
 EAS.txt
 SAS.txt
 ```
-Before we run our meta-analysis we need to check the following
+Before we run our meta-analysis we need to check the following:
 
-*1.* Are the SNPs in chr:bp format on the same genome build
-*2.* Is the GWAS trait transformation similar between the studies if not we have to do a p-value based meta-analysis
+*1.* If the SNPs in chr:bp format on the same genome build
+*2.* If the GWAS quantitative trait transformation similar is among the studies; if not we have to do a p-value based meta-analysis
 *2.* If the quantitative trait transformation is similar we will run the meta-analysis based on the beta and standard error
 *3.* There is no neef to worry about trait transformation for the case-control meta-analysis
 
-By specifying the scheme in the *metal.txt* config file , we are now going to run
+By specifying the scheme in the *metal.txt* config file , we are able to run these types of analysis indicated below:
 
 1. P value based meta-analyis
+```bash
+SCHEME SAMPLESIZE
+```
+You will need to specify N in the individual studies
 
 2. Beta and standard error based meta-analysis
 
+```bash
+SCHEME   STDERR
+```
+
+You will need to specify BETA and SE in the individual studies
+
 What differences do you see in the output of these analysis ?
 
-Lastly we would like to assess the heterogeneity of accross the study results. This we will do by modifying the metal.txt file .
+Lastly we would like to assess the heterogeneity accross the study results. This we will do by modifying the metal.txt file .
+
+```bash
+ANALYZE HETEROGENEITY
+```
 
 Can you state the SNP which has the most significant heterogeneity across these studies?
 
