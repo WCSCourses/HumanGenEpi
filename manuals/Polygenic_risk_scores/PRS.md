@@ -5,7 +5,7 @@ To begin with we will start with splitting our target data set into the validati
 
 **Rscript splitting.R**
 
-This will generate two files that we will use in the down stream analysis which are test and validate
+This will generate two files that we will use in the down stream analysis as  test and validation data sets
 
  We will now start with the PRS software using the following data
 ```bash
