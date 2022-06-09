@@ -38,9 +38,6 @@ wget https://github.com/WCSCourses/HumanGenEpi/raw/main/course_data/Variant-leve
 
 ## Association analysis
 ## Step 1: Examining the phenotype file
-```bash
-cp ~/Day2_association_analysis/CAD_LDL.pheno .
-```
 Besides the 6th column in PLINK .ped and .fam file, you can use another phenotype file via the command of `--pheno [filename]` in PLINK.
 
 First, let's use R to examine the content of the `CAD_LDL.pheno` phenotype file<br>
