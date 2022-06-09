@@ -193,7 +193,7 @@ Rscript practical3.manhattanPlot.R CAD.adj-AGE.assoc.logistic manhattanPlot.CAD.
 #### LocusZoom (https://statgen.github.io/localzoom/)<br>
 LocalZoom is a tool for generating regional association plot via web browser or offline. For the web-based js version without uploading the summary statistics, a tabix-indexed tab-delimited text file is needed. If you are comfortable uploading your data to a server, you can consider using the my.locuszoom.org upload service with more custom function.
  
-Please Noted that both the reference (Ref) and alternative (Alt) alleles are needed for visualizing the LD. For simplicity, we use A1 as the alternative allele and A2 as the reference allele here. You will usually flip the genotypes to the reference strand and get the right Ref/Alt alleles after imputation. 
+Please noted that both the reference (Ref) and alternative (Alt) alleles are needed for visualizing the LD. For simplicity, we use A1 as the alternative allele and A2 as the reference allele here. You will usually flip to the reference strand and get the right Ref/Alt alleles after imputation. 
 ```bash
 # (i) convert "fixed width" PLINK association result format to "tab-delimited"
 # (ii) add the A2 allele (specifying the right Ref and Alt alleles are needed for LD plot)
