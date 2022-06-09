@@ -26,6 +26,7 @@ Otherwise, you can download the whole dataset passing QC from the github
  
 ```bash
 wget https://github.com/WCSCourses/HumanGenEpi/raw/main/course_data/Variant-level_association_analysis/practical3.PLINK-QCed.tar.gz 
+tar -zxvf practical3.PLINK-QCed.tar.gz
 ```
 </details>
 
