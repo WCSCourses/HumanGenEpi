@@ -37,6 +37,11 @@ mkdir ~/practical2_QC
 cd ~/practical2_QC
 ```
 
+- Move the files in 1000gData to your current directory
+```bash
+mv ~/1000gData/* .
+```
+
 - Download all zip file under it to your current directory
 ```bash
 wget https://github.com/WCSCourses/HumanGenEpi/raw/main/course_data/Sample_array_QC/practical2.tar.gz
