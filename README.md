@@ -52,6 +52,9 @@ Sathiya Maran ,Monash University Malaysia
 [Download here]()
 
 
+## Presewntations
+<a href="https://github.com/WCSCourses/HumanGenEpi/tree/main/presentations" target="_blank">Download here</a>
+
 ## Course manual
 <a href="https://github.com/WCSCourses/HumanGenEpi/blob/main/manuals/Computational_resources/" target="blank">Computational Resources</a>
 
