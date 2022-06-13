@@ -52,7 +52,7 @@ Sathiya Maran ,Monash University Malaysia
 [Download here]()
 
 
-## Presewntations
+## Presentations
 <a href="https://github.com/WCSCourses/HumanGenEpi/tree/main/presentations" target="_blank">Download here</a>
 
 ## Course manual
