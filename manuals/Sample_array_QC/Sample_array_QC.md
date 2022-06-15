@@ -26,7 +26,7 @@ In this practical, we will investigate the
 + **Missingness** for samples and variants
 + **Heterogeneity** in terms of inbreeding coefficient for sex chromosomes and autosomes
 + Identify-by-descent (IBD) and coefficient of relationship (PI_hat) for **relatedness** assessment
-+ Principal component analysis (PCA) for identification **population outliers**
++ Principal component analysis (PCA) for identification of **population outliers**
 + Hardy-weinberg equilibrium
 
 ## Step 0: Download the genotype data
@@ -35,6 +35,11 @@ In this practical, we will investigate the
 ```bash
 mkdir ~/practical2_QC
 cd ~/practical2_QC
+```
+
+- Move the files in 1000gData to your current directory
+```bash
+mv ~/1000gData/* .
 ```
 
 - Download all zip file under it to your current directory

@@ -26,6 +26,7 @@ Otherwise, you can download the whole dataset passing QC from the github
  
 ```bash
 wget https://github.com/WCSCourses/HumanGenEpi/raw/main/course_data/Variant-level_association_analysis/practical3.PLINK-QCed.tar.gz 
+tar -zxvf practical3.PLINK-QCed.tar.gz
 ```
 </details>
 
@@ -37,9 +38,6 @@ wget https://github.com/WCSCourses/HumanGenEpi/raw/main/course_data/Variant-leve
 
 ## Association analysis
 ## Step 1: Examining the phenotype file
-```bash
-cp ~/Day2_association_analysis/CAD_LDL.pheno .
-```
 Besides the 6th column in PLINK .ped and .fam file, you can use another phenotype file via the command of `--pheno [filename]` in PLINK.
 
 First, let's use R to examine the content of the `CAD_LDL.pheno` phenotype file<br>
@@ -191,10 +189,12 @@ Rscript practical3.manhattanPlot.R CAD.adj-AGE.assoc.logistic manhattanPlot.CAD.
 ### Step 3: Annotating the association findings
 #### LocusZoom (https://statgen.github.io/localzoom/)<br>
 LocalZoom is a tool for generating regional association plot via web browser or offline. For the web-based js version without uploading the summary statistics, a tabix-indexed tab-delimited text file is needed. If you are comfortable uploading your data to a server, you can consider using the my.locuszoom.org upload service with more custom function.
+ 
+Please noted that both the reference (Ref) and alternative (Alt) alleles are needed for visualizing the LD. For simplicity, we use A1 as the alternative allele and A2 as the reference allele here. You will usually flip to the reference strand and get the right Ref/Alt alleles after imputation. 
 ```bash
 # (i) convert "fixed width" PLINK association result format to "tab-delimited"
 # (ii) add the A2 allele (specifying the right Ref and Alt alleles are needed for LD plot)
-awk 'BEGIN { OFS="\t"; a2["SNP"]="A2" } NR==FNR { a1[$2]=$5; a2[$2]=$6 } NR!=FNR { $4=$4"\t"a2[$2]; if (FNR!=1) $2=$1":"$3; print $0 }' \
+awk 'BEGIN { OFS="\t"; a2["SNP"]="A2" } NR==FNR { a2[$2]=$6 } NR!=FNR { $4=$4"\t"a2[$2]; if (FNR!=1) $2=$1":"$3; print }' \
  chrAll.ASA.afterSampleQC.afterVariantQC.bim \
  LDL.adj-AGE.assoc.linear | \
  bgzip > LDL.adj-AGE.assoc.linear.forLocuszoom.gz
@@ -215,7 +215,7 @@ tabix -s 1 -b 3 -e 3 --skip-lines 1 -f LDL.adj-AGE.assoc.linear.forLocuszoom.gz
 
 + Next > Accept option > Type `rs2075650` in the box > Go to the region
 + Choose `LD population: EAS`
-+ You can also change the range of region to `19:45300000-455000000` for a zoom in view
++ You can also change the range of region to `19:45300000-45500000` for a zoom in view
 <img src="https://user-images.githubusercontent.com/8644480/171678660-f12f0ff9-c4d1-4472-bf9d-089ad58d0164.png" width=800>
 
 #### FUMA (https://fuma.ctglab.nl/)

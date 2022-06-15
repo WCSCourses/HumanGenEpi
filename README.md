@@ -44,13 +44,9 @@ Tinashe Chikoware, Sydney Brenner Institute for Molecular Bioscience, University
 Eleftheria Zeggini, Institute of Translational Genomics, Helmholtz Zentrum München<br>
 Sathiya Maran ,Monash University Malaysia
 
-## Timetable
 
-
-
-### Detailed timetable
-[Download here]()
-
+## Presentations
+<a href="https://github.com/WCSCourses/HumanGenEpi/tree/main/presentations" target="_blank">Download here</a>
 
 ## Course manual
 <a href="https://github.com/WCSCourses/HumanGenEpi/blob/main/manuals/Computational_resources/" target="blank">Computational Resources</a>
