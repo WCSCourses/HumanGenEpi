@@ -215,7 +215,7 @@ tabix -s 1 -b 3 -e 3 --skip-lines 1 -f LDL.adj-AGE.assoc.linear.forLocuszoom.gz
 
 + Next > Accept option > Type `rs2075650` in the box > Go to the region
 + Choose `LD population: EAS`
-+ You can also change the range of region to `19:45300000-455000000` for a zoom in view
++ You can also change the range of region to `19:45300000-45500000` for a zoom in view
 <img src="https://user-images.githubusercontent.com/8644480/171678660-f12f0ff9-c4d1-4472-bf9d-089ad58d0164.png" width=800>
 
 #### FUMA (https://fuma.ctglab.nl/)
