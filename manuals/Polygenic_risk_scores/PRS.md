@@ -42,7 +42,7 @@ xz -dv ASN.bed.xz
 ***Its key to do some QC on your discovery data set***
 
 ``` bash
-Rscript PRSice.R --prsice PRSice_linux --base
+Rscript PRSice.R --prsice PRSice_linux --base \
 ASN.gwas.txt --target ASN --binary F --keep validate --pheno ASN.pheno --cov ASN.cov --out trial1
 ```
 Check out the trial1.log file which contains the errors shown above. So, we see that initially
@@ -60,7 +60,7 @@ uniq ASN.gwas.txt > ASN.gwasqc.txt
 ***Preliminary analysis using default settings***
 
 ``` bash
-Rscript PRSice.R --prsice PRSice_linux --base
+Rscript PRSice.R --prsice PRSice_linux --base \
 ASN.gwasqc.txt --target ASN --keep validate --pheno ASN.pheno --binary F --cov ASN.cov --out Prelim
 ```
 
@@ -72,21 +72,21 @@ PRS R2 and how many SNPs are in the best preforming PRS ?
 *   clump-kb 500 clump-r2 0.1
 
 ``` bash 
-Rscript PRSice.R --prsice PRSice_linux --base
-ASN.gwasqc.txt --target ASN --binary F --keep validate --pheno ASN.pheno --cov ASN.cov –-clump-kb
+Rscript PRSice.R --prsice PRSice_linux --base \
+ASN.gwasqc.txt --target ASN --binary F --keep validate --pheno ASN.pheno --cov ASN.cov –-clump-kb \
 500 –-clump-r2 0.1 –-base-info INFO:0.4 --out Opt500_0.1
 ```
 *  clump-kb 250 clump-r2 0.3
 
 ``` bash
-Rscript PRSice.R PRSice_linux --base
-ASN.gwasqc.txt --binary F --target ASN --keep validate --pheno ASN.pheno --cov ASN.cov –-clump-kb
+Rscript PRSice.R PRSice_linux --base \
+ASN.gwasqc.txt --binary F --target ASN --keep validate --pheno ASN.pheno --cov ASN.cov –-clump-kb \
 250 –-clump-r2 0.3 –-base-info INFO:0.4 --out Opt250_0.5
 ```
 ***Which parametes give the best predictive PRS ? Lets print out the SNPs of the best predictive PRS***
 
 ``` bash
-Rscript PRSice.R --prsice PRSice_linux --base
+Rscript PRSice.R --prsice PRSice_linux --base \
 ASN.gwasqc.txt --target ASN --keep validate --pheno ASN.pheno --binary F --cov ASN.cov –-clump-kb 500 –-clump-r2 0.1 –-base-info INFO:0.4 –-print-snp –-out validation
 
 ```
@@ -108,7 +108,7 @@ grep -wf PRS_snps ASN.gwasqc.txt | sed '1i\CHR	BP	SNP	A1	A2	N	SE	P	OR	INFO	MAF' 
 ***Finally lets run this best PRS in the test dataset and create a decile plot***
 
 ``` bash
-Rscript PRSice.R --prsice PRSice_linux --base
+Rscript PRSice.R --prsice PRSice_linux --base \
 Bestprs_disc --target ASN --keep test --pheno ASN.pheno --binary F --cov ASN.cov –-no-clump –-keep-ambig --fastscore --bar-levels 1 –-base-info INFO:0.4 --quantile 10 --quant-break 1,2,3,4,5,6,7,8,9,10 --quant-ref 1 –-out test
 
 ```
