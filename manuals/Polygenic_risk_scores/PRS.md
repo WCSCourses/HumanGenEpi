@@ -42,8 +42,7 @@ xz -dv ASN.bed.xz
 ***Its key to do some QC on your discovery data set***
 
 ``` bash
-Rscript PRSice.R --prsice PRSice_linux --base \
-ASN.gwas.txt --target ASN --binary F --keep validate --pheno ASN.pheno --cov ASN.cov --out trial1
+Rscript PRSice.R --prsice PRSice_linux --base ASN.gwas.txt --target ASN --binary F --keep validate --pheno ASN.pheno --cov ASN.cov --out trial1
 ```
 Check out the trial1.log file which contains the errors shown above. So, we see that initially
 the all the SNPs in the base file are read. Ambiguous variants are removed to avoid strand
@@ -60,8 +59,7 @@ uniq ASN.gwas.txt > ASN.gwasqc.txt
 ***Preliminary analysis using default settings***
 
 ``` bash
-Rscript PRSice.R --prsice PRSice_linux --base \
-ASN.gwasqc.txt --target ASN --keep validate --pheno ASN.pheno --binary F --cov ASN.cov --out Prelim
+Rscript PRSice.R --prsice PRSice_linux --base ASN.gwasqc.txt --target ASN --keep validate --pheno ASN.pheno --binary F --cov ASN.cov --out Prelim
 ```
 
 Let’s look at the .summary file and the plots and ensure you understand them. What is the
