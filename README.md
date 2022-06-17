@@ -72,6 +72,8 @@ Sathiya Maran ,Monash University Malaysia
 <a href="https://github.com/WCSCourses/HumanGenEpi/blob/main/manuals/Data_sharing_and_ELSI/" target="_blank">Data sharing and Ethical Legal and Social Issues (ELSI)</a>
 
 <a href="https://github.com/WCSCourses/HumanGenEpi/tree/main/manuals/Public%20bioinformatics%20resources%20for%20GWAS%20interpretation">Public bioinformatics resources for GWAS interpretation</a>
+
+<a href="https://github.com/WCSCourses/HumanGenEpi/tree/main/manuals/Tools%26bestpractices-genotype%2C%20phenotype%20QC_transformation">Tools&bestpractices-genotype, phenotype QC_transformation</a>
                                                                                                                              
 <a href="https://github.com/WCSCourses/HumanGenEpi/blob/main/manuals/GWAS_project/" target="_blank">GWAS Project</a>
 
