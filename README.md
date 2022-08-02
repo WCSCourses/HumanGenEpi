@@ -37,7 +37,7 @@ Eva Maria Cutiongco-De La Paz, Philippines Genome Centre<br>
 Segun Fatumo, London School of Hygiene and Tropical Medicine<br>
 Ananyo Choudhury, Sydney Brenner Institute for Molecular Bioscience, University of the Witwatersrand<br>
 Dhriti Sengupta, Sydney Brenner Institute for Molecular Bioscience, University of the Witwatersrand<br>
-Tinashe Chikoware, Sydney Brenner Institute for Molecular Bioscience, University of the Witwatersrand<br>
+Tinashe Chikowore, Sydney Brenner Institute for Molecular Bioscience, University of the Witwatersrand<br>
 
 ## Speakers
 
