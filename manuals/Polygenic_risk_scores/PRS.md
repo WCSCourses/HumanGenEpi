@@ -105,3 +105,9 @@ grep -wf PRS_snps ASN.gwasqc.txt | sed '1i\CHR BP SNP A1 A2	N SE P OR INFO MAF' 
 Rscript PRSice.R --prsice PRSice_linux --base Bestprs_disc --target ASN --keep test --pheno ASN.pheno --binary F --cov ASN.cov --no-clump --keep-ambig --fastscore --bar-levels 1 --base-info INFO:0.4 --quantile 10 --quant-break 1,2,3,4,5,6,7,8,9,10 --quant-ref 1 --out test
 
 ```
+## Computing PRS for disease traits
+
+# Download the disease phenotype and add it to the code above
+``` bash
+wget https://github.com/WCSCourses/HumanGenEpi/blob/main/manuals/Polygenic_risk_scores/ASNdzpheno.txt
+```
