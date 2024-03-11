@@ -4,7 +4,7 @@ In this manual you will learn how to compute polygenic risck scores using **PRSi
 **You will need to download the following files for this practical** 
 
 ```bash
-# In your home directory create a folder called PRS and download the files into it
+# In your home directory create a folder called PRS and download the files into it. For those we Mac(OS X 64-bit) use PRSice_mac 
 
 mkdir PRS
 cd PRS
@@ -33,6 +33,8 @@ wget https://github.com/WCSCourses/HumanGenEpi/raw/main/manuals/Polygenic_risk_s
 
 xz -dv ASN.gwas.txt.xz
 xz -dv ASN.bed.xz
+
+
 ```
 
 
