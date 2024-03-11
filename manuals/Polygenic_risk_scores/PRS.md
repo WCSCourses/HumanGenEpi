@@ -4,7 +4,7 @@ In this manual you will learn how to compute polygenic risck scores using **PRSi
 **You will need to download the following files for this practical** 
 
 ```bash
-# In your home directory create a folder called PRS and download the files into it. For those we Mac(OS X 64-bit) use PRSice_mac 
+# In your home directory create a folder called PRS and download the files into it.
 
 mkdir PRS
 cd PRS
@@ -36,7 +36,7 @@ xz -dv ASN.bed.xz
 
 
 ```
-
+**For those with Mac(OS X 64-bit) use PRSice_mac instead of PRSice_linux in steps below**
 
 ## 1. Training the PRS to find the best predictive one using the validation target data set
 
